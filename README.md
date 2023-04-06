@@ -33,7 +33,7 @@ npm start
 To run the `backend` make sure you are under the api folder and:
 
 ````bash
-npm start:dev
+npm run start:dev
 ````
 <br />
 
@@ -45,15 +45,14 @@ npm start:dev
 
 1. Create a `.env` file in the root directory and copy the content from `.env.example`
 2. Make sure MongoDB is running (if you are using local MongoDB)
-3. If you need to customize your env, take a look at `secrets.ts` file
-4. Separate routes and functions into routers, controllers, services folders
+3. Separate routes and functions into routers, controllers, services folders
 
 <br />
 
 ## `client` folder
 
 1. Create a `.env` file in the root directory if you need to store secret data
-2. You can complete your project using SASS, CSS, or other styling libraries
+2. You can complete your project using CSS, or other styling libraries
 
 <br />
 
@@ -76,10 +75,9 @@ Check the REST API slides for what are the required features
 6. You are advised to follow this approach:
    1. Build one Model at a time, so if you are starting with products then build its model and only products model (if this collection would have a relation with another collection then it's fine to build that too)
    2. Focus on finishing the most basic routes of all CRUD operations in their simplest format. (without fancy controllers or aggregations etc)
-   3. The idea is MVP approach you want to build the basic routes and most basic features then start adding up more complex logic as you go further.
-   4. once the basic routes are done, move to the client folder and start connecting the routes you built with the frontend. (you have to see the results)
-   5. if you start that way you are good to start playing around and have more complex logic whether in backend or frontend
-   6. if you follow this approach you would practice, one of the most important things is to add features to an existing codebase.
+   3. once the basic routes are done, move to the client folder and start connecting the routes you built with the frontend. (you have to see the results)
+   4. if you start that way you are good to start playing around and have more complex logic whether in backend or frontend
+   5. if you follow this approach you would practice, one of the most important things is to add features to an existing codebase.
 7. And again, **PLEASE**, **DO NOT** push your code when you have so much code written. it will be so hard to suggest better approaches or solutions and you would end up with a very basic code review. If you don't care and don't want a code review feel free to push your fullstack project at the last minute.
 
 <br />
