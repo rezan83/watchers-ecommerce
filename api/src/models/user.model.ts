@@ -1,19 +1,21 @@
-import { Schema, model } from 'mongoose'
+import { ObjectId, Schema, model } from 'mongoose'
 
 export interface IUserFiles {
   image?: Buffer | undefined
 }
 export interface IUser extends IUserFiles {
+  _id?: ObjectId
   name: string
   password: string
   email: string
   phone: number
   is_verified: boolean
   is_admin: boolean
+  is_banned: boolean
   createdAt: Date
 }
 
-const userSchema = new Schema({
+const userSchema = new Schema<IUser>({
   name: {
     type: String,
     required: true,
@@ -51,6 +53,6 @@ const userSchema = new Schema({
   image: { type: String, contentType: String },
 })
 
-const User = model('User', userSchema)
+const User = model<IUser>('User', userSchema)
 
 export default User

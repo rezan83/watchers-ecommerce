@@ -1,16 +1,18 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
+import morgan from 'morgan'
 // import session from 'express-session'
 // import cookieParser from 'cookie-parser'
 // import passport from 'passport'
 
-import apiErrorHandler from './middlewares/apiErrorHandler'
-import apiContentType from './middlewares/apiContentType'
-import movieRouter from './routers/movie.router'
+// import apiErrorHandler from './middlewares/apiErrorHandler'
+// import apiContentType from './middlewares/apiContentType'
+// import movieRouter from './routers/movie.router'
 import usersRouter from './routers/user.router'
 import cookieParser from 'cookie-parser'
 import { env } from './config'
+import authRouter from './routers/auth.router'
 
 dotenv.config({ path: '.env' })
 const app = express()
@@ -25,7 +27,8 @@ app.use(
     credentials: true,
   })
 )
-app.use(apiContentType)
+app.use(morgan('dev'))
+// app.use(apiContentType)
 app.use(express.json())
 app.use(cookieParser())
 /** using passport also requires to ass session and cookieParser middlewares to express
@@ -46,10 +49,11 @@ app.use(passport.session())
 */
 
 // Set up routers
-app.use('/api/v1/movies', movieRouter)
+// app.use('/api/v1/movies', movieRouter)
+app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/users', usersRouter)
 
 // Custom API error handler
-app.use(apiErrorHandler)
+// app.use(apiErrorHandler)
 
 export default app

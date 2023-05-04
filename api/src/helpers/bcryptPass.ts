@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 
 const salt = 10;
 
-export const hashPass = async password => {
+export const hashPass = async (password:string) => {
   try {
     return await bcrypt.hash(password, 10);
   } catch (error) {
@@ -10,7 +10,7 @@ export const hashPass = async password => {
   }
 };
 
-export const comparePass = async (password, hashedPass) => {
+export const comparePass = async (password:string, hashedPass:string) => {
   try {
     return await bcrypt.compare(password, hashedPass);
   } catch (error) {

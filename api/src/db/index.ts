@@ -1,19 +1,19 @@
-import mongoose from 'mongoose';
-import {env} from '../config';
+import mongoose, { ConnectOptions } from 'mongoose'
+import { env } from '../config'
 
 const connectOptions = {
   useNewUrlParser: true,
-  useUnifiedTopology: true
-}
+  useUnifiedTopology: true,
+} as ConnectOptions
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(env.MONGO_URI || '', connectOptions);
+    await mongoose.connect(env.MONGO_URI || '', connectOptions)
 
-    console.log('MongoDB is connected');
-  } catch (err) {
-    console.error('err:', err.message);
+    console.log('MongoDB is connected')
+  } catch (err: any) {
+    console.error('err:', err.message)
   }
-};
+}
 
-export default connectDB;
+export default connectDB

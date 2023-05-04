@@ -1,31 +1,34 @@
-import errorHandler from 'errorhandler'
-import mongoose from 'mongoose'
+// import errorHandler from 'errorhandler'
+// import mongoose from 'mongoose'
+
+import connectDB from './db'
+connectDB()
 
 import app from './app'
-import { MONGODB_URI } from './util/secrets'
-import logger from './util/logger'
+// import { MONGODB_URI } from './util/secrets'
+// import logger from './util/logger'
 
-const mongoUrl = MONGODB_URI
+// const mongoUrl = MONGODB_URI
 
-mongoose
-  .connect(mongoUrl)
-  .then(() => {
-    logger.info('Connected to MongoDB')
-  })
-  .catch((err: Error) => {
-    console.log(
-      'MongoDB connection error. Please make sure MongoDB is running. ' + err
-    )
-    process.exit(1)
-  })
+// mongoose
+//   .connect(mongoUrl)
+//   .then(() => {
+//     logger.info('Connected to MongoDB')
+//   })
+//   .catch((err: Error) => {
+//     console.log(
+//       'MongoDB connection error. Please make sure MongoDB is running. ' + err
+//     )
+//     process.exit(1)
+//   })
 
 /**
  * Error Handler. Provides error handing middleware
    only use in development
  */
-if (process.env.NODE_ENV === 'development') {
-  app.use(errorHandler())
-}
+// if (process.env.NODE_ENV === 'development') {
+//   app.use(errorHandler())
+// }
 
 // Start Express server
 app.listen(app.get('port'), () => {
