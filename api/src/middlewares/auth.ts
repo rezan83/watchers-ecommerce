@@ -17,23 +17,17 @@ interface JwtPayload {
   }
 }
 
-export interface authReq extends Request {
-  user?: any
-}
-export const isLogedIn = (req: authReq, res: Response, next: NextFunction) => {
+export const isLogedIn = (req: Request, res: Response, next: NextFunction) => {
   try {
-    console.log(req.headers.authorization)
     if (req.headers.authorization || req.headers.Authorization) {
       const token = req.headers.authorization?.split(' ')[1] || ''
-      console.log(token)
-
       jwt.verify(token, env.JWT_SECRET, async (err, decoded) => {
         if (err) {
           return res.status(401).json({ message: 'Unauthorized' })
         }
         const { email } = decoded as JwtPayload
         const user = await User.findOne({ email }).select('-password')
-        req.user = user
+        req.body.user = user
 
         next()
       })
@@ -44,12 +38,12 @@ export const isLogedIn = (req: authReq, res: Response, next: NextFunction) => {
 }
 
 export const isAddmin = async (
-  req: authReq,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    if (req.user && req.user.is_admin) {
+    if (req.body.user && req.body.user.is_admin) {
       next()
     } else {
       return res

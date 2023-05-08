@@ -13,6 +13,8 @@ import usersRouter from './routers/user.router'
 import cookieParser from 'cookie-parser'
 import { env } from './config'
 import authRouter from './routers/auth.router'
+import productsRoute from './routers/product.router'
+import adminRouter from './routers/admin.router'
 
 dotenv.config({ path: '.env' })
 const app = express()
@@ -51,7 +53,9 @@ app.use(passport.session())
 // Set up routers
 // app.use('/api/v1/movies', movieRouter)
 app.use('/api/v1/auth', authRouter)
+app.use('/api/v1/admin', adminRouter)
 app.use('/api/v1/users', usersRouter)
+app.use('/api/v1/products', productsRoute)
 
 // Custom API error handler
 // app.use(apiErrorHandler)
