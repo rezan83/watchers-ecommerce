@@ -256,7 +256,7 @@ const authController = {
           name: user.name,
           email: user.email,
           phone: user.phone,
-          image: user.image,
+          // image: user.image,
         },
         message: 'login successful',
       })

@@ -1,6 +1,6 @@
-import { config } from 'dotenv';
+import { config } from 'dotenv'
 
-config();
+config()
 export const env = {
   PORT: process.env.PORT || 3001,
   MONGO_URI: process.env.MONGO_URI || '',
@@ -10,5 +10,9 @@ export const env = {
   MAIL_USER: process.env.MAIL_USER,
   CLIENT_URL: process.env.CLIENT_URL,
   SERVER_URL: process.env.SERVER_URL,
-  SESSION_SEC: process.env.SESSION_SEC
-};
+  SESSION_SEC: process.env.SESSION_SEC,
+
+  CLOUDINARY_NAME: process.env.CLOUDINARY_NAME,
+  CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
+  CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
+}

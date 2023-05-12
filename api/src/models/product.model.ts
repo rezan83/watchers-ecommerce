@@ -4,10 +4,11 @@ export interface IProduct {
   _id?: ObjectId
   name: string
   description?: string
-  categories?: string[]
+  price: number
+  categories?: Schema.Types.ObjectId[]
   createdAt: Date
+  createdBy: Schema.Types.ObjectId
   image?: string
-  //   variants, sizes
 }
 
 const productSchema = new Schema<IProduct>({
@@ -15,15 +16,17 @@ const productSchema = new Schema<IProduct>({
     type: String,
     required: true,
   },
-  description: {
-    type: String,
+  price: {
+    type: Number,
     required: true,
   },
-  categories: [String],
-
+  description: {
+    type: String,
+  },
+  categories: [{ type: Schema.Types.ObjectId, ref: 'Category' }],
+  createdBy: { type: Schema.Types.ObjectId, ref: 'User' },
   createdAt: { type: Date, default: Date.now },
   image: { type: String, contentType: String },
-  //   variants, sizes
 })
 
 const Product = model<IProduct>('Product', productSchema)
