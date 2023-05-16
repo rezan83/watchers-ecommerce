@@ -1,5 +1,4 @@
 import { Request, Response } from 'express'
-import { SortOrder } from 'mongoose'
 
 import User from '../models/user.model'
 

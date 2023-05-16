@@ -26,7 +26,7 @@ app.set('port', env.PORT)
 // Global middleware
 app.use(
   cors({
-    origin: '*',
+    origin: 'http://localhost:3000',
     credentials: true,
   })
 )
@@ -34,19 +34,23 @@ app.use(morgan('dev'))
 // app.use(apiContentType)
 app.use(express.json())
 app.use(cookieParser())
+app.set("trust proxy", 1)
 /** using passport also requires to ass session and cookieParser middlewares to express
  * To be activated later
-app.use(
-  session({
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      secure: true,
-      maxAge: 60 * 60 * 24,
-    },
-    secret: 'secret',
-  })
-)
+// app.use(
+//   session({
+//     resave: false,
+//     saveUninitialized: false,
+
+//     cookie: {
+//       sameSite: 'none',
+//       httpOnly: false,
+//       secure: false,
+//       maxAge: 10 * 24 * 60 * 60 * 1000,
+//     },
+//     secret: 'secret',
+//   })
+// )
 app.use(passport.initialize())
 app.use(passport.session())
 */
@@ -57,7 +61,6 @@ app.use('/api/v1/admin', adminRouter)
 app.use('/api/v1/users', usersRouter)
 app.use('/api/v1/products', productsRoute)
 app.use('/api/v1/categories', categoriesRoute)
-
 
 // Custom API error handler
 // app.use(apiErrorHandler)

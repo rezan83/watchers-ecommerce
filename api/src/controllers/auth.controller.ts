@@ -8,7 +8,7 @@ import sendEmail from '../helpers/mailer'
 import {
   generateAccessToken,
   generateRefreshToken,
-  setJwtRefreshToCookie,
+  // setJwtRefreshToCookie,
 } from '../helpers/jwtGenerator'
 
 const authController = {
@@ -248,15 +248,16 @@ const authController = {
 
       const refreshToken = generateRefreshToken({ email })
 
-      setJwtRefreshToCookie(res, refreshToken)
+      // setJwtRefreshToCookie(res, refreshToken)
 
       return res.status(200).json({
         accessToken,
+        refreshToken,
         user: {
           name: user.name,
           email: user.email,
           phone: user.phone,
-          // image: user.image,
+          is_admin: user.is_admin,
         },
         message: 'login successful',
       })
@@ -281,16 +282,17 @@ const authController = {
   },
 
   refreshUser: async (req: Request, res: Response) => {
+    console.log('req', req)
     try {
-      if (req.cookies?.jwt) {
-        const refreshToken = req.cookies.jwt
+      if (req.cookies?.refreshToken || req.body.refreshToken) {
+        const refreshToken = req.cookies.refreshToken || req.body.refreshToken
 
         jwt.verify(
           refreshToken,
           env.JWT_REFRESH,
-          (err: any, userCredentials: any) => {
+          async (err: any, userCredentials: any) => {
             if (err) {
-              return res.status(406).json({ message: 'Unauthorized' })
+              return res.status(401).json({ message: 'Unauthorized' })
             } else {
               const accessToken = generateAccessToken({
                 email: userCredentials.email,
@@ -298,8 +300,19 @@ const authController = {
               const refreshToken = generateRefreshToken({
                 email: userCredentials.email,
               })
-              setJwtRefreshToCookie(res, refreshToken)
-              return res.json({ accessToken })
+
+              // setJwtRefreshToCookie(res, refreshToken)
+
+              return res.json({
+                accessToken,
+                refreshToken,
+                user: {
+                  name: userCredentials.name,
+                  email: userCredentials.email,
+                  phone: userCredentials.phone,
+                  is_admin: userCredentials.is_admin,
+                },
+              })
             }
           }
         )
