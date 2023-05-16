@@ -6,8 +6,8 @@ authRoute.post('/register', authControllers.registerUser)
 authRoute.post('/login', authControllers.loginUser)
 authRoute.post('/refresh', authControllers.refreshUser)
 authRoute.post('/logout', authControllers.logoutUser)
-authRoute.post('/forgetPassword', authControllers.forgetPassword)
+authRoute.post('/forget-password', authControllers.forgetPassword)
 authRoute.get('/verify/:token', authControllers.verifyUser)
-authRoute.get('/verifyPassword/:token', authControllers.verifyPassword)
+authRoute.get('/verify-password/:token', authControllers.verifyPassword)
 
 export default authRoute

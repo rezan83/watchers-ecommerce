@@ -2,11 +2,11 @@ import { ObjectId, Schema, model } from 'mongoose'
 
 
 export interface IUser{
-  _id: Schema.Types.ObjectId
+  _id?: Schema.Types.ObjectId
   name: string
   password: string
   email: string
-  phone: number
+  phone?: number
   is_verified: boolean
   is_admin: boolean
   is_banned: boolean
@@ -14,7 +14,6 @@ export interface IUser{
 }
 
 const userSchema = new Schema<IUser>({
-  _id: Schema.Types.ObjectId,
   name: {
     type: String,
     required: true,
@@ -42,7 +41,7 @@ const userSchema = new Schema<IUser>({
   },
   phone: {
     type: Number,
-    required: true,
+    // required: true,
     min: 6,
   },
   is_verified: { type: Boolean, default: false },

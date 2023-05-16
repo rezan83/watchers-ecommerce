@@ -21,7 +21,9 @@ import {
   MenuButton,
   MenuDivider,
   MenuItem,
-  MenuList
+  MenuList,
+  useColorMode,
+  Button
 } from '@chakra-ui/react';
 import {
   FiHome,
@@ -33,6 +35,7 @@ import {
   FiBell,
   FiChevronDown
 } from 'react-icons/fi';
+import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { HiShoppingBag } from 'react-icons/hi';
 import { IconType } from 'react-icons';
 import useAuthStore from 'store';
@@ -51,16 +54,10 @@ const LinkItems: Array<LinkItemProps> = [
   { name: 'Settings', icon: FiSettings }
 ];
 
-const admin = {
-  name: 'Rezan',
-  is_admin: true
-};
-const normuser = {
-  name: 'Me',
-  is_admin: false
-};
+const Logo = 'Watchers';
 
 export default function SidebarWithHeader({ children }: { children: ReactNode }) {
+  
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
@@ -103,7 +100,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       {...rest}>
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
         <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-          Watchers
+          {Logo}
         </Text>
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
@@ -163,9 +160,9 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   const navigate = useNavigate();
   const clearAuth = useAuthStore(state => state.clearAuth);
   const isLogedIn = useAuthStore(state => state.token);
-  const setToken = useAuthStore(state => state.setToken);
-  const setUser = useAuthStore(state => state.setUser);
   const user = useAuthStore(state => state.user);
+  const { colorMode, toggleColorMode } = useColorMode();
+  // const { isOpen, onOpen, onClose } = useDisclosure();
 
   const signOut = () => {
     clearAuth();
@@ -200,11 +197,14 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         fontSize="2xl"
         fontFamily="monospace"
         fontWeight="bold">
-        Logo
+        {Logo}
       </Text>
 
       <HStack spacing={{ base: '0', md: '6' }}>
         <IconButton size="lg" variant="ghost" aria-label="open menu" icon={<FiBell />} />
+        <Button onClick={toggleColorMode}>
+          {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+        </Button>
         <Flex alignItems={'center'}>
           <Menu>
             <MenuButton py={2} transition="all 0.3s" _focus={{ boxShadow: 'none' }}>

@@ -12,12 +12,10 @@ import {
 } from '../helpers/jwtGenerator'
 
 const authController = {
-  registerUser: async (req: Request, res: Response) => {
-    // const form = formidable({ multiples: true })
 
-    // form.parse(req, async (err, fields, files) => {
-    const { name, password, email, phone } = req.body
-    if (!name || !email || !phone || !password) {
+  registerUser: async (req: Request, res: Response) => {
+    const { name, password, email } = req.body
+    if (!name || !email || !password) {
       return res.status(404).json({
         message: 'name, email, phone or password is missing',
       })
@@ -36,7 +34,7 @@ const authController = {
 
     const hashedPass = await hashPass(password)
     jwt.sign(
-      { name, hashedPass, email, phone },
+      { name, hashedPass, email },
       env.JWT_SECRET,
       { expiresIn: '10min' },
       function (err, token) {
@@ -48,6 +46,7 @@ const authController = {
           subject: 'hello',
           html: `<h2>Hello ${name}</h2>
                  <p>Please click the link bellow to verify your email</p>
+                 <p>Then login using your credentials</p>
                  <a style="color:white;text-decoration:none;padding:1rem;line-height:2rem;background:dodgerblue;" href="${env.SERVER_URL}/api/v1/auth/verify/${token}" target="_blank">ACTIVATE</a>
                  `,
         }
@@ -58,7 +57,6 @@ const authController = {
         })
       }
     )
-    // })
   },
 
   verifyUser: async (req: Request, res: Response) => {
@@ -78,16 +76,16 @@ const authController = {
         name: string
         email: string
         hashedPass: string
-        phone: number
-        image?: {
-          type: Buffer
-          mimetype: string
-          originalFilename: string
-          filepath: string
-        }
+        phone?: number
+        // image?: {
+        //   type: Buffer
+        //   mimetype: string
+        //   originalFilename: string
+        //   filepath: string
+        // }
       }
 
-      const { name, email, hashedPass, phone } = decoded as JwtPayload
+      const { name, email, hashedPass } = decoded as JwtPayload
       const isUserFound = await User.findOne({ email: email })
       if (isUserFound) {
         res.status(400).json({
@@ -98,7 +96,6 @@ const authController = {
         name: name,
         email: email,
         password: hashedPass,
-        phone: phone,
         is_verified: true,
       })
 
@@ -116,9 +113,10 @@ const authController = {
           message: 'user was not created',
         })
       }
-      res.status(200).json({
-        message: 'user was created, ready to sign in',
-      })
+      // res.status(200).json({
+      //   message: 'user was created, ready to sign in',
+      // })
+      res.redirect(env.CLIENT_URL + '/login')
     })
   },
 
@@ -130,9 +128,9 @@ const authController = {
           message: 'email or password is missing',
         })
       }
-      if (password.length < 8) {
+      if (password.length < 6) {
         return res.status(404).json({
-          message: 'minimum length for password is 8 characters',
+          message: 'minimum length for password is 6 characters',
         })
       }
       const user = await User.findOne({ email: email })
@@ -153,12 +151,14 @@ const authController = {
           if (err) {
             return res.status(400).json({ message: 'something went wrong' })
           }
+
           const emailInfo = {
             email,
             subject: 'hello',
             html: `<h2>Hello ${user.name}</h2>
                   <p>Please click the link bellow to verify your new password</p>
-                  <a style="color:white;text-decoration:none;padding:1rem;line-height:2rem;background:dodgerblue;" href="${env.SERVER_URL}/api/v1/auth/verifyPassword/${token}" target="_blank">ACTIVATE</a>
+                  <p>After that, just use it to log in again</p>
+                  <a style="color:white;text-decoration:none;padding:1rem;line-height:2rem;background:dodgerblue;" href="${env.SERVER_URL}/api/v1/auth/verify-password/${token}" target="_blank">ACTIVATE</a>
                   `,
           }
 
@@ -209,9 +209,7 @@ const authController = {
         })
       }
 
-      res.status(200).json({
-        message: 'user was created, ready to sign in',
-      })
+      res.redirect(env.CLIENT_URL + '/login')
     })
   },
 

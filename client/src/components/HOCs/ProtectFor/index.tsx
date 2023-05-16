@@ -9,31 +9,31 @@ interface IProps {
 }
 const ProtectFor: FC<IProps> = ({ rule, children }) => {
   const isUser = useAuthStore(state => state.user);
-  let evaluate: boolean = false;
+  let allowed: boolean = false;
   const navigate = useNavigate();
   switch (rule) {
     case 'admin':
-      evaluate = isUser?.is_admin || false;
+      allowed = isUser?.is_admin || false;
       break;
     case 'user':
-      evaluate = isUser ? true : false;
+      allowed = isUser ? true : false;
       break;
     case 'guest':
-      evaluate = isUser ? false : true;
+      allowed = isUser ? false : true;
       break;
 
     default:
-      evaluate = false
+      allowed = false;
       break;
   }
 
   useEffect(() => {
-    if (!evaluate) {
+    if (!allowed) {
       navigate('/');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [evaluate, rule]);
+  }, [allowed, rule]);
 
-  return <>{evaluate && <>{children}</>}</>;
+  return <>{allowed && <>{children}</>}</>;
 };
 export default ProtectFor;

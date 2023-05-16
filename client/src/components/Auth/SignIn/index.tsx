@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link as ReactRouter } from 'react-router-dom';
 import {
   Flex,
   Box,
@@ -23,28 +24,38 @@ export default function SIgnIn() {
   const setToken = useAuthStore(state => state.setToken);
   const setRefreshToken = useAuthStore(state => state.setRefreshToken);
   const navigate = useNavigate();
+  const [isForgetPass, setIsForgetPass] = useState(false);
   const [email, setEmail] = useState('rezan.moh83@gmail.com');
   const [password, setPass] = useState('bobobobobobo');
-  const submitLogin = () => {
+  const submitLogin = async () => {
     if (email && password) {
-      axiosInstance
-        .post(process.env.REACT_APP_LOGIN_URL || '', {
+      try {
+        const url = isForgetPass
+          ? process.env.REACT_APP_FORGET_URL
+          : process.env.REACT_APP_LOGIN_URL;
+        const submitAuth = await axiosInstance.post(url!, {
           email,
           password
-        })
-        .then(res => {
-          const { user, accessToken , refreshToken} = res.data;
-          setUser(user);
-          setToken(accessToken);
-          setRefreshToken(refreshToken);
-          navigate('/');
-        })
-        .catch(err => {
-          console.log(err);
         });
 
-      setEmail('');
-      setPass('');
+        const authData = await submitAuth.data;
+
+        if (!isForgetPass) {
+        const { user, accessToken, refreshToken } = authData;
+        setUser(user);
+        setToken(accessToken);
+        setRefreshToken(refreshToken);
+        setEmail('');
+        setPass('');
+          navigate('/');
+        } else {
+          navigate('/verify-email');
+        }
+        setIsForgetPass(false);
+        // navigate('/login');
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -56,7 +67,9 @@ export default function SIgnIn() {
       bg={useColorModeValue('gray.50', 'gray.800')}>
       <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
         <Stack align={'center'}>
-          <Heading fontSize={'4xl'}>Sign in to your account</Heading>
+          <Heading fontSize={'4xl'}>
+            {isForgetPass ? 'Set a new password' : 'Sign in to your account'}
+          </Heading>
           <Text fontSize={'lg'} color={'gray.600'}>
             to enjoy all of our cool <Link color={'blue.400'}>features</Link> ✌️
           </Text>
@@ -69,18 +82,11 @@ export default function SIgnIn() {
               <FormErrorMessage>Email is required.</FormErrorMessage>
             </FormControl>
             <FormControl id="password" isInvalid={!password} isRequired>
-              <FormLabel>Password</FormLabel>
+              <FormLabel>{isForgetPass && 'New '}Password</FormLabel>
               <Input type="password" value={password} onChange={e => setPass(e.target.value)} />
               <FormErrorMessage>Password is required.</FormErrorMessage>
             </FormControl>
             <Stack spacing={10}>
-              <Stack
-                direction={{ base: 'column', sm: 'row' }}
-                align={'start'}
-                justify={'space-between'}>
-                <Checkbox>Remember me</Checkbox>
-                <Link color={'blue.400'}>Forgot password?</Link>
-              </Stack>
               <Button
                 onClick={submitLogin}
                 bg={'blue.400'}
@@ -88,8 +94,29 @@ export default function SIgnIn() {
                 _hover={{
                   bg: 'blue.500'
                 }}>
-                Sign in
+                {isForgetPass ? 'Submit' : 'Sign in'}
               </Button>
+              <Stack
+                direction={{ base: 'column', sm: 'row' }}
+                align={'start'}
+                justify={'space-between'}>
+                <Checkbox>Remember me</Checkbox>
+                <Link color={'blue.400'} onClick={() => setIsForgetPass(perv => !perv)}>
+                  {isForgetPass ? 'Just Login' : 'Forgot password?'}
+                </Link>
+              </Stack>
+
+              <Stack
+                direction={{ base: 'column', sm: 'row' }}
+                align={'start'}
+                justify={'space-between'}>
+                <Text>
+                  No Account?{' '}
+                  <Link as={ReactRouter} to={'/signup'} color={'blue.400'}>
+                    Register
+                  </Link>
+                </Text>
+              </Stack>
             </Stack>
           </Stack>
         </Box>
