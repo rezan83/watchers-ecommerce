@@ -1,9 +1,13 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+
 interface IUser {
+  _id: string;
   name: string;
+  email: string;
   is_admin: boolean;
+  phone?: number;
   status?: string;
 }
 

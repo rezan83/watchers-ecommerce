@@ -1,4 +1,4 @@
-import { Flex, Box, Stack, Link, Button, Heading, Text, useColorModeValue } from '@chakra-ui/react';
+import { Flex, Stack, Heading, useColorModeValue } from '@chakra-ui/react';
 
 export default function VerifyEmail() {
   return (
@@ -11,7 +11,6 @@ export default function VerifyEmail() {
         <Stack align={'center'}>
           <Heading fontSize={'4xl'}>Please verify your email</Heading>
         </Stack>
-      
       </Stack>
     </Flex>
   );

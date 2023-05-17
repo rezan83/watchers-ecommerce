@@ -57,7 +57,6 @@ const LinkItems: Array<LinkItemProps> = [
 const Logo = 'Watchers';
 
 export default function SidebarWithHeader({ children }: { children: ReactNode }) {
-  
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
@@ -162,14 +161,12 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   const isLogedIn = useAuthStore(state => state.token);
   const user = useAuthStore(state => state.user);
   const { colorMode, toggleColorMode } = useColorMode();
-  // const { isOpen, onOpen, onClose } = useDisclosure();
-
+console.log(user)
   const signOut = () => {
     clearAuth();
   };
   const signIn = () => {
-    // setToken('hello');
-    // setUser(normuser);
+  
     navigate('login');
   };
 
@@ -233,7 +230,11 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
             <MenuList
               bg={useColorModeValue('white', 'gray.900')}
               borderColor={useColorModeValue('gray.200', 'gray.700')}>
-              <MenuItem>Profile</MenuItem>
+              <MenuItem>
+                <Link as={RouterLink} to={'/profile'}>
+                  Profile
+                </Link>
+              </MenuItem>
               <MenuItem>Settings</MenuItem>
               <MenuItem>Billing</MenuItem>
               <MenuDivider />

@@ -9,6 +9,8 @@ import ProtectFor from './HOCs/ProtectFor';
 import theme from 'config/theme';
 import SignUp from './Auth/SignUp';
 import VerifyEmail from './Auth/VerifyEmail';
+import Profile from 'pages/Profile';
+import ProfileEdit from './Auth/ProfileEdit';
 
 const App = () => {
   return (
@@ -35,7 +37,22 @@ const App = () => {
                 </ProtectFor>
               }
             />
-            {/* verify-email */}
+            <Route
+              path={'/profile'}
+              element={
+                <ProtectFor rule={'user'}>
+                  <Profile />
+                </ProtectFor>
+              }
+            />
+             <Route
+              path={'/edit-profile'}
+              element={
+                <ProtectFor rule={'user'}>
+                  <ProfileEdit />
+                </ProtectFor>
+              }
+            />
             <Route
               path={'/verify-email'}
               element={
@@ -68,7 +85,6 @@ const App = () => {
 };
 export default App;
 
-
 // authRoute.post('/register', authControllers.registerUser)
 // authRoute.post('/login', authControllers.loginUser)
 // authRoute.post('/refresh', authControllers.refreshUser)
@@ -76,3 +92,8 @@ export default App;
 // authRoute.post('/forget-password', authControllers.forgetPassword)
 // authRoute.get('/verify/:token', authControllers.verifyUser)
 // authRoute.get('/verify-password/:token', authControllers.verifyPassword)
+
+// usersRoute.get('/:id', isLogedIn, userControllers.fetchOneUser)
+// usersRoute.put('/', isLogedIn, userControllers.updateOneUser)
+// usersRoute.delete('/', isLogedIn, userControllers.deleteOneUser)
+// usersRoute.post('/profile', isLogedIn, userControllers.userProfile)

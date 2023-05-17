@@ -18,5 +18,5 @@ import {Request} from 'express'
 // }
 
 export interface authReq extends Request {
-  user?: IUser | any
+  user?:  any
 }

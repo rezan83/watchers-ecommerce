@@ -280,7 +280,6 @@ const authController = {
   },
 
   refreshUser: async (req: Request, res: Response) => {
-    console.log('req', req)
     try {
       if (req.cookies?.refreshToken || req.body.refreshToken) {
         const refreshToken = req.cookies.refreshToken || req.body.refreshToken
@@ -300,15 +299,16 @@ const authController = {
               })
 
               // setJwtRefreshToCookie(res, refreshToken)
-
-              return res.json({
+              const refreshUser = await User.findOne({email:userCredentials.email})
+              
+              return res.status(200).json({
                 accessToken,
                 refreshToken,
                 user: {
-                  name: userCredentials.name,
-                  email: userCredentials.email,
-                  phone: userCredentials.phone,
-                  is_admin: userCredentials.is_admin,
+                  name: refreshUser?.name,
+                  email: refreshUser?.email,
+                  phone: refreshUser?.phone,
+                  is_admin: refreshUser?.is_admin,
                 },
               })
             }
