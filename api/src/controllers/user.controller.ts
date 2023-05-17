@@ -18,14 +18,6 @@ const userControllers = {
     }
   },
 
-  fetchOneUser: (req: Request, res: Response) => {
-    User.findById(req.params.id)
-      .then((user) => res.status(200).json(user))
-      .catch((err) =>
-        res.status(404).json({ message: 'user not found', error: err.message })
-      )
-  },
-
   deleteOneUser: (req: authReq, res: Response) => {
     const userId = req.params.id || req.user?._id
     User.findByIdAndRemove(userId)

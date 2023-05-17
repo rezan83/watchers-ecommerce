@@ -29,6 +29,14 @@ const adminControllers = {
       )
   },
 
+  fetchOneUser: (req: Request, res: Response) => {
+    User.findById(req.params.id)
+      .then((user) => res.status(200).json(user))
+      .catch((err) =>
+        res.status(404).json({ message: 'user not found', error: err.message })
+      )
+  },
+
   admin: (req: Request, res: Response) => {
     try {
       return res.status(200).json({

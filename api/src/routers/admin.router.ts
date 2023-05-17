@@ -3,7 +3,14 @@ import adminControllers from '../controllers/admin.controller'
 import { isAddmin, isLogedIn } from '../middlewares/auth'
 const adminRoute = Router()
 
-adminRoute.get('/all-users', isLogedIn, isAddmin, adminControllers.fetchAllUsers)
+adminRoute.get(
+  '/all-users',
+  isLogedIn,
+  isAddmin,
+  adminControllers.fetchAllUsers
+)
+adminRoute.get('/:id', isLogedIn, isAddmin, adminControllers.fetchOneUser)
+
 adminRoute.get('/', isLogedIn, isAddmin, adminControllers.admin)
 adminRoute.delete('/:id', isLogedIn, isAddmin, adminControllers.deleteOneUser)
 adminRoute.put('/ban/:id', isLogedIn, isAddmin, adminControllers.banUser)
