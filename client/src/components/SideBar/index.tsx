@@ -35,16 +35,18 @@ import {
   FiBell,
   FiChevronDown
 } from 'react-icons/fi';
-import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { HiShoppingBag } from 'react-icons/hi';
+import { AiFillDashboard } from 'react-icons/ai';
+import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { IconType } from 'react-icons';
-import useAuthStore from 'store';
+import useAuthStore from 'store/authStore';
 
 interface LinkItemProps {
   name: string;
   icon: IconType;
   link?: string;
 }
+
 const LinkItems: Array<LinkItemProps> = [
   { name: 'Home', icon: FiHome, link: 'home' },
   { name: 'Products', icon: HiShoppingBag, link: 'products' },
@@ -87,6 +89,7 @@ interface SidebarProps extends BoxProps {
 }
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+  const authUser = useAuthStore(state => state.authUser);
   return (
     <Box
       transition="3s ease"
@@ -103,6 +106,11 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         </Text>
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
+      {authUser?.is_admin && (
+        <NavItem key={'Dashboard'} icon={AiFillDashboard} link={'dashboard'}>
+          {'Dashboard'}
+        </NavItem>
+      )}
       {LinkItems.map(link => (
         <NavItem key={link.name} icon={link.icon} link={link.link}>
           {link.name}
@@ -158,15 +166,12 @@ interface MobileProps extends FlexProps {
 const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   const navigate = useNavigate();
   const clearAuth = useAuthStore(state => state.clearAuth);
-  const isLogedIn = useAuthStore(state => state.token);
-  const user = useAuthStore(state => state.user);
+  const authUser = useAuthStore(state => state.authUser);
   const { colorMode, toggleColorMode } = useColorMode();
-console.log(user)
   const signOut = () => {
     clearAuth();
   };
   const signIn = () => {
-  
     navigate('login');
   };
 
@@ -217,9 +222,9 @@ console.log(user)
                   alignItems="flex-start"
                   spacing="1px"
                   ml="2">
-                  <Text fontSize="sm">{isLogedIn ? user?.name : 'Guest'}</Text>
+                  <Text fontSize="sm">{authUser ? authUser?.name : 'Guest'}</Text>
                   <Text fontSize="xs" color="gray.600">
-                    {isLogedIn ? user?.status : 'Guest'}
+                    {authUser ? authUser?.status : 'Guest'}
                   </Text>
                 </VStack>
                 <Box display={{ base: 'none', md: 'flex' }}>
@@ -238,7 +243,7 @@ console.log(user)
               <MenuItem>Settings</MenuItem>
               <MenuItem>Billing</MenuItem>
               <MenuDivider />
-              {isLogedIn ? (
+              {authUser ? (
                 <MenuItem onClick={signOut}>Sign out</MenuItem>
               ) : (
                 <MenuItem onClick={signIn}>Sign in</MenuItem>

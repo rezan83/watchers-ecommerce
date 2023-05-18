@@ -17,7 +17,7 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
-import axiosInstance from 'helpers/intercepter';
+import axiosInstance from 'helpers/axiosInterceptors';
 
 export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);

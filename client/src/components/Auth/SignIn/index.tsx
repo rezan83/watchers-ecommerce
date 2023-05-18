@@ -15,12 +15,12 @@ import {
   useColorModeValue,
   FormErrorMessage
 } from '@chakra-ui/react';
-import axiosInstance from 'helpers/intercepter';
-import useAuthStore from 'store';
+import axiosInstance from 'helpers/axiosInterceptors';
+import useAuthStore from 'store/authStore';
 import { useNavigate } from 'react-router-dom';
 
 export default function SIgnIn() {
-  const setUser = useAuthStore(state => state.setUser);
+  const setAuthUser = useAuthStore(state => state.setAuthUser);
   const setToken = useAuthStore(state => state.setToken);
   const setRefreshToken = useAuthStore(state => state.setRefreshToken);
   const navigate = useNavigate();
@@ -41,18 +41,16 @@ export default function SIgnIn() {
         const authData = await submitAuth.data;
 
         if (!isForgetPass) {
-        const { user, accessToken, refreshToken } = authData;
-        setUser(user);
-        setToken(accessToken);
-        setRefreshToken(refreshToken);
-        setEmail('');
-        setPass('');
-          navigate('/');
+          const { user, accessToken, refreshToken } = authData;
+          setAuthUser(user);
+          setToken(accessToken);
+          setRefreshToken(refreshToken);
+          setEmail('');
+          setPass('');
         } else {
           navigate('/verify-email');
         }
         setIsForgetPass(false);
-        // navigate('/login');
       } catch (error) {
         console.log(error);
       }

@@ -1,25 +1,25 @@
 import { FC, ReactNode, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import useAuthStore from 'store';
+import useAuthStore from 'store/authStore';
 
 interface IProps {
   children: ReactNode;
   rule: 'admin' | 'user' | 'guest';
 }
 const ProtectFor: FC<IProps> = ({ rule, children }) => {
-  const isUser = useAuthStore(state => state.user);
+  const isAuthUser = useAuthStore(state => state.authUser);
   let allowed: boolean = false;
   const navigate = useNavigate();
   switch (rule) {
     case 'admin':
-      allowed = isUser?.is_admin || false;
+      allowed = isAuthUser?.is_admin || false;
       break;
     case 'user':
-      allowed = isUser ? true : false;
+      allowed = isAuthUser ? true : false;
       break;
     case 'guest':
-      allowed = isUser ? false : true;
+      allowed = isAuthUser ? false : true;
       break;
 
     default:
@@ -32,7 +32,7 @@ const ProtectFor: FC<IProps> = ({ rule, children }) => {
       navigate('/');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allowed, rule]);
+  }, [isAuthUser, rule]);
 
   return <>{allowed && <>{children}</>}</>;
 };

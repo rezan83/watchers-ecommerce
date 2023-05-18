@@ -1,23 +1,15 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { IUser } from './@types';
 
-
-interface IUser {
-  _id: string;
-  name: string;
-  email: string;
-  is_admin: boolean;
-  phone?: number;
-  status?: string;
-}
 
 interface IAuthStore {
   token: null | string;
   refreshToken: null | string;
-  user: null | IUser;
+  authUser: null | IUser;
   setToken: (token: string) => void;
   setRefreshToken: (refreshToken: string) => void;
-  setUser: (user: IUser) => void;
+  setAuthUser: (user: IUser) => void;
   clearAuth: () => void;
 }
 
@@ -26,16 +18,15 @@ const useAuthStore = create(
     (set, get) => ({
       token: null,
       refreshToken: null,
-      user: null,
+      authUser: null,
       setToken: token => set(state => ({ token })),
 
       setRefreshToken: refreshToken => set(state => ({ refreshToken })),
 
-      setUser: user =>
-        set(state => {
-          user.status = user.is_admin ? 'Admin' : 'User';
-          return { user };
-        }),
+      setAuthUser: authUser => {
+        authUser.status = authUser.is_admin ? 'Admin' : 'User';
+        set({ authUser });
+      },
       clearAuth: () => set(state => ({ token: null, refreshToken: null, user: null }))
     }),
     {
@@ -50,19 +41,28 @@ export const setZustandAuthToken = (token: string) =>
     token
   }));
 
-  export const setZustandAuthRefreshToken = (refreshToken: string) =>
+export const setZustandAuthRefreshToken = (refreshToken: string) =>
   useAuthStore.setState(state => ({
     ...state,
     refreshToken
   }));
 
-export const setZustandAuthUser = (user: IUser) =>
+export const setZustandAuthUser = (authUser: IUser) =>
   useAuthStore.setState(state => ({
     ...state,
-    user
+    authUser
   }));
 
 export const getZustandAuthToken = () => useAuthStore.getState().token;
+export const getZustandAuthUser = () => useAuthStore.getState().authUser;
 export const getZustandAuthRefreshToken = () => useAuthStore.getState().refreshToken;
 
 export default useAuthStore;
+
+// const useFishStore = create((set) => ({
+//   fishies: {},
+//   fetch: async (pond) => {
+//     const response = await fetch(pond)
+//     set({ fishies: await response.json() })
+//   },
+// }))

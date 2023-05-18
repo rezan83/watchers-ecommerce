@@ -11,18 +11,23 @@ import {
   useColorModeValue
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import useAuthStore from 'store/authStore';
+import { IUser } from 'store/@types';
+import useUsersStore from 'store/usersStore';
 
-export default function Profile() {
-  const authUser = useAuthStore(state => state.authUser);
+export default function ProfileCard({ user }: { user: IUser }) {
+  const userBg = user.is_banned ? ['red.800', 'red.800'] : ['white', 'gray.800'];
+  const setUserToEdit = useUsersStore(state => state.setUserToEdit);
   const navigate = useNavigate();
-
+  const goToProfileEdit = () => {
+    setUserToEdit(user);
+    navigate('/edit-profile');
+  };
   return (
     <Center py={6}>
       <Box
         maxW={'90%'}
         w={'full'}
-        bg={useColorModeValue('white', 'gray.800')}
+        bg={useColorModeValue(userBg[0], userBg[1])}
         boxShadow={'2xl'}
         rounded={'md'}
         overflow={'hidden'}>
@@ -51,15 +56,15 @@ export default function Profile() {
         <Box p={6}>
           <Stack spacing={0} align={'center'} mb={5}>
             <Heading fontSize={'2xl'} fontWeight={500} fontFamily={'body'}>
-              {authUser?.name}
+              {user?.name}
             </Heading>
-            <Text color={'gray.500'}> {authUser?.email}</Text>
-            <Text color={'gray.500'}> {authUser?.phone}</Text>
-            {authUser?.is_admin && <Text color={'gray.500'}> Admin</Text>}
+            <Text color={'gray.500'}> {user?.email}</Text>
+            <Text color={'gray.500'}> {user?.phone}</Text>
+            {user?.is_admin && <Text color={'gray.500'}> Admin</Text>}
           </Stack>
 
           <Button
-            onClick={() => navigate('/edit-profile')}
+            onClick={goToProfileEdit}
             w={'full'}
             mt={8}
             bg={useColorModeValue('#151f21', 'gray.900')}

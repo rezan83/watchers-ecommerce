@@ -11,6 +11,7 @@ import SignUp from './Auth/SignUp';
 import VerifyEmail from './Auth/VerifyEmail';
 import Profile from 'pages/Profile';
 import ProfileEdit from './Auth/ProfileEdit';
+import Users from 'pages/Dashboard/Users';
 
 const App = () => {
   return (
@@ -19,18 +20,18 @@ const App = () => {
         <Sidebar>
           <Routes>
             <Route path={'/'} element={<Home />} />
-            <Route path={'/home'} element={<Home />} />
+            <Route path={'home'} element={<Home />} />
             <Route
-              path={'/dashboard'}
+              path={'dashboard'}
               element={
                 <ProtectFor rule={'admin'}>
                   <Dashboard />
                 </ProtectFor>
-              }
-            />
-
+              }>
+              <Route path={'users'} element={<Users />} />
+            </Route>
             <Route
-              path={'/products'}
+              path={'products'}
               element={
                 <ProtectFor rule={'user'}>
                   <Products />
@@ -38,15 +39,15 @@ const App = () => {
               }
             />
             <Route
-              path={'/profile'}
+              path={'profile'}
               element={
                 <ProtectFor rule={'user'}>
                   <Profile />
                 </ProtectFor>
               }
             />
-             <Route
-              path={'/edit-profile'}
+            <Route
+              path={'edit-profile'}
               element={
                 <ProtectFor rule={'user'}>
                   <ProfileEdit />
@@ -54,7 +55,7 @@ const App = () => {
               }
             />
             <Route
-              path={'/verify-email'}
+              path={'verify-email'}
               element={
                 <ProtectFor rule={'guest'}>
                   <VerifyEmail />
@@ -62,7 +63,7 @@ const App = () => {
               }
             />
             <Route
-              path={'/login'}
+              path={'login'}
               element={
                 <ProtectFor rule={'guest'}>
                   <SignIn />
@@ -70,13 +71,14 @@ const App = () => {
               }
             />
             <Route
-              path={'/signup'}
+              path={'signup'}
               element={
                 <ProtectFor rule={'guest'}>
                   <SignUp />
                 </ProtectFor>
               }
             />
+            <Route path="*" element={<Home />} />
           </Routes>
         </Sidebar>
       </ChakraProvider>
@@ -97,3 +99,17 @@ export default App;
 // usersRoute.put('/', isLogedIn, userControllers.updateOneUser)
 // usersRoute.delete('/', isLogedIn, userControllers.deleteOneUser)
 // usersRoute.post('/profile', isLogedIn, userControllers.userProfile)
+
+
+// adminRoute.get(
+//   '/all-users',
+//   isLogedIn,
+//   isAddmin,
+//   adminControllers.fetchAllUsers
+// )
+// adminRoute.get('/:id', isLogedIn, isAddmin, adminControllers.fetchOneUser)
+
+// adminRoute.get('/', isLogedIn, isAddmin, adminControllers.admin)
+// adminRoute.delete('/:id', isLogedIn, isAddmin, adminControllers.deleteOneUser)
+// adminRoute.put('/ban/:id', isLogedIn, isAddmin, adminControllers.banUser)
+// adminRoute.put('/unban/:id', isLogedIn, isAddmin, adminControllers.unbanUser)

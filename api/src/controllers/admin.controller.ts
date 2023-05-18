@@ -16,13 +16,13 @@ const adminControllers = {
       .sort({ title: title } as { [key: string]: SortOrder })
       .then((users) => {
         pages
-          ? res.json({
+          ? res.status(200).json({
               page: +page,
               pages,
               next,
               users,
             })
-          : res.json(users)
+          : res.status(200).json(users)
       })
       .catch((err) =>
         res.status(404).json({ message: 'users not found', error: err.message })
@@ -50,11 +50,10 @@ const adminControllers = {
   },
 
   deleteOneUser: (req: Request, res: Response) => {
-    const userId = req.params.id || req.body.user?._id
-    User.findByIdAndRemove(userId)
+    User.findByIdAndRemove(req.params.id)
       .then((data) =>
         res.status(200).json({
-          message: `user with id:${userId} deleted successfully`,
+          message: `user with id:${req.params.id} deleted successfully`,
         })
       )
       .catch((err) =>
@@ -62,10 +61,21 @@ const adminControllers = {
       )
   },
 
+  updateOneUser: (req: Request, res: Response) => {
+    User.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    })
+      .then((user) => {
+        res.status(200).json({ message: 'updated successfully', user })
+      })
+      .catch((err) =>
+        res.status(404).json({ message: 'user not found', error: err.message })
+      )
+  },
   banUser: (req: Request, res: Response) => {
-    User.findByIdAndUpdate(req.params.id, { is_banned: true })
-      .then((data) =>
-        res.status(200).json({ message: 'banned successfully', data })
+    User.findByIdAndUpdate(req.params.id, { is_banned: true }, { new: true })
+      .then((user) =>
+        res.status(200).json({ message: 'banned successfully', user })
       )
       .catch((err) =>
         res.status(404).json({ message: 'user not found', error: err.message })
@@ -73,9 +83,9 @@ const adminControllers = {
   },
 
   unbanUser: (req: Request, res: Response) => {
-    User.findByIdAndUpdate(req.params.id, { is_banned: false })
-      .then((data) =>
-        res.status(200).json({ message: 'ubanned successfully', data })
+    User.findByIdAndUpdate(req.params.id, { is_banned: false }, { new: true })
+      .then((user) =>
+        res.status(200).json({ message: 'ubanned successfully', user })
       )
       .catch((err) =>
         res.status(404).json({ message: 'user not found', error: err.message })

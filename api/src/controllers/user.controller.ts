@@ -19,11 +19,10 @@ const userControllers = {
   },
 
   deleteOneUser: (req: authReq, res: Response) => {
-    const userId = req.params.id || req.user?._id
-    User.findByIdAndRemove(userId)
+    User.findByIdAndRemove(req.user?._id)
       .then((data) =>
         res.status(200).json({
-          message: `user with id:${userId} deleted successfully`,
+          message: `user with id:${req.user?._id} deleted successfully`,
         })
       )
       .catch((err) =>
