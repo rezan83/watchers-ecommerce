@@ -28,8 +28,8 @@ productsRoute.post(
   '/',
   isLogedIn,
   isAddmin,
-  upload.single('image'),
-  uploadToCloudinary,
+  // upload.single('image'),
+  // uploadToCloudinary,
   productControllers.addOneProduct
 )
 

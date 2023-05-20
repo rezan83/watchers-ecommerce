@@ -1,4 +1,5 @@
 import { config } from 'dotenv'
+import { resolve } from 'path'
 
 config()
 export const env = {
@@ -15,4 +16,6 @@ export const env = {
   CLOUDINARY_NAME: process.env.CLOUDINARY_NAME,
   CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
   CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
+
+  UPLOAD: `${resolve(__dirname, '..')}/uploads/`,
 }

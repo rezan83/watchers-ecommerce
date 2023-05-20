@@ -15,35 +15,34 @@ import {
 } from '@chakra-ui/react';
 import { SmallCloseIcon } from '@chakra-ui/icons';
 
-import axiosInstance from 'helpers/axiosInterceptors';
+import axiosInstance from 'api/axiosInterceptors';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from 'store/authStore';
-import useUsersStore from 'store/usersStore';
-import { IUser } from 'store/@types';
+import { IUser } from '@types';
 
 export default function UserProfileEdit(): JSX.Element {
   const authUser = useAuthStore(state => state.authUser);
   const setAuthUser = useAuthStore(state => state.setAuthUser);
-  const anotherUserToEdit = useUsersStore(state => state.anotherUserToEdit);
-  const setUserToEdit = useUsersStore(state => state.setUserToEdit);
+  const userToEdit = useAuthStore(state => state.userToEdit);
+  const setUserToEdit = useAuthStore(state => state.setUserToEdit);
   const clearAuth = useAuthStore(state => state.clearAuth);
   const [url, setUrl] = useState('');
   const [user, setUser] = useState<IUser | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (authUser?.is_admin && anotherUserToEdit) {
-      setUser(anotherUserToEdit);
+    if (authUser?.is_admin && userToEdit) {
+      setUser(userToEdit);
     } else {
       setUser(authUser);
     }
     const editUrl =
-      authUser?.is_admin && anotherUserToEdit
-        ? process.env.REACT_APP_ADMIN_URL! + anotherUserToEdit._id
+      authUser?.is_admin && userToEdit
+        ? process.env.REACT_APP_ADMIN_URL! + userToEdit._id
         : process.env.REACT_APP_USER_URL!;
     setUrl(editUrl);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authUser, anotherUserToEdit, authUser]);
+  }, [authUser, userToEdit, authUser]);
 
   const submitProfileEdit = async () => {
     console.log('submitProfileEdit');
@@ -55,7 +54,7 @@ export default function UserProfileEdit(): JSX.Element {
         });
 
         setUserToEdit(null);
-        if (!authUser?.is_admin && !anotherUserToEdit) {
+        if (!authUser?.is_admin && !userToEdit) {
           navigate('/profile');
           setAuthUser(updatedUser.data.user);
         } else {
@@ -73,7 +72,7 @@ export default function UserProfileEdit(): JSX.Element {
       try {
         await axiosInstance.delete(url);
         setUserToEdit(null);
-        if (!authUser?.is_admin && !anotherUserToEdit) {
+        if (!authUser?.is_admin && !userToEdit) {
           clearAuth();
           navigate('/');
         } else {
@@ -196,7 +195,7 @@ export default function UserProfileEdit(): JSX.Element {
 
           <Button
             onClick={banAccount}
-            isDisabled={!!authUser?.is_admin && !anotherUserToEdit}
+            isDisabled={!!authUser?.is_admin && !userToEdit}
             w={'full'}
             mt={8}
             bg={useColorModeValue('#151f21', 'red.900')}

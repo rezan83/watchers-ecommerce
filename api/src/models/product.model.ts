@@ -8,7 +8,7 @@ export interface IProduct {
   categories?: Schema.Types.ObjectId[]
   createdAt: Date
   createdBy: Schema.Types.ObjectId
-  image?: string
+  image: string
 }
 
 const productSchema = new Schema<IProduct>({
@@ -26,7 +26,7 @@ const productSchema = new Schema<IProduct>({
   categories: [{ type: Schema.Types.ObjectId, ref: 'Category' }],
   createdBy: { type: Schema.Types.ObjectId, ref: 'User' },
   createdAt: { type: Date, default: Date.now },
-  image: { type: String, contentType: String },
+  image: { type: String, contentType: String , required: true},
 })
 
 const Product = model<IProduct>('Product', productSchema)

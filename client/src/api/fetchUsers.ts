@@ -1,4 +1,4 @@
-import { IUser } from 'store/@types';
+import { IUser } from '@types';
 import axiosInstance from './axiosInterceptors';
 
 const fetchUsers = async (): Promise<IUser[]> => {

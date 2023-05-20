@@ -3,6 +3,7 @@ import { SortOrder } from 'mongoose'
 
 import Product from '../models/product.model'
 import { authReq } from '../models/@types'
+import { uploadToCloudinary } from '../middlewares/uploader'
 
 const productControllers = {
   fetchAllProducts: async (req: Request, res: Response) => {
@@ -11,21 +12,21 @@ const productControllers = {
       ? null
       : Math.ceil((await Product.countDocuments({})) / +limit)
     const next = pages === null ? false : +page < pages
-    Product.find({ price: { $gte: minPrice, ...(maxPrice && {$lte: maxPrice}) } })
+    Product.find({
+      price: { $gte: minPrice, ...(maxPrice && { $lte: maxPrice }) },
+    })
       .limit(+limit)
       .skip((+page - 1) * +limit)
       .sort({ createdAt: createdAt } as { [key: string]: SortOrder })
       .then((products) => {
-        return (
-          pages
+        return pages
           ? res.json({
               page: +page,
               pages,
               next,
               products,
             })
-          : 
-          res.json(products))
+          : res.json(products)
       })
       .catch((err: any) =>
         res
@@ -34,19 +35,19 @@ const productControllers = {
       )
   },
 
-  addOneProduct: (req: authReq, res: Response) => {
-    const id = req.user?._id
-    console.log('addOneProduct:', req.body)
+  addOneProduct: async (req: authReq, res: Response) => {
+    const image = await uploadToCloudinary(req, res)
     try {
       const newProduct = new Product({
-        createdBy: String(id),
+        createdBy: String(req.user?._id),
+        image,
         ...req.body,
       })
 
-      newProduct.save()
+      await newProduct.save()
       res.status(200).json({ message: 'updated successfully' })
     } catch (err: any) {
-      res.status(404).json({ message: 'product not found', error: err.message })
+      res.status(500).json({ message: err.message, error: err })
     }
   },
 

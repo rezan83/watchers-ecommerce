@@ -1,12 +1,13 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { IUser } from './@types';
-
+import { IUser } from '../@types';
 
 interface IAuthStore {
   token: null | string;
   refreshToken: null | string;
   authUser: null | IUser;
+  userToEdit: IUser | null;
+  setUserToEdit: (user: IUser | null) => void;
   setToken: (token: string) => void;
   setRefreshToken: (refreshToken: string) => void;
   setAuthUser: (user: IUser) => void;
@@ -19,6 +20,7 @@ const useAuthStore = create(
       token: null,
       refreshToken: null,
       authUser: null,
+      userToEdit: null,
       setToken: token => set(state => ({ token })),
 
       setRefreshToken: refreshToken => set(state => ({ refreshToken })),
@@ -26,6 +28,9 @@ const useAuthStore = create(
       setAuthUser: authUser => {
         authUser.status = authUser.is_admin ? 'Admin' : 'User';
         set({ authUser });
+      },
+      setUserToEdit: userToEdit => {
+        set({ userToEdit });
       },
       clearAuth: () => set(state => ({ token: null, refreshToken: null, user: null }))
     }),

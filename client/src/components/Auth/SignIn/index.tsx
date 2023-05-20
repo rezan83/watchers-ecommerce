@@ -15,7 +15,7 @@ import {
   useColorModeValue,
   FormErrorMessage
 } from '@chakra-ui/react';
-import axiosInstance from 'helpers/axiosInterceptors';
+import axiosInstance from 'api/axiosInterceptors';
 import useAuthStore from 'store/authStore';
 import { useNavigate } from 'react-router-dom';
 

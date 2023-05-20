@@ -9,3 +9,10 @@ export interface IUser {
   is_banned: boolean;
   status?: string;
 }
+
+export interface IProduct {
+  name: string;
+  description?: string;
+  price: number;
+  image?: Blob;
+}

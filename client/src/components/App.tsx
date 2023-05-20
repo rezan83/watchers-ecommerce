@@ -5,13 +5,14 @@ import Home from 'pages/Home';
 import Products from 'pages/Products';
 import Dashboard from 'pages/Dashboard';
 import SignIn from './Auth/SignIn';
-import ProtectFor from './HOCs/ProtectFor';
+import ProtectRouteFor from './HOCs/ProtectRouteFor';
 import theme from 'config/theme';
 import SignUp from './Auth/SignUp';
 import VerifyEmail from './Auth/VerifyEmail';
 import Profile from 'pages/Profile';
 import ProfileEdit from './Auth/ProfileEdit';
 import Users from 'pages/Dashboard/Users';
+import AddProducts from 'pages/Dashboard/AddProducts';
 
 const App = () => {
   return (
@@ -24,58 +25,59 @@ const App = () => {
             <Route
               path={'dashboard'}
               element={
-                <ProtectFor rule={'admin'}>
+                <ProtectRouteFor rule={'admin'}>
                   <Dashboard />
-                </ProtectFor>
+                </ProtectRouteFor>
               }>
               <Route path={'users'} element={<Users />} />
+              <Route path={'add-products'} element={<AddProducts />} />
             </Route>
             <Route
               path={'products'}
               element={
-                <ProtectFor rule={'user'}>
+                <ProtectRouteFor rule={'user'}>
                   <Products />
-                </ProtectFor>
+                </ProtectRouteFor>
               }
             />
             <Route
               path={'profile'}
               element={
-                <ProtectFor rule={'user'}>
+                <ProtectRouteFor rule={'user'}>
                   <Profile />
-                </ProtectFor>
+                </ProtectRouteFor>
               }
             />
             <Route
               path={'edit-profile'}
               element={
-                <ProtectFor rule={'user'}>
+                <ProtectRouteFor rule={'user'}>
                   <ProfileEdit />
-                </ProtectFor>
+                </ProtectRouteFor>
               }
             />
             <Route
               path={'verify-email'}
               element={
-                <ProtectFor rule={'guest'}>
+                <ProtectRouteFor rule={'guest'}>
                   <VerifyEmail />
-                </ProtectFor>
+                </ProtectRouteFor>
               }
             />
             <Route
               path={'login'}
               element={
-                <ProtectFor rule={'guest'}>
+                <ProtectRouteFor rule={'guest'}>
                   <SignIn />
-                </ProtectFor>
+                </ProtectRouteFor>
               }
             />
             <Route
               path={'signup'}
               element={
-                <ProtectFor rule={'guest'}>
+                <ProtectRouteFor rule={'guest'}>
                   <SignUp />
-                </ProtectFor>
+                </ProtectRouteFor>
               }
             />
             <Route path="*" element={<Home />} />

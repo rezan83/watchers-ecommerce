@@ -4,29 +4,47 @@ import { Request, Response, NextFunction } from 'express'
 
 const storage = multer.memoryStorage()
 const upload = multer({ storage })
+const multerUploadMiddleware = upload.single('image')
 
+function runMiddleware(req: Request, res: Response, fn: any) {
+  return new Promise((resolve, reject) => {
+    fn(req, res, (result: any) => {
+      if (result instanceof Error) {
+        return reject(result)
+      }
+      return resolve(result)
+    })
+  })
+}
 interface uploadReq extends Request {
   image?: string
 }
+
 const uploadToCloudinary = async (
   req: uploadReq,
-  res: Response,
-  next: NextFunction
+  res: Response
+  // next: NextFunction
 ) => {
-  const { file } = req
-  if (file?.originalname) {
-    cloudinary.uploader
-      .upload_stream({ resource_type: 'auto' }, (error, result) => {
-        if (error) {
-          return next(error)
-        }
+  let secure_url: string = ''
+  await runMiddleware(req, res, multerUploadMiddleware)
 
-        req.body.image = result?.secure_url
-        next()
+  if (req.file) {
+    const b64 = Buffer.from(req.file.buffer).toString('base64')
+    let dataURI = 'data:' + req.file.mimetype + ';base64,' + b64
+
+    await cloudinary.uploader
+      .upload(dataURI, {
+        resource_type: 'auto',
       })
-      .end(file?.buffer)
+
+      .then((data: any) => {
+        secure_url = data?.secure_url
+      })
+      .catch((err: any) => {
+        console.log(err)
+      })
   }
-  next()
+  return secure_url
 }
 
 export { upload, uploadToCloudinary }

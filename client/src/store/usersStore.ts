@@ -1,25 +1,22 @@
 import { create } from 'zustand';
-import { IUser } from './@types';
-import fetchUsers from 'helpers/fetchUsers';
+import { IUser } from '../@types';
+import fetchUsers from 'api/fetchUsers';
 
 interface IUsersStore {
   users: IUser[];
-  anotherUserToEdit: IUser | null;
+
   setUsers: (users: IUser[]) => void;
-  setUserToEdit: (user: IUser | null) => void;
   fetchStoreUsers: () => void;
   clearUsers: () => void;
 }
 
 const useUsersStore = create<IUsersStore>((set, get) => ({
   users: [],
-  anotherUserToEdit: null,
+
   setUsers: users => {
     set({ users });
   },
-  setUserToEdit: anotherUserToEdit => {
-    set({ anotherUserToEdit });
-  },
+
   fetchStoreUsers: async () => {
     const users = await fetchUsers();
     set({ users });

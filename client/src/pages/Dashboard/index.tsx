@@ -1,6 +1,6 @@
 import { Link as RouterLink, Outlet } from 'react-router-dom';
 
-import { FC  } from 'react';
+import { FC } from 'react';
 import {
   Box,
   Flex,
@@ -19,7 +19,10 @@ interface ILink {
     link: string;
   };
 }
-const Links = [{ name: 'Users', link: 'users' }];
+const Links = [
+  { name: 'Users', link: 'users' },
+  { name: 'Add Products', link: 'add-products' }
+];
 
 const NavLink: FC<ILink> = ({ link }) => (
   <Link
@@ -42,7 +45,6 @@ export default function Dashboard() {
   return (
     <>
       <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
-        
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
           <IconButton
             size={'md'}
@@ -51,9 +53,9 @@ export default function Dashboard() {
             display={{ md: 'none' }}
             onClick={isOpen ? onClose : onOpen}
           />
-        
+
           <HStack spacing={8} alignItems={'center'}>
-          <Box>Dashboard</Box>
+            <Box>Dashboard</Box>
             <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
               {Links.map(link => (
                 <NavLink key={link.name} link={link} />

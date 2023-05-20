@@ -18,7 +18,6 @@ axiosInstance.interceptors.request.use(
     if (token) {
       config.headers['authorization'] = `Bearer ${token}`;
     }
-    config.headers['Content-Type'] = 'application/json';
     return config;
   },
   error => {

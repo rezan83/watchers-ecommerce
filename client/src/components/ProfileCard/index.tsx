@@ -11,12 +11,12 @@ import {
   useColorModeValue
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import { IUser } from 'store/@types';
-import useUsersStore from 'store/usersStore';
+import { IUser } from '@types';
+import useAuthStore from 'store/authStore';
 
 export default function ProfileCard({ user }: { user: IUser }) {
   const userBg = user.is_banned ? ['red.800', 'red.800'] : ['white', 'gray.800'];
-  const setUserToEdit = useUsersStore(state => state.setUserToEdit);
+  const setUserToEdit = useAuthStore(state => state.setUserToEdit);
   const navigate = useNavigate();
   const goToProfileEdit = () => {
     setUserToEdit(user);
