@@ -22,8 +22,8 @@ const Products = ({ cart }: { cart?: boolean }) => {
   return (
     <>
       <h1>{(cart ? cartProducts : products).length ? (cart ? 'Cart' : 'Products') : 'No Items'}</h1>
-      <SimpleGrid p="1rem" columns={cart ? [2] : [1]} spacing={10}>
-        <SimpleGrid p="1rem" columns={cart ? [1] : [1, 2, 2, 3]} spacing={10}>
+      <SimpleGrid  columns={cart ? [2] : [1]} spacing={5}>
+        <SimpleGrid p="1rem" columns={cart ? [1] : [1, 2, 2, 3]} spacing={5}>
           {(cart ? cartProducts : products).map(product => {
             return <ProductCard key={product._id} product={product} />;
           })}

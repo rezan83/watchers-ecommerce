@@ -80,10 +80,10 @@ function ProductCard({ product }: { product: IProduct }) {
   };
 
   return (
-    <Flex p={20} w="full" alignItems="center" justifyContent="center">
+    <Flex p={10} w="310px" alignItems="center" justifyContent="center">
       <Box
         bg={useColorModeValue('white', 'gray.800')}
-        maxW="sm"
+        w="100%"
         borderWidth="1px"
         rounded="lg"
         shadow="lg"
