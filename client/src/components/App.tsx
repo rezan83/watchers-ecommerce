@@ -33,6 +33,14 @@ const App = () => {
               <Route path={'add-products'} element={<AddProducts />} />
             </Route>
             <Route
+              path={'cart'}
+              element={
+                <ProtectRouteFor rule={'user'}>
+                  <Products cart/>
+                </ProtectRouteFor>
+              }
+            />
+            <Route
               path={'products'}
               element={
                 <ProtectRouteFor rule={'user'}>

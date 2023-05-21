@@ -75,16 +75,35 @@ const productControllers = {
       )
   },
 
-  updateOneProduct: (req: Request, res: Response) => {
-    Product.findByIdAndUpdate(req.params.id, req.body)
-      .then((data) =>
-        res.status(200).json({ message: 'updated successfully', data })
+  updateOneProduct: async (req: Request, res: Response) => {
+    const image = await uploadToCloudinary(req, res)
+    try {
+      await Product.findByIdAndUpdate(
+        req.params.id,
+        { ...(image && { image: image }), ...req.body },
+        { new: true }
       )
-      .catch((err) =>
-        res
-          .status(404)
-          .json({ message: 'product not found', error: err.message })
-      )
+        .then((product) =>
+          res.status(200).json({ message: 'updated successfully', product })
+        )
+        .catch((err) =>
+          res
+            .status(404)
+            .json({ message: 'product not found', error: err.message })
+        )
+    } catch (err: any) {
+      res.status(500).json({ message: err.message, error: err })
+    }
+
+    // Product.findByIdAndUpdate(req.params.id, req.body)
+    //   .then((data) =>
+    //     res.status(200).json({ message: 'updated successfully', data })
+    //   )
+    //   .catch((err) =>
+    //     res
+    //       .status(404)
+    //       .json({ message: 'product not found', error: err.message })
+    //   )
   },
 }
 

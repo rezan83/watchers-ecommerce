@@ -1,0 +1,54 @@
+import { IProduct } from '@types';
+import axiosInstance from './axiosInterceptors';
+
+
+export const fetchProducts = async (): Promise<IProduct[]> => {
+  let products: IProduct[] = [];
+  try {
+    const productsRes = await axiosInstance.get(process.env.REACT_APP_PRODUCTS_URL!);
+    products = await productsRes.data;
+  } catch (error) {
+    console.log(error);
+  }
+  return products;
+};
+
+export async function multiFormReq(product: IProduct, edit = false) {
+  const multiForm = new FormData();
+  const { image, name, description, price } = product;
+  const productInfo = { image, name, description, price };
+  productInfo &&
+    Object.entries(productInfo as IProduct).forEach(entry => {
+      multiForm.append(entry[0], entry[1]);
+    });
+  let response;
+  try {
+    if (edit) {
+      response = await axiosInstance.put(
+        process.env.REACT_APP_PRODUCTS_URL! + product._id,
+        multiForm,
+        {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        }
+      );
+    } else {
+      response = await axiosInstance.post(process.env.REACT_APP_PRODUCTS_URL!, multiForm, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+    }
+
+    return response?.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function deleteProduct(id: string) {
+  try {
+    const response = await axiosInstance.delete(process.env.REACT_APP_PRODUCTS_URL! + id);
+
+    return response?.data;
+  } catch (error) {
+    console.log(error);
+  }
+}

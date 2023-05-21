@@ -32,7 +32,7 @@ const useAuthStore = create(
       setUserToEdit: userToEdit => {
         set({ userToEdit });
       },
-      clearAuth: () => set(state => ({ token: null, refreshToken: null, user: null }))
+      clearAuth: () => set(state => ({ token: null, refreshToken: null, user: null, authUser: null }))
     }),
     {
       name: 'AuthStorage'

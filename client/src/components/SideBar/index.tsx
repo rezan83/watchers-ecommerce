@@ -23,7 +23,10 @@ import {
   MenuItem,
   MenuList,
   useColorMode,
-  Button
+  Button,
+  chakra,
+  Tag,
+  TagLabel
 } from '@chakra-ui/react';
 import {
   FiHome,
@@ -33,13 +36,15 @@ import {
   FiSettings,
   FiMenu,
   FiBell,
-  FiChevronDown
+  FiChevronDown,
+  FiShoppingCart
 } from 'react-icons/fi';
 import { HiShoppingBag } from 'react-icons/hi';
 import { AiFillDashboard } from 'react-icons/ai';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { IconType } from 'react-icons';
 import useAuthStore from 'store/authStore';
+import useCartStore from 'store/cartStore';
 
 interface LinkItemProps {
   name: string;
@@ -167,6 +172,8 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   const navigate = useNavigate();
   const clearAuth = useAuthStore(state => state.clearAuth);
   const authUser = useAuthStore(state => state.authUser);
+  const cartCount = useCartStore(state => state.cartCount());
+
   const { colorMode, toggleColorMode } = useColorMode();
   const signOut = () => {
     clearAuth();
@@ -204,9 +211,23 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 
       <HStack spacing={{ base: '0', md: '6' }}>
         <IconButton size="lg" variant="ghost" aria-label="open menu" icon={<FiBell />} />
+
         <Button onClick={toggleColorMode}>
           {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
         </Button>
+        <Tag>
+          <chakra.a href={'#'} display={'flex'}>
+            <Icon
+              onClick={()=>navigate('/cart')}
+              as={FiShoppingCart}
+              h={7}
+              w={7}
+              alignSelf={'center'}
+              color={cartCount ? 'dodgerblue' : 'white'}
+            />
+          </chakra.a>
+          <TagLabel>{cartCount || ''}</TagLabel>
+        </Tag>
         <Flex alignItems={'center'}>
           <Menu>
             <MenuButton py={2} transition="all 0.3s" _focus={{ boxShadow: 'none' }}>

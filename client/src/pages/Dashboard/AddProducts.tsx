@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Button,
   Flex,
@@ -14,9 +14,10 @@ import {
   Center
 } from '@chakra-ui/react';
 import { SmallCloseIcon } from '@chakra-ui/icons';
-import multiFormReq from 'api/multiFormReq';
+import { multiFormReq, deleteProduct } from 'api/crudProducts';
 import { useNavigate } from 'react-router-dom';
 import { IProduct } from '@types';
+import useCartStore from 'store/cartStore';
 
 const initialProduct: IProduct = {
   name: '',
@@ -24,20 +25,53 @@ const initialProduct: IProduct = {
 };
 
 export default function UserProfileEdit(): JSX.Element {
+  const productToEdit = useCartStore(state => state.productToEdit);
+  const setProductToEdit = useCartStore(state => state.setProductToEdit);
   const navigate = useNavigate();
   const [product, setProduct] = useState<IProduct>(initialProduct);
   const [imagPrev, setImagPrev] = useState('');
 
   const submitProductAdd = async () => {
     try {
-      const res = await multiFormReq(product);
+      const res = await multiFormReq(product, !!productToEdit);
       if (res) {
+        setProductToEdit(null);
         navigate('/products');
       }
     } catch (error) {
       console.log(error);
     }
   };
+  const submitDeleteProduct = async () => {
+    if (productToEdit) {
+      // call api
+      // axiosInstance.delete(proccess.env.)
+      try {
+        await deleteProduct(productToEdit._id!)
+        setProductToEdit(null)
+        navigate('/products');
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  };
+  const cancelEdit = () => {
+    if (productToEdit) {
+      setProductToEdit(null);
+    } else {
+      setProduct(initialProduct);
+    }
+    navigate('/products');
+  };
+
+  useEffect(() => {
+    if (productToEdit) {
+      setProduct(productToEdit);
+      setImagPrev(String(productToEdit.image));
+    } else {
+      setProduct(initialProduct);
+    }
+  }, [productToEdit]);
 
   return (
     <Flex
@@ -56,7 +90,7 @@ export default function UserProfileEdit(): JSX.Element {
         my={12}
         direction={['column']}>
         <Heading lineHeight={1.1} fontSize={{ base: '2xl', sm: '3xl' }}>
-          Add Product
+          {productToEdit ? 'Edit' : 'Add'} Product
         </Heading>
         <form id="form" encType="multipart/form-data">
           <Stack spacing={3} direction={['column']}>
@@ -107,7 +141,7 @@ export default function UserProfileEdit(): JSX.Element {
                 type="text"
               />
             </FormControl>
-            <FormControl id="ProductDescription" isRequired>
+            <FormControl id="ProductDescription">
               <FormLabel>Product Description</FormLabel>
               <Input
                 onChange={e => setProduct(product => ({ ...product, description: e.target.value }))}
@@ -132,6 +166,7 @@ export default function UserProfileEdit(): JSX.Element {
           <Stack spacing={3} direction={['column']}>
             <Stack spacing={3} direction={['column', 'row']}>
               <Button
+                onClick={cancelEdit}
                 bg={'red.400'}
                 color={'white'}
                 w="full"
@@ -142,7 +177,8 @@ export default function UserProfileEdit(): JSX.Element {
               </Button>
 
               <Button
-                // onClick={deleteAccount}
+                onClick={submitDeleteProduct}
+                isDisabled={!productToEdit}
                 w={'full'}
                 mt={8}
                 bg={useColorModeValue('#151f21', 'red.900')}

@@ -11,8 +11,9 @@ export interface IUser {
 }
 
 export interface IProduct {
+  _id?: string;
   name: string;
   description?: string;
   price: number;
-  image?: Blob;
+  image?: Blob | string;
 }
