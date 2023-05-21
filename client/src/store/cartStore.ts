@@ -1,9 +1,12 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { IProduct } from '../@types';
+import { fetchOneProduct } from 'api/crudProducts';
 
 interface ICartStore {
   cartItems: IProduct[];
+  productDetails: IProduct | null;
+  setProductDetails: (id: string) => void;
   productToEdit: IProduct | null;
   setProductToEdit: (productToEdit: IProduct | null) => void;
   currency: string;
@@ -20,6 +23,13 @@ const useCartStore = create(
   persist<ICartStore>(
     (set, get) => ({
       cartItems: [],
+      productDetails: null,
+      setProductDetails: async (id: string) => {
+        const product = await fetchOneProduct(id);
+        if (product) {
+          set(state => ({ productDetails: product }));
+        }
+      },
       productToEdit: null,
       setProductToEdit: (productToEdit: IProduct | null) => set(state => ({ productToEdit })),
       addToCartStore: (product: IProduct) => {

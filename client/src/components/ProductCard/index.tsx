@@ -59,18 +59,22 @@ import useCartStore from 'store/cartStore';
 // }
 
 function ProductCard({ product }: { product: IProduct }) {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const isAdmin = useAuthStore(state => state.authUser?.is_admin);
   const addToCartStore = useCartStore(state => state.addToCartStore);
   const setProductToEdit = useCartStore(state => state.setProductToEdit);
+  const setProductDetails = useCartStore(state => state.setProductDetails);
   const isProductInCart = useCartStore(state => state.isProductInCart(product._id!));
   const currency = useCartStore(state => state.currency);
 
   const goToProductEdit = () => {
-    setProductToEdit(product)
-    navigate('/dashboard/add-products')
-  }
-
+    setProductToEdit(product);
+    navigate('/dashboard/add-products');
+  };
+  const showProductDetails = () => {
+    setProductDetails(product._id!);
+    navigate('/product-details');
+  };
   const addToCart = () => {
     addToCartStore(product);
   };
@@ -110,11 +114,29 @@ function ProductCard({ product }: { product: IProduct }) {
               )} */}
           </Box>
           <Flex mt="1" justifyContent="space-between" alignContent="center">
-            <Box fontSize="2xl" fontWeight="semibold" as="h4" lineHeight="tight" isTruncated>
+            <Box
+              onClick={showProductDetails}
+              fontSize="xl"
+              fontWeight="semibold"
+              as="h4"
+              lineHeight="tight"
+              isTruncated>
               {product.name}
             </Box>
+          </Flex>
+
+          <Flex justifyContent="space-between" alignContent="center">
+            {/* <Rating rating={product.rating} numReviews={product.numReviews} /> */}
+            <Box fontSize="2xl" color={useColorModeValue('gray.800', 'white')}>
+              <Box as="h5" fontSize="lg">
+                <p>
+                  {currency}
+                  {product.price.toFixed(2)}
+                </p>
+              </Box>
+            </Box>
             <Tooltip
-              label={isProductInCart ? 'already in cart' : 'Add to cart'}
+              label={isProductInCart ? 'Remove from cart' : 'Add to cart'}
               bg="white"
               placement={'top'}
               color={'gray.800'}
@@ -130,16 +152,6 @@ function ProductCard({ product }: { product: IProduct }) {
                 />
               </chakra.a>
             </Tooltip>
-          </Flex>
-
-          <Flex justifyContent="space-between" alignContent="center">
-            {/* <Rating rating={product.rating} numReviews={product.numReviews} /> */}
-            <Box fontSize="2xl" color={useColorModeValue('gray.800', 'white')}>
-              <Box as="span" color={'gray.600'} fontSize="lg">
-                {currency}
-              </Box>
-              {product.price.toFixed(2)}
-            </Box>
           </Flex>
         </Box>
         {isAdmin && (

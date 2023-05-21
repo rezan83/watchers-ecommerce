@@ -1,7 +1,6 @@
 import { IProduct } from '@types';
 import axiosInstance from './axiosInterceptors';
 
-
 export const fetchProducts = async (): Promise<IProduct[]> => {
   let products: IProduct[] = [];
   try {
@@ -12,7 +11,14 @@ export const fetchProducts = async (): Promise<IProduct[]> => {
   }
   return products;
 };
-
+export const fetchOneProduct = async (id: string): Promise<IProduct | void> => {
+  try {
+    const productRes = await axiosInstance.get(process.env.REACT_APP_PRODUCTS_URL! + id);
+    return await productRes.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
 export async function multiFormReq(product: IProduct, edit = false) {
   const multiForm = new FormData();
   const { image, name, description, price } = product;

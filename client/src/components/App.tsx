@@ -13,6 +13,7 @@ import Profile from 'pages/Profile';
 import ProfileEdit from './Auth/ProfileEdit';
 import Users from 'pages/Dashboard/Users';
 import AddProducts from 'pages/Dashboard/AddProducts';
+import ProductDetails from './ProductDetails';
 
 const App = () => {
   return (
@@ -37,6 +38,14 @@ const App = () => {
               element={
                 <ProtectRouteFor rule={'user'}>
                   <Products cart/>
+                </ProtectRouteFor>
+              }
+            />
+             <Route
+              path={'product-details'}
+              element={
+                <ProtectRouteFor rule={'user'}>
+                  <ProductDetails />
                 </ProtectRouteFor>
               }
             />

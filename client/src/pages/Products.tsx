@@ -21,12 +21,19 @@ const Products = ({ cart }: { cart?: boolean }) => {
 
   return (
     <>
-      <h1>{(cart ? cartProducts : products).length ? 'Products' : 'No Items'}</h1>
-      {cart && <h2>Total {currency}{cartTotal}</h2>}
-      <SimpleGrid columns={cart? [1]:[1, 2, 3]} spacing={10}>
-        {(cart ? cartProducts : products).map(product => {
-          return <ProductCard key={product._id} product={product} />;
-        })}
+      <h1>{(cart ? cartProducts : products).length ? (cart ? 'Cart' : 'Products') : 'No Items'}</h1>
+      <SimpleGrid p="1rem" columns={cart ? [2] : [1]} spacing={10}>
+        <SimpleGrid p="1rem" columns={cart ? [1] : [1, 2, 2, 3]} spacing={10}>
+          {(cart ? cartProducts : products).map(product => {
+            return <ProductCard key={product._id} product={product} />;
+          })}
+        </SimpleGrid>
+        {cart && (
+          <h2>
+            Total: {currency}
+            {cartTotal}
+          </h2>
+        )}
       </SimpleGrid>
     </>
   );
