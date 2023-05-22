@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { IProduct } from '../@types';
 import { fetchOneProduct } from 'api/crudProducts';
+import { PurchaseUnit } from '@paypal/paypal-js';
 
 interface ICartStore {
   cartItems: IProduct[];
@@ -16,6 +17,7 @@ interface ICartStore {
   isCartEmpty: () => boolean;
   cartCount: () => number;
   cartTotal: () => number;
+  purchase_units: () => PurchaseUnit[];
   clearCartStore: () => void;
 }
 
@@ -23,6 +25,19 @@ const useCartStore = create(
   persist<ICartStore>(
     (set, get) => ({
       cartItems: [],
+      purchase_units: () => {
+        return get().cartItems.reduce<PurchaseUnit[]>((a, b) => {
+          a.push({
+            reference_id: b._id,
+            description: b.name,
+            amount: {
+              currency_code: 'EUR',
+              value: String(b.price)
+            }
+          });
+          return a;
+        }, []);
+      },
       productDetails: null,
       setProductDetails: async (id: string) => {
         const product = await fetchOneProduct(id);
@@ -54,6 +69,15 @@ const useCartStore = create(
   )
 );
 
+// purchase_units: [
+//     {
+//       description: 'Your description',
+//       amount: {
+//         currency_code: 'EUR',
+//         value: '200.0'
+//       }
+//     }
+//   ]
 // export const setZustandAuthToken = (token: string) =>
 //   useAuthStore.setState(state => ({
 //     ...state,

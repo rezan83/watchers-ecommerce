@@ -3,6 +3,7 @@ import { SimpleGrid } from '@chakra-ui/react';
 import ProductCard from 'components/ProductCard';
 import useProductsStore from 'store/productsStrore';
 import useCartStore from 'store/cartStore';
+import PaypalBtn from 'components/PaypalBtn';
 
 const Products = ({ cart }: { cart?: boolean }) => {
   const fetchStoreProducts = useProductsStore(state => state.fetchStoreProducts);
@@ -22,17 +23,20 @@ const Products = ({ cart }: { cart?: boolean }) => {
   return (
     <>
       <h1>{(cart ? cartProducts : products).length ? (cart ? 'Cart' : 'Products') : 'No Items'}</h1>
-      <SimpleGrid  columns={cart ? [2] : [1]} spacing={5}>
+      <SimpleGrid columns={cart ? [2] : [1]} spacing={5}>
         <SimpleGrid p="1rem" columns={cart ? [1] : [1, 2, 2, 3]} spacing={5}>
           {(cart ? cartProducts : products).map(product => {
             return <ProductCard key={product._id} product={product} />;
           })}
         </SimpleGrid>
         {cart && (
-          <h2>
-            Total: {currency}
-            {cartTotal}
-          </h2>
+          <div>
+            <h2>
+              Total: {currency}
+              {cartTotal}
+            </h2>
+            <PaypalBtn />
+          </div>
         )}
       </SimpleGrid>
     </>
