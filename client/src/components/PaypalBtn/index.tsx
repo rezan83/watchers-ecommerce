@@ -6,7 +6,8 @@ const paypalInit = async (
   paypalRef: React.MutableRefObject<null>,
   setPaid: React.Dispatch<React.SetStateAction<boolean>>,
   setError: React.Dispatch<React.SetStateAction<null>>,
-  purchase_units: PurchaseUnit[]
+  purchase_units: PurchaseUnit[],
+  clearCartStore: () => void
 ) => {
   let paypal: PayPalNamespace | null = null;
   try {
@@ -30,6 +31,9 @@ const paypalInit = async (
         onApprove: async (data, actions) => {
           const order = await actions.order?.capture();
           setPaid(true);
+          if (order) {
+            clearCartStore();
+          }
           console.log(order);
         },
         onError: (err: any) => {
@@ -43,6 +47,7 @@ const paypalInit = async (
 
 export default function PaypalBtn() {
   const purchase_units = useCartStore(state => state.purchase_units());
+  const clearCartStore = useCartStore(state => state.clearCartStore);
   const [paid, setPaid] = React.useState(false);
   const [error, setError] = React.useState(null);
   const paypalRef = React.useRef(null);
@@ -50,7 +55,7 @@ export default function PaypalBtn() {
   // To show PayPal buttons once the component loads
   React.useEffect(() => {
     // const paypal = await paypalInit ()
-    paypalInit(paypalRef, setPaid, setError, purchase_units);
+    paypalInit(paypalRef, setPaid, setError, purchase_units, clearCartStore);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
