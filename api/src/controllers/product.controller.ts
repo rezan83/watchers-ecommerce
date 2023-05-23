@@ -15,10 +15,6 @@ const productControllers = {
       maxPrice,
       searchName = '',
     } = req.query
-    const pages = !limit
-      ? null
-      : Math.ceil((await Product.countDocuments({})) / +limit)
-    const next = pages === null ? false : +page < pages
 
     const searchNameRgx = new RegExp(searchName as string, 'i')
     const filters = {
@@ -28,6 +24,10 @@ const productControllers = {
         { description: { $regex: searchNameRgx } },
       ],
     }
+    const pages = !limit
+      ? null
+      : Math.ceil((await Product.countDocuments(filters)) / +limit)
+    const next = pages === null ? false : +page < pages
 
     Product.find(filters)
       .limit(+limit)
@@ -41,7 +41,7 @@ const productControllers = {
               next,
               products,
             })
-          : res.json({products})
+          : res.json({ products })
       })
       .catch((err: any) =>
         res

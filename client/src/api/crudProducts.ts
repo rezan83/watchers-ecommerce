@@ -10,10 +10,8 @@ export const fetchProducts = async (
   let products: IProductPages = { products: [] };
   const setLimit = limit || 4;
   let filter = `?limit=${setLimit}`;
-  filter += page? `&&page=${page}`:''
-  filter += priceFilter
-    ? `&&minPrice=${priceFilter[0]}&&maxPrice=${priceFilter[1]}`
-    : '';
+  filter += page ? `&&page=${page}` : '';
+  filter += priceFilter ? `&&minPrice=${priceFilter[0]}&&maxPrice=${priceFilter[1]}` : '';
   filter += nameFilter ? `&&searchName=${nameFilter}` : '';
   try {
     const productsRes = await axiosInstance.get(process.env.REACT_APP_PRODUCTS_URL! + filter);

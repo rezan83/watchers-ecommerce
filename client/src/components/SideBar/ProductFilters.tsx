@@ -12,11 +12,9 @@ import useProductsStore from 'store/productsStrore';
 import { FaFilter } from 'react-icons/fa';
 
 const ProductFilters: FC = () => {
-  const fetchStoreProducts = useProductsStore(state => state.fetchStoreProducts);
-  const page = useProductsStore(state => state.page);
-  const limit = useProductsStore(state => state.limit);
-  const [priceFilter, setPriceFilter] = useState<number[] | null>(null);
-  const [nameFilter, setNameFilter] = useState<string | null>(null);
+  const setNameFilter = useProductsStore(state => state.setNameFilter);
+  const priceFilter = useProductsStore(state => state.priceFilter);
+  const setPriceFilter = useProductsStore(state => state.setPriceFilter);
 
   const priceFilterhandle = (minmax: number[]) => {
     setPriceFilter(minmax);
@@ -25,10 +23,6 @@ const ProductFilters: FC = () => {
     setNameFilter(e.target.value);
   };
 
-  useEffect(() => {
-    fetchStoreProducts(priceFilter, nameFilter, limit, page);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [priceFilter, nameFilter, limit, page]);
 
   return (
     <Flex m="15px" direction="column" w={'80%'}>

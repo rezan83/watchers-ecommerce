@@ -9,6 +9,10 @@ import Paginate from 'components/Paginate';
 const Products = ({ cart }: { cart?: boolean }) => {
   const fetchStoreProducts = useProductsStore(state => state.fetchStoreProducts);
   const products = useProductsStore(state => state.products);
+  const priceFilter = useProductsStore(state => state.priceFilter);
+  const nameFilter = useProductsStore(state => state.nameFilter);
+  const limit = useProductsStore(state => state.limit);
+  const page = useProductsStore(state => state.page);
   const cartProducts = useCartStore(state => state.cartItems);
   const cartTotal = useCartStore(state => state.cartTotal());
   const currency = useCartStore(state => state.currency);
@@ -16,11 +20,11 @@ const Products = ({ cart }: { cart?: boolean }) => {
 
   useEffect(() => {
     if (!cart) {
-      fetchStoreProducts();
+      fetchStoreProducts(priceFilter, nameFilter, limit, page);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cart, cartProducts]);
+  }, [cart, cartProducts, priceFilter, nameFilter, limit, page]);
 
   return (
     <>
