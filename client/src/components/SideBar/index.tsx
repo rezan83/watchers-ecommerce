@@ -105,14 +105,19 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   const authUser = useAuthStore(state => state.authUser);
   const fetchStoreProducts = useProductsStore(state => state.fetchStoreProducts);
   const [priceFilter, setPriceFilter] = useState<number[] | null>(null);
+  const [nameFilter, setNameFilter] = useState<string | null>(null);
 
   const priceFilterhandle = (minmax: number[]) => {
     setPriceFilter(minmax);
   };
+  const searchHandle: React.ChangeEventHandler<HTMLInputElement> = e => {
+    setNameFilter(e.target.value);
+  };
 
   useEffect(() => {
-    fetchStoreProducts(priceFilter);
-  }, [priceFilter]);
+    fetchStoreProducts(priceFilter, nameFilter);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [priceFilter, nameFilter]);
 
   return (
     <Box
@@ -146,19 +151,32 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
               <Flex direction="column" w={'full'}>
                 <>
                   <h4>Price</h4>
-                  <RangeSlider
-                    aria-label={['min', 'max']}
-                    max={1000}
-                    defaultValue={[0, 1000]}
-                    step={25}
-                    onChangeEnd={priceFilterhandle}>
-                    <RangeSliderTrack>
-                      <RangeSliderFilledTrack />
-                    </RangeSliderTrack>
-                    <RangeSliderThumb index={0} />
-                    <RangeSliderThumb index={1} />
-                  </RangeSlider>
-                  <p>{priceFilter ? `min:${priceFilter[0]} max:${priceFilter[1]}` : ''}</p>
+                  <div>
+                    <RangeSlider
+                      aria-label={['min', 'max']}
+                      max={1000}
+                      defaultValue={[0, 1000]}
+                      step={25}
+                      onChangeEnd={priceFilterhandle}>
+                      <RangeSliderTrack>
+                        <RangeSliderFilledTrack />
+                      </RangeSliderTrack>
+                      <RangeSliderThumb index={0} />
+                      <RangeSliderThumb index={1} />
+                    </RangeSlider>
+                    <p>{priceFilter ? `min:${priceFilter[0]} max:${priceFilter[1]}` : ''}</p>
+                  </div>
+                  <hr />
+                  <Box>
+                    <label htmlFor="name">Name</label>
+                    <input
+                      type="search"
+                      name="name"
+                      id="name"
+                      placeholder="search name"
+                      onChange={searchHandle}
+                    />
+                  </Box>
                 </>
               </Flex>
             </NavItem>

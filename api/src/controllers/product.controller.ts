@@ -7,14 +7,29 @@ import { uploadToCloudinary } from '../middlewares/uploader'
 
 const productControllers = {
   fetchAllProducts: async (req: Request, res: Response) => {
-    const { limit = 0, page = 1, createdAt, minPrice = 0, maxPrice } = req.query
+    const {
+      limit = 0,
+      page = 1,
+      createdAt,
+      minPrice = 0,
+      maxPrice,
+      searchName = '',
+    } = req.query
     const pages = !limit
       ? null
       : Math.ceil((await Product.countDocuments({})) / +limit)
     const next = pages === null ? false : +page < pages
-    Product.find({
+
+    const searchNameRgx = new RegExp(searchName as string, 'i')
+    const filters = {
       price: { $gte: minPrice, ...(maxPrice && { $lte: maxPrice }) },
-    })
+      $or: [
+        { name: { $regex: searchNameRgx } },
+        { description: { $regex: searchNameRgx } },
+      ],
+    }
+    
+    Product.find(filters)
       .limit(+limit)
       .skip((+page - 1) * +limit)
       .sort({ createdAt: createdAt } as { [key: string]: SortOrder })

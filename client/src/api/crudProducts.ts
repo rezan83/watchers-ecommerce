@@ -1,11 +1,15 @@
 import { IProduct } from '@types';
 import axiosInstance from './axiosInterceptors';
 
-export const fetchProducts = async (priceFilter: number[] | null = null): Promise<IProduct[]> => {
+export const fetchProducts = async (
+  priceFilter: number[] | null = null,
+  nameFilter: string | null = null
+): Promise<IProduct[]> => {
   let products: IProduct[] = [];
-  const filter = priceFilter? `?minPrice=${priceFilter[0]}&&maxPrice=${priceFilter[1]}` : ''
+  let filter = priceFilter ? `?minPrice=${priceFilter[0]}&&maxPrice=${priceFilter[1]}` : '?';
+  filter += nameFilter ? `&&searchName=${nameFilter}` : '';
   try {
-    const productsRes = await axiosInstance.get(process.env.REACT_APP_PRODUCTS_URL!+filter);
+    const productsRes = await axiosInstance.get(process.env.REACT_APP_PRODUCTS_URL! + filter);
     products = await productsRes.data;
   } catch (error) {
     console.log(error);
