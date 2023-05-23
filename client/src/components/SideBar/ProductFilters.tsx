@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import {
   Box,
   Flex,
@@ -22,7 +22,6 @@ const ProductFilters: FC = () => {
   const searchHandle: React.ChangeEventHandler<HTMLInputElement> = e => {
     setNameFilter(e.target.value);
   };
-
 
   return (
     <Flex m="15px" direction="column" w={'80%'}>

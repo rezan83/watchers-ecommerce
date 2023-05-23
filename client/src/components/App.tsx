@@ -14,8 +14,24 @@ import ProfileEdit from './ProfileEdit';
 import Users from 'pages/Dashboard/Users';
 import AddProducts from 'pages/Dashboard/AddProducts';
 import ProductDetails from './ProductDetails';
+import { useEffect } from 'react';
+import useProductsStore from 'store/productsStrore';
 
 const App = () => {
+  const fetchStoreProducts = useProductsStore(state => state.fetchStoreProducts);
+  const priceFilter = useProductsStore(state => state.priceFilter);
+  const nameFilter = useProductsStore(state => state.nameFilter);
+  const limit = useProductsStore(state => state.limit);
+  const page = useProductsStore(state => state.page);
+
+
+  useEffect(() => {
+    console.log("home effect")
+       fetchStoreProducts(priceFilter, nameFilter, limit, page);
+     
+     // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [ priceFilter, nameFilter, limit, page]);
+
   return (
     <BrowserRouter>
       <ChakraProvider theme={theme}>

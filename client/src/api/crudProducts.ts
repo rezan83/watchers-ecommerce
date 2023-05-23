@@ -7,6 +7,7 @@ export const fetchProducts = async (
   limit: number | null = null,
   page: number | null = null
 ): Promise<IProductPages> => {
+  console.log("fetchProducts")
   let products: IProductPages = { products: [] };
   const setLimit = limit || 4;
   let filter = `?limit=${setLimit}`;
