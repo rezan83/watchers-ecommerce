@@ -17,3 +17,10 @@ export interface IProduct {
   price: number;
   image?: Blob | string;
 }
+
+export interface IProductPages {
+  products: IProduct[];
+  page?: number;
+  pages?: number;
+  next?: boolean;
+}

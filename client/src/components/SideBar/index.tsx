@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode } from 'react';
 import { Link as RouterLink, useNavigate, useLocation } from 'react-router-dom';
 
 import {
@@ -27,11 +27,7 @@ import {
   Button,
   chakra,
   Tag,
-  TagLabel,
-  RangeSlider,
-  RangeSliderTrack,
-  RangeSliderThumb,
-  RangeSliderFilledTrack
+  TagLabel
 } from '@chakra-ui/react';
 import {
   FiHome,
@@ -45,13 +41,12 @@ import {
   FiShoppingCart
 } from 'react-icons/fi';
 import { HiShoppingBag } from 'react-icons/hi';
-import { FaFilter } from 'react-icons/fa';
 import { AiFillDashboard } from 'react-icons/ai';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { IconType } from 'react-icons';
 import useAuthStore from 'store/authStore';
 import useCartStore from 'store/cartStore';
-import useProductsStore from 'store/productsStrore';
+import ProductFilters from './ProductFilters';
 
 interface LinkItemProps {
   name: string;
@@ -103,21 +98,6 @@ interface SidebarProps extends BoxProps {
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   const isProductsPage = useLocation().pathname === '/products';
   const authUser = useAuthStore(state => state.authUser);
-  const fetchStoreProducts = useProductsStore(state => state.fetchStoreProducts);
-  const [priceFilter, setPriceFilter] = useState<number[] | null>(null);
-  const [nameFilter, setNameFilter] = useState<string | null>(null);
-
-  const priceFilterhandle = (minmax: number[]) => {
-    setPriceFilter(minmax);
-  };
-  const searchHandle: React.ChangeEventHandler<HTMLInputElement> = e => {
-    setNameFilter(e.target.value);
-  };
-
-  useEffect(() => {
-    fetchStoreProducts(priceFilter, nameFilter);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [priceFilter, nameFilter]);
 
   return (
     <Box
@@ -145,44 +125,10 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
           <NavItem key={link.name} icon={link.icon} link={link.link}>
             {link.name}
           </NavItem>
-
-          {link.name === 'Products' && isProductsPage && (
-            <NavItem icon={FaFilter}>
-              <Flex direction="column" w={'full'}>
-                <>
-                  <h4>Price</h4>
-                  <div>
-                    <RangeSlider
-                      aria-label={['min', 'max']}
-                      max={1000}
-                      defaultValue={[0, 1000]}
-                      step={25}
-                      onChangeEnd={priceFilterhandle}>
-                      <RangeSliderTrack>
-                        <RangeSliderFilledTrack />
-                      </RangeSliderTrack>
-                      <RangeSliderThumb index={0} />
-                      <RangeSliderThumb index={1} />
-                    </RangeSlider>
-                    <p>{priceFilter ? `min:${priceFilter[0]} max:${priceFilter[1]}` : ''}</p>
-                  </div>
-                  <hr />
-                  <Box>
-                    <label htmlFor="name">Name</label>
-                    <input
-                      type="search"
-                      name="name"
-                      id="name"
-                      placeholder="search name"
-                      onChange={searchHandle}
-                    />
-                  </Box>
-                </>
-              </Flex>
-            </NavItem>
-          )}
         </>
       ))}
+
+      {isProductsPage && <ProductFilters />}
     </Box>
   );
 };

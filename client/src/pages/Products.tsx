@@ -4,6 +4,7 @@ import ProductCard from 'components/ProductCard';
 import useProductsStore from 'store/productsStrore';
 import useCartStore from 'store/cartStore';
 import PaypalBtn from 'components/PaypalBtn';
+import Paginate from 'components/Paginate';
 
 const Products = ({ cart }: { cart?: boolean }) => {
   const fetchStoreProducts = useProductsStore(state => state.fetchStoreProducts);
@@ -23,10 +24,12 @@ const Products = ({ cart }: { cart?: boolean }) => {
 
   return (
     <>
-      <h1>{(cart ? cartProducts : products).length ? (cart ? 'Cart' : 'Products') : 'No Items'}</h1>
-      <SimpleGrid columns={cart ? [2] : [1]} spacing={5}>
+      <h1>{(cart ? cartProducts : products.products).length ? (cart ? 'Cart' : 'Products') : 'No Items'}</h1>
+      <SimpleGrid columns={cart ? [2] : [1]} spacing={5} justifyItems={'center'}>
+       
+        <Paginate/>
         <SimpleGrid p="1rem" columns={cart ? [1] : [1, 2, 2, 3]} spacing={5}>
-          {(cart ? cartProducts : products).map(product => {
+          {(cart ? cartProducts : products.products).map(product => {
             return <ProductCard key={product._id} product={product} />;
           })}
         </SimpleGrid>

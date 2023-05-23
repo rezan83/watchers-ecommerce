@@ -28,7 +28,7 @@ const productControllers = {
         { description: { $regex: searchNameRgx } },
       ],
     }
-    
+
     Product.find(filters)
       .limit(+limit)
       .skip((+page - 1) * +limit)
@@ -41,7 +41,7 @@ const productControllers = {
               next,
               products,
             })
-          : res.json(products)
+          : res.json({products})
       })
       .catch((err: any) =>
         res

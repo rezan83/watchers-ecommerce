@@ -10,7 +10,7 @@ import theme from 'config/theme';
 import SignUp from './Auth/SignUp';
 import VerifyEmail from './Auth/VerifyEmail';
 import Profile from 'pages/Profile';
-import ProfileEdit from './Auth/ProfileEdit';
+import ProfileEdit from './ProfileEdit';
 import Users from 'pages/Dashboard/Users';
 import AddProducts from 'pages/Dashboard/AddProducts';
 import ProductDetails from './ProductDetails';
