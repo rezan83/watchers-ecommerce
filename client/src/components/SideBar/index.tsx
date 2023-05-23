@@ -1,5 +1,6 @@
-import React, { ReactNode } from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import React, { ReactNode, useEffect, useState } from 'react';
+import { Link as RouterLink, useNavigate, useLocation } from 'react-router-dom';
+
 import {
   IconButton,
   Avatar,
@@ -26,25 +27,31 @@ import {
   Button,
   chakra,
   Tag,
-  TagLabel
+  TagLabel,
+  RangeSlider,
+  RangeSliderTrack,
+  RangeSliderThumb,
+  RangeSliderFilledTrack
 } from '@chakra-ui/react';
 import {
   FiHome,
-  FiTrendingUp,
-  FiCompass,
-  FiStar,
-  FiSettings,
+  // FiTrendingUp,
+  // FiCompass,
+  // FiStar,
+  // FiSettings,
   FiMenu,
   FiBell,
   FiChevronDown,
   FiShoppingCart
 } from 'react-icons/fi';
 import { HiShoppingBag } from 'react-icons/hi';
+import { FaFilter } from 'react-icons/fa';
 import { AiFillDashboard } from 'react-icons/ai';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { IconType } from 'react-icons';
 import useAuthStore from 'store/authStore';
 import useCartStore from 'store/cartStore';
+import useProductsStore from 'store/productsStrore';
 
 interface LinkItemProps {
   name: string;
@@ -54,16 +61,16 @@ interface LinkItemProps {
 
 const LinkItems: Array<LinkItemProps> = [
   { name: 'Home', icon: FiHome, link: 'home' },
-  { name: 'Products', icon: HiShoppingBag, link: 'products' },
-  { name: 'Trending', icon: FiTrendingUp },
-  { name: 'Explore', icon: FiCompass },
-  { name: 'Favourites', icon: FiStar },
-  { name: 'Settings', icon: FiSettings }
+  { name: 'Products', icon: HiShoppingBag, link: 'products' }
+  // { name: 'Trending', icon: FiTrendingUp },
+  // { name: 'Explore', icon: FiCompass },
+  // { name: 'Favourites', icon: FiStar },
+  // { name: 'Settings', icon: FiSettings }
 ];
 
 const Logo = 'Watchers';
 
-export default function SidebarWithHeader({ children }: { children: ReactNode }) {
+export default function Sidebar({ children }: { children: ReactNode }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
@@ -94,7 +101,19 @@ interface SidebarProps extends BoxProps {
 }
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+  const isProductsPage = useLocation().pathname === '/products';
   const authUser = useAuthStore(state => state.authUser);
+  const fetchStoreProducts = useProductsStore(state => state.fetchStoreProducts);
+  const [priceFilter, setPriceFilter] = useState<number[] | null>(null);
+
+  const priceFilterhandle = (minmax: number[]) => {
+    setPriceFilter(minmax);
+  };
+
+  useEffect(() => {
+    fetchStoreProducts(priceFilter);
+  }, [priceFilter]);
+
   return (
     <Box
       transition="3s ease"
@@ -117,9 +136,34 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         </NavItem>
       )}
       {LinkItems.map(link => (
-        <NavItem key={link.name} icon={link.icon} link={link.link}>
-          {link.name}
-        </NavItem>
+        <>
+          <NavItem key={link.name} icon={link.icon} link={link.link}>
+            {link.name}
+          </NavItem>
+
+          {link.name === 'Products' && isProductsPage && (
+            <NavItem icon={FaFilter}>
+              <Flex direction="column" w={'full'}>
+                <>
+                  <h4>Price</h4>
+                  <RangeSlider
+                    aria-label={['min', 'max']}
+                    max={1000}
+                    defaultValue={[0, 1000]}
+                    step={25}
+                    onChangeEnd={priceFilterhandle}>
+                    <RangeSliderTrack>
+                      <RangeSliderFilledTrack />
+                    </RangeSliderTrack>
+                    <RangeSliderThumb index={0} />
+                    <RangeSliderThumb index={1} />
+                  </RangeSlider>
+                  <p>{priceFilter ? `min:${priceFilter[0]} max:${priceFilter[1]}` : ''}</p>
+                </>
+              </Flex>
+            </NavItem>
+          )}
+        </>
       ))}
     </Box>
   );
@@ -218,7 +262,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         <Tag>
           <chakra.a href={'#'} display={'flex'}>
             <Icon
-              onClick={()=>navigate('/cart')}
+              onClick={() => navigate('/cart')}
               as={FiShoppingCart}
               h={7}
               w={7}

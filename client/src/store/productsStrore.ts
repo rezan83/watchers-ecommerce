@@ -1,12 +1,12 @@
 import { create } from 'zustand';
 import { IProduct } from '../@types';
-import {fetchProducts} from 'api/crudProducts';
+import { fetchProducts } from 'api/crudProducts';
 
 interface IProductsStore {
   products: IProduct[];
 
   setProducts: (products: IProduct[]) => void;
-  fetchStoreProducts: () => void;
+  fetchStoreProducts: (priceFilter?: null | number[]) => void;
   clearProducts: () => void;
 }
 
@@ -17,8 +17,8 @@ const useProductsStore = create<IProductsStore>((set, get) => ({
     set({ products });
   },
 
-  fetchStoreProducts: async () => {
-    const products = await fetchProducts();
+  fetchStoreProducts: async (priceFilter = null) => {
+    const products = await fetchProducts(priceFilter);
     set({ products });
   },
   clearProducts: () => set(state => ({ products: [] }))

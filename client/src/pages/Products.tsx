@@ -11,6 +11,7 @@ const Products = ({ cart }: { cart?: boolean }) => {
   const cartProducts = useCartStore(state => state.cartItems);
   const cartTotal = useCartStore(state => state.cartTotal());
   const currency = useCartStore(state => state.currency);
+ 
 
   useEffect(() => {
     if (!cart) {

@@ -46,6 +46,7 @@ const paypalInit = async (
 };
 
 export default function PaypalBtn() {
+    console.log("PaypalBtn")
   const purchase_units = useCartStore(state => state.purchase_units());
   const clearCartStore = useCartStore(state => state.clearCartStore);
   const [paid, setPaid] = React.useState(false);
