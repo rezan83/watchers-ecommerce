@@ -65,11 +65,3 @@ export const getZustandAuthUser = () => useAuthStore.getState().authUser;
 export const getZustandAuthRefreshToken = () => useAuthStore.getState().refreshToken;
 
 export default useAuthStore;
-
-// const useFishStore = create((set) => ({
-//   fishies: {},
-//   fetch: async (pond) => {
-//     const response = await fetch(pond)
-//     set({ fishies: await response.json() })
-//   },
-// }))

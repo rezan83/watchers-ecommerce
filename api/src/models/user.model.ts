@@ -10,6 +10,7 @@ export interface IUser {
   is_admin: boolean
   is_banned: boolean
   createdAt: Date
+  image?: string
 }
 
 const userSchema = new Schema<IUser>({
@@ -48,6 +49,7 @@ const userSchema = new Schema<IUser>({
   is_admin: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now },
   // image: { type: String, contentType: String },
+  image: { type: String, contentType: String },
 })
 
 const User = model<IUser>('User', userSchema)

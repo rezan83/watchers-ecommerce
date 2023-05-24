@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import { SortOrder } from 'mongoose'
 
 import User from '../models/user.model'
+import { uploadToCloudinary } from '../middlewares/uploader'
 
 const adminControllers = {
   fetchAllUsers: async (req: Request, res: Response) => {
@@ -61,10 +62,15 @@ const adminControllers = {
       )
   },
 
-  updateOneUser: (req: Request, res: Response) => {
-    User.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    })
+  updateOneUser: async (req: Request, res: Response) => {
+    const image = await uploadToCloudinary(req, res)
+    User.findByIdAndUpdate(
+      req.params.id,
+      { ...req.body, image },
+      {
+        new: true,
+      }
+    )
       .then((user) => {
         res.status(200).json({ message: 'updated successfully', user })
       })
@@ -72,6 +78,7 @@ const adminControllers = {
         res.status(404).json({ message: 'user not found', error: err.message })
       )
   },
+  
   banUser: (req: Request, res: Response) => {
     User.findByIdAndUpdate(req.params.id, { is_banned: true }, { new: true })
       .then((user) =>

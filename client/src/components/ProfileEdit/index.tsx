@@ -20,6 +20,7 @@ import axiosInstance from 'api/axiosInterceptors';
 
 import useAuthStore from 'store/authStore';
 import { IUser } from '@types';
+import { multiFormReq } from 'api/fetchUsers';
 
 export default function UserProfileEdit(): JSX.Element {
   const authUser = useAuthStore(state => state.authUser);
@@ -27,6 +28,7 @@ export default function UserProfileEdit(): JSX.Element {
   const userToEdit = useAuthStore(state => state.userToEdit);
   const setUserToEdit = useAuthStore(state => state.setUserToEdit);
   const clearAuth = useAuthStore(state => state.clearAuth);
+  const [imagPrev, setImagPrev] = useState('');
   const [url, setUrl] = useState('');
   const [user, setUser] = useState<IUser | null>(null);
   const navigate = useNavigate();
@@ -34,6 +36,7 @@ export default function UserProfileEdit(): JSX.Element {
   useEffect(() => {
     if (authUser?.is_admin && userToEdit) {
       setUser(userToEdit);
+      setImagPrev(String(userToEdit.image));
     } else {
       setUser(authUser);
     }
@@ -46,14 +49,14 @@ export default function UserProfileEdit(): JSX.Element {
   }, [authUser, userToEdit, authUser]);
 
   const submitProfileEdit = async () => {
-    console.log('submitProfileEdit');
     if (user?.name && user?.phone) {
       try {
-        const updatedUser = await axiosInstance.put(url, {
-          name: user.name,
-          phone: user?.phone
-        });
+        // const updatedUser = await axiosInstance.put(url, {
+        //   name: user.name,
+        //   phone: user?.phone
+        // });
 
+        const updatedUser = await multiFormReq(url,user)
         setUserToEdit(null);
         if (!authUser?.is_admin && !userToEdit) {
           navigate('/profile');
@@ -121,7 +124,7 @@ export default function UserProfileEdit(): JSX.Element {
           <FormLabel>User Icon</FormLabel>
           <Stack direction={['column', 'row']} spacing={6}>
             <Center>
-              <Avatar size="xl" src="https://bit.ly/sage-adebayo">
+              <Avatar size="xl" src={imagPrev}>
                 <AvatarBadge
                   as={IconButton}
                   size="sm"
@@ -134,7 +137,24 @@ export default function UserProfileEdit(): JSX.Element {
               </Avatar>
             </Center>
             <Center w="full">
-              <Button w="full">Change Icon</Button>
+              {/* <Button w="full">Change Icon</Button> */}
+              <FormControl id="ProductImage">
+                <FormLabel>User Image</FormLabel>
+                <Input
+                  onChange={e => {
+                    setImagPrev(URL.createObjectURL(e.target.files?.[0] as any));
+                    setUser(user => {
+                      console.log("selectedimg:", e.target.files?.[0])
+                      return {
+                        ...user,
+                        image: e.target.files?.[0]
+                      } as IUser;
+                    });
+                  }}
+                  _placeholder={{ color: 'gray.500' }}
+                  type="file"
+                />
+              </FormControl>
             </Center>
           </Stack>
         </FormControl>

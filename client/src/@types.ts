@@ -8,6 +8,7 @@ export interface IUser {
   is_admin: boolean;
   is_banned: boolean;
   status?: string;
+  image?: Blob | string;
 }
 
 export interface ICategory {
