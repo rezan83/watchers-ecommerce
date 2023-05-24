@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken'
 import { env } from '../config'
 import User, { IUser } from '../models/user.model'
 import { authReq } from '../models/@types'
+import { ObjectId } from 'mongodb'
 
 interface JwtPayload {
   name: string
@@ -27,13 +28,25 @@ export const isLogedIn = (req: authReq, res: Response, next: NextFunction) => {
           return res.status(401).json({ message: 'Unauthorized' })
         }
         const { email } = decoded as JwtPayload
-        const user  = await User.findOne({ email }).select(
-          '-password'
-        ) 
+        const user = await User.findOne({ email }).select('-password')
         req.user = user
 
         next()
       })
+    } else if (env.ENV === 'DEV') {
+      const user: IUser = {
+        _id: '64403213fd5bec939734c6a0',
+        name: 'Rezan',
+        is_admin: true,
+        password: 'testtest',
+        email: 'test@test.com',
+        is_verified: true,
+        is_banned: false,
+        createdAt: new Date(),
+      }
+      req.user = user
+
+      next()
     }
   } catch (error) {
     return res.status(500).json({ message: 'something went wrong' })

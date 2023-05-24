@@ -22,7 +22,7 @@ const categoryControllers = {
       const newCategory = new Category(req.body)
 
       newCategory.save()
-      res.status(200).json({ message: 'updated successfully', newCategory })
+      res.status(201).json({ message: 'updated successfully', newCategory })
     } catch (err:any) {
       res
         .status(404)

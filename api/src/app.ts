@@ -62,6 +62,10 @@ app.use('/api/v1/users', usersRouter)
 app.use('/api/v1/products', productsRoute)
 app.use('/api/v1/categories', categoriesRoute)
 
+app.get('/', (req,res)=>{
+  res.status(200).json({message: "hello world"})
+})
+
 // Custom API error handler
 // app.use(apiErrorHandler)
 

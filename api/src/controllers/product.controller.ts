@@ -60,7 +60,7 @@ const productControllers = {
       })
 
       await newProduct.save()
-      res.status(200).json({ message: 'updated successfully' })
+      res.status(201).json({ message: 'Product Created successfully', product:newProduct })
     } catch (err: any) {
       res.status(500).json({ message: err.message, error: err })
     }
