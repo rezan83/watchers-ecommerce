@@ -9,13 +9,14 @@ import {
   RangeSliderThumb,
   RangeSliderTrack
 } from '@chakra-ui/react';
-import Select, { MultiValue } from 'react-select';
+import { MultiValue } from 'react-select';
 
 import useProductsStore from 'store/productsStrore';
 import { FaFilter } from 'react-icons/fa';
 
 import useCategoriesStore from 'store/categoriesStore';
 import './productFilter.css';
+import SelectCategories from './SelectCategories';
 
 const ProductFilters: FC = () => {
   const categories = useCategoriesStore(state =>
@@ -75,15 +76,7 @@ const ProductFilters: FC = () => {
       </Box>
       <Box m="5px">
         <label htmlFor="">Categories</label>
-        <Select
-          // defaultValue={[selectOptions[2], selectOptions[3]]}
-          onChange={selectCategories}
-          isMulti
-          name="categories"
-          options={categories}
-          className="categories-multi-select"
-          classNamePrefix="select"
-        />
+        <SelectCategories categories={categories} selectCategories={selectCategories} />
       </Box>
     </Flex>
   );

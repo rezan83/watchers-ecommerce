@@ -112,11 +112,11 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         </NavItem>
       )}
       {LinkItems.map(link => (
-        <>
+   
           <NavItem key={link.name} icon={link.icon} link={link.link}>
             {link.name}
           </NavItem>
-        </>
+     
       ))}
 
       {isProductsPage && <ProductFilters />}

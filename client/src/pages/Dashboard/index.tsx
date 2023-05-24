@@ -1,6 +1,6 @@
+import { FC } from 'react';
 import { Link as RouterLink, Outlet } from 'react-router-dom';
 
-import { FC } from 'react';
 import {
   Box,
   Flex,
@@ -21,7 +21,7 @@ interface ILink {
 }
 const Links = [
   { name: 'Users', link: 'users' },
-  { name: 'Add Products', link: 'add-products' }
+  { name: 'Add/ Edit Products', link: 'add-products' }
 ];
 
 const NavLink: FC<ILink> = ({ link }) => (
@@ -55,7 +55,19 @@ export default function Dashboard() {
           />
 
           <HStack spacing={8} alignItems={'center'}>
-            <Box>Dashboard</Box>
+            <Link
+              as={RouterLink}
+              to={'/dashboard'}
+              px={2}
+              py={1}
+              rounded={'md'}
+              _hover={{
+                textDecoration: 'none',
+                bg: useColorModeValue('gray.200', 'gray.700')
+              }}>
+              <Box>Dashboard</Box>
+            </Link>
+
             <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
               {Links.map(link => (
                 <NavLink key={link.name} link={link} />

@@ -19,7 +19,7 @@ export interface IProduct {
   _id?: string;
   name: string;
   description?: string;
-  categories?: ICategory[]
+  categories?: string[]
   price: number;
   image?: Blob | string;
 }

@@ -25,6 +25,7 @@ export const fetchProducts = async (
   }
   return products;
 };
+
 export const fetchOneProduct = async (id: string): Promise<IProduct | void> => {
   try {
     const productRes = await axiosInstance.get(process.env.REACT_APP_PRODUCTS_URL! + id);
@@ -33,14 +34,19 @@ export const fetchOneProduct = async (id: string): Promise<IProduct | void> => {
     console.log(error);
   }
 };
+
 export async function multiFormReq(product: IProduct, edit = false) {
   const multiForm = new FormData();
-  const { image, name, description, price } = product;
-  const productInfo = { image, name, description, price };
+  const { image, name, description, price, categories } = product;
+  const productInfo = { image, name, description, price};
   productInfo &&
     Object.entries(productInfo as IProduct).forEach(entry => {
       multiForm.append(entry[0], entry[1]);
     });
+    categories?.forEach(entry => {
+      multiForm.append("categories", entry);
+    });
+
   let response;
   try {
     if (edit) {
