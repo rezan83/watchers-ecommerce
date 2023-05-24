@@ -10,10 +10,16 @@ export interface IUser {
   status?: string;
 }
 
+export interface ICategory {
+  _id?: string;
+  name: string
+}
+
 export interface IProduct {
   _id?: string;
   name: string;
   description?: string;
+  categories?: ICategory[]
   price: number;
   image?: Blob | string;
 }
@@ -24,3 +30,4 @@ export interface IProductPages {
   pages?: number;
   next?: boolean;
 }
+

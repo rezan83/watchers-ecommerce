@@ -5,13 +5,16 @@ export const fetchProducts = async (
   priceFilter: number[] | null = null,
   nameFilter: string | null = null,
   limit: number | null = null,
-  page: number | null = null
+  page: number | null = null,
+  selectedCategories: null | string[]
 ): Promise<IProductPages> => {
-  console.log("fetchProducts")
   let products: IProductPages = { products: [] };
   const setLimit = limit || 4;
   let filter = `?limit=${setLimit}`;
   filter += page ? `&&page=${page}` : '';
+
+  const categories = selectedCategories? selectedCategories.map(c=> `&&selectedCategories=${c}`).join(','): ''
+  filter += categories
   filter += priceFilter ? `&&minPrice=${priceFilter[0]}&&maxPrice=${priceFilter[1]}` : '';
   filter += nameFilter ? `&&searchName=${nameFilter}` : '';
   try {

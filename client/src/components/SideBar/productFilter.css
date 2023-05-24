@@ -1,0 +1,18 @@
+.categories-multi-select,
+.select__multi-value {
+  color: white;
+  background-color: #46454d;
+}
+
+.categories-multi-select * {
+  color: white;
+  background-color: hsl(248, 5%, 29%);
+}
+
+.select__multi-value {
+  border: hsl(203, 82%, 76%) solid 1px;
+}
+
+.select__multi-value__label {
+  color: white !important;
+}

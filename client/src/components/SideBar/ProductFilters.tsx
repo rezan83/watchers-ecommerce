@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+
 import {
   Box,
   Flex,
@@ -8,10 +9,20 @@ import {
   RangeSliderThumb,
   RangeSliderTrack
 } from '@chakra-ui/react';
+import Select, { MultiValue } from 'react-select';
+
 import useProductsStore from 'store/productsStrore';
 import { FaFilter } from 'react-icons/fa';
 
+import useCategoriesStore from 'store/categoriesStore';
+import './productFilter.css';
+
 const ProductFilters: FC = () => {
+  const categories = useCategoriesStore(state =>
+    state.categories.map(c => ({ label: c.name, value: c._id }))
+  );
+  const setSelectedCategories = useCategoriesStore(state => state.setSelectedCategories);
+
   const setNameFilter = useProductsStore(state => state.setNameFilter);
   const priceFilter = useProductsStore(state => state.priceFilter);
   const setPriceFilter = useProductsStore(state => state.setPriceFilter);
@@ -23,11 +34,20 @@ const ProductFilters: FC = () => {
     setNameFilter(e.target.value);
   };
 
+  const selectCategories = (
+    e: MultiValue<{
+      label: string;
+      value: string | undefined;
+    }>
+  ) => {
+    let selectedCategories = e.map(c => ({ name: c.label, _id: c.value }));
+    setSelectedCategories(selectedCategories);
+  };
   return (
     <Flex m="15px" direction="column" w={'80%'}>
       <Icon as={FaFilter} />
       <h4>Price</h4>
-      <div>
+      <Box m="5px">
         <RangeSlider
           aria-label={['min', 'max']}
           max={1000}
@@ -41,9 +61,9 @@ const ProductFilters: FC = () => {
           <RangeSliderThumb index={1} />
         </RangeSlider>
         <p>{priceFilter ? `min:${priceFilter[0]} max:${priceFilter[1]}` : ''}</p>
-      </div>
+      </Box>
       <hr />
-      <Box>
+      <Box m="5px">
         <label htmlFor="name">Name</label>
         <input
           type="search"
@@ -51,6 +71,18 @@ const ProductFilters: FC = () => {
           id="name"
           placeholder="search name"
           onChange={searchHandle}
+        />
+      </Box>
+      <Box m="5px">
+        <label htmlFor="">Categories</label>
+        <Select
+          // defaultValue={[selectOptions[2], selectOptions[3]]}
+          onChange={selectCategories}
+          isMulti
+          name="categories"
+          options={categories}
+          className="categories-multi-select"
+          classNamePrefix="select"
         />
       </Box>
     </Flex>

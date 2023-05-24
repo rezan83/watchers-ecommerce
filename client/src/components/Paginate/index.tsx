@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Flex, Icon } from '@chakra-ui/react';
 import { FaChevronCircleLeft, FaChevronCircleRight } from 'react-icons/fa';
+
 import useProductsStore from 'store/productsStrore';
 
 const Paginate = () => {

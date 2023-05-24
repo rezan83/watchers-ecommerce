@@ -8,10 +8,10 @@ import {
   Tooltip,
   Button
 } from '@chakra-ui/react';
-import { IProduct } from '@types';
-// import { BsStar, BsStarFill, BsStarHalf } from 'react-icons/bs';
 import { FiShoppingCart } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
+
+import { IProduct } from '@types';
 import useAuthStore from 'store/authStore';
 import useCartStore from 'store/cartStore';
 

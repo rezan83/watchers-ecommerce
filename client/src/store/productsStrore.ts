@@ -18,7 +18,8 @@ interface IProductsStore {
     priceFilter?: null | number[],
     nameFilter?: string | null,
     limit?: null | number,
-    page?: null | number
+    page?: null | number,
+    selectedCategories?: null | string[]
   ) => void;
   clearProducts: () => void;
 }
@@ -27,10 +28,6 @@ const useProductsStore = create<IProductsStore>((set, get) => ({
   products: { products: [] },
   page: 1,
   setPage: num => {
-    // if (get().products.pages !== undefined) {
-    //   if (get().page + num <= get().products.pages) {
-    //   }
-    // }
     set({ page: get().page + num });
   },
   limit: 4,
@@ -45,8 +42,14 @@ const useProductsStore = create<IProductsStore>((set, get) => ({
     set({ products });
   },
 
-  fetchStoreProducts: async (priceFilter = null, nameFilter = null, limit = null, page = null) => {
-    const products = await fetchProducts(priceFilter, nameFilter, limit, page);
+  fetchStoreProducts: async (
+    priceFilter = null,
+    nameFilter = null,
+    limit = null,
+    page = null,
+    selectedCategories = null
+  ) => {
+    const products = await fetchProducts(priceFilter, nameFilter, limit, page, selectedCategories);
     set({ products });
   },
   clearProducts: () => set(state => ({ products: { products: [] } }))

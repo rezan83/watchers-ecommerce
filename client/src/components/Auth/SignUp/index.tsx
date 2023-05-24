@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link as ReactRouter, useNavigate } from 'react-router-dom';
 import {
   Flex,
@@ -15,8 +16,9 @@ import {
   useColorModeValue,
   Link
 } from '@chakra-ui/react';
-import { useState } from 'react';
+
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
+
 import axiosInstance from 'api/axiosInterceptors';
 
 export default function SignUp() {

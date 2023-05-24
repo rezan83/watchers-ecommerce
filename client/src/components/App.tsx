@@ -16,9 +16,12 @@ import AddProducts from 'pages/Dashboard/AddProducts';
 import ProductDetails from './ProductDetails';
 import { useEffect } from 'react';
 import useProductsStore from 'store/productsStrore';
+import useCategoriesStore from 'store/categoriesStore';
 
 const App = () => {
   const fetchStoreProducts = useProductsStore(state => state.fetchStoreProducts);
+  const fetchStoreCategories = useCategoriesStore(state => state.fetchStoreCategories);
+  const selectedCategories = useCategoriesStore(state => state.selectedCategories);
   const priceFilter = useProductsStore(state => state.priceFilter);
   const nameFilter = useProductsStore(state => state.nameFilter);
   const limit = useProductsStore(state => state.limit);
@@ -26,11 +29,10 @@ const App = () => {
 
 
   useEffect(() => {
-    console.log("home effect")
-       fetchStoreProducts(priceFilter, nameFilter, limit, page);
-     
+       fetchStoreProducts(priceFilter, nameFilter, limit, page, selectedCategories );
+       fetchStoreCategories();
      // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [ priceFilter, nameFilter, limit, page]);
+   }, [ priceFilter, nameFilter, limit, page, selectedCategories]);
 
   return (
     <BrowserRouter>

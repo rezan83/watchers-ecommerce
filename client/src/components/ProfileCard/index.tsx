@@ -11,6 +11,7 @@ import {
   useColorModeValue
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
+
 import { IUser } from '@types';
 import useAuthStore from 'store/authStore';
 

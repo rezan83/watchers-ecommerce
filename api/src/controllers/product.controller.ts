@@ -7,6 +7,7 @@ import { uploadToCloudinary } from '../middlewares/uploader'
 
 const productControllers = {
   fetchAllProducts: async (req: Request, res: Response) => {
+    // { categories: {$in: [id1 , id2]}}
     const {
       limit = 0,
       page = 1,
@@ -14,15 +15,27 @@ const productControllers = {
       minPrice = 0,
       maxPrice,
       searchName = '',
+      selectedCategories,
     } = req.query
 
     const searchNameRgx = new RegExp(searchName as string, 'i')
+
     const filters = {
+      ...(selectedCategories && {
+        categories: {},
+      }),
       price: { $gte: minPrice, ...(maxPrice && { $lte: maxPrice }) },
       $or: [
         { name: { $regex: searchNameRgx } },
         { description: { $regex: searchNameRgx } },
       ],
+    }
+    if (selectedCategories) {
+      if (Array.isArray(selectedCategories)) {
+        filters.categories = { $in: [...(selectedCategories as string[])] }
+      } else {
+        filters.categories = { $in: [selectedCategories as string] }
+      }
     }
     const pages = !limit
       ? null
@@ -60,7 +73,9 @@ const productControllers = {
       })
 
       await newProduct.save()
-      res.status(201).json({ message: 'Product Created successfully', product:newProduct })
+      res
+        .status(201)
+        .json({ message: 'Product Created successfully', product: newProduct })
     } catch (err: any) {
       res.status(500).json({ message: err.message, error: err })
     }

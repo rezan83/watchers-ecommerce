@@ -29,21 +29,12 @@ import {
   Tag,
   TagLabel
 } from '@chakra-ui/react';
-import {
-  FiHome,
-  // FiTrendingUp,
-  // FiCompass,
-  // FiStar,
-  // FiSettings,
-  FiMenu,
-  FiBell,
-  FiChevronDown,
-  FiShoppingCart
-} from 'react-icons/fi';
+import { FiHome, FiMenu, FiBell, FiChevronDown, FiShoppingCart } from 'react-icons/fi';
 import { HiShoppingBag } from 'react-icons/hi';
 import { AiFillDashboard } from 'react-icons/ai';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { IconType } from 'react-icons';
+
 import useAuthStore from 'store/authStore';
 import useCartStore from 'store/cartStore';
 import ProductFilters from './ProductFilters';

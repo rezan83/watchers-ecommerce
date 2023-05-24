@@ -14,9 +14,10 @@ import {
   Center
 } from '@chakra-ui/react';
 import { SmallCloseIcon } from '@chakra-ui/icons';
+import { useNavigate } from 'react-router-dom';
 
 import axiosInstance from 'api/axiosInterceptors';
-import { useNavigate } from 'react-router-dom';
+
 import useAuthStore from 'store/authStore';
 import { IUser } from '@types';
 

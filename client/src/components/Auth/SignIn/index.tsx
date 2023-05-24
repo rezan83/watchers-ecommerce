@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link as ReactRouter } from 'react-router-dom';
+import { Link as ReactRouter, useNavigate } from 'react-router-dom';
 import {
   Flex,
   Box,
@@ -15,9 +15,9 @@ import {
   useColorModeValue,
   FormErrorMessage
 } from '@chakra-ui/react';
+
 import axiosInstance from 'api/axiosInterceptors';
 import useAuthStore from 'store/authStore';
-import { useNavigate } from 'react-router-dom';
 
 export default function SIgnIn() {
   const setAuthUser = useAuthStore(state => state.setAuthUser);

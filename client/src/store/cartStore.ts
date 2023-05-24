@@ -1,8 +1,9 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { PurchaseUnit } from '@paypal/paypal-js';
+
 import { IProduct } from '../@types';
 import { fetchOneProduct } from 'api/crudProducts';
-import { PurchaseUnit } from '@paypal/paypal-js';
 
 interface ICartStore {
   cartItems: IProduct[];
