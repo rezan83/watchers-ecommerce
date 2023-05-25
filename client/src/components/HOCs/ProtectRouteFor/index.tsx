@@ -28,7 +28,9 @@ const ProtectFor: FC<IProps> = ({ rule, children }) => {
   }
 
   useEffect(() => {
-    if (!allowed) {
+    if (!allowed && rule === 'user') {
+      navigate('/login');
+    } else if (!allowed) {
       navigate('/');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
