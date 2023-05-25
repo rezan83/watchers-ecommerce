@@ -42,9 +42,7 @@ export default function UserProfileEdit(): JSX.Element {
       setUser(authUser);
     }
     const editUrl =
-      authUser?.is_admin && userToEdit
-        ? env.ADMIN_URL! + userToEdit._id
-        : env.USERS_URL!;
+      authUser?.is_admin && userToEdit ? env.ADMIN_URL! + userToEdit._id : env.USERS_URL!;
     setUrl(editUrl);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authUser, userToEdit, authUser]);
@@ -57,7 +55,7 @@ export default function UserProfileEdit(): JSX.Element {
         //   phone: user?.phone
         // });
 
-        const updatedUser = await multiFormReq(url,user)
+        const updatedUser = await multiFormReq(url, user);
         setUserToEdit(null);
         if (!authUser?.is_admin && !userToEdit) {
           navigate('/profile');
@@ -145,7 +143,7 @@ export default function UserProfileEdit(): JSX.Element {
                   onChange={e => {
                     setImagPrev(URL.createObjectURL(e.target.files?.[0] as any));
                     setUser(user => {
-                      console.log("selectedimg:", e.target.files?.[0])
+                      console.log('selectedimg:', e.target.files?.[0]);
                       return {
                         ...user,
                         image: e.target.files?.[0]
@@ -203,6 +201,10 @@ export default function UserProfileEdit(): JSX.Element {
 
           <Button
             onClick={deleteAccount}
+            isDisabled={
+              (!!authUser?.is_admin && !userToEdit) ||
+              (userToEdit?.is_admin && authUser?.email !== userToEdit?.email)
+            }
             w={'full'}
             mt={8}
             bg={useColorModeValue('#151f21', 'red.900')}
@@ -217,7 +219,7 @@ export default function UserProfileEdit(): JSX.Element {
 
           <Button
             onClick={banAccount}
-            isDisabled={!!authUser?.is_admin && !userToEdit}
+            isDisabled={userToEdit?.is_admin}
             w={'full'}
             mt={8}
             bg={useColorModeValue('#151f21', 'red.900')}

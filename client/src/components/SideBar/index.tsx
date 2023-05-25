@@ -177,6 +177,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   const authUser = useAuthStore(state => state.authUser);
   const cartCount = useCartStore(state => state.cartCount());
   const clearCartStore = useCartStore(state => state.clearCartStore);
+  const setUserToEdit = useAuthStore(state => state.setUserToEdit);
 
   const { colorMode, toggleColorMode } = useColorMode();
   const signOut = () => {
@@ -257,7 +258,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               bg={useColorModeValue('white', 'gray.900')}
               borderColor={useColorModeValue('gray.200', 'gray.700')}>
               <MenuItem>
-                <Link as={RouterLink} to={'/profile'}>
+                <Link onClick={() => setUserToEdit(null)} as={RouterLink} to={'/profile'}>
                   Profile
                 </Link>
               </MenuItem>
