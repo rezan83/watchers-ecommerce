@@ -25,8 +25,8 @@ export default function SIgnIn() {
   const setRefreshToken = useAuthStore(state => state.setRefreshToken);
   const navigate = useNavigate();
   const [isForgetPass, setIsForgetPass] = useState(false);
-  const [email, setEmail] = useState('rezan.moh83@gmail.com');
-  const [password, setPass] = useState('bobobobobobo');
+  const [email, setEmail] = useState('');
+  const [password, setPass] = useState('');
   const submitLogin = async () => {
     if (email && password) {
       try {
