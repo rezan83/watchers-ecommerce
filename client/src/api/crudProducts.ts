@@ -9,7 +9,7 @@ export const fetchProducts = async (
   selectedCategories: null | string[]
 ): Promise<IProductPages> => {
   let products: IProductPages = { products: [] };
-  const setLimit = limit || 4;
+  const setLimit = limit || 6;
   let filter = `?limit=${setLimit}`;
   filter += page ? `&&page=${page}` : '';
 

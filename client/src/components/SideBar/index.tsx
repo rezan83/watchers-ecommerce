@@ -113,9 +113,8 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
           <NavItem key={'Dashboard'} icon={AiFillDashboard} link={'dashboard'}>
             {'Dashboard'}
           </NavItem>
-         
-            {isDashboardPage && <DashLinks />}
-         
+
+          {isDashboardPage && <DashLinks />}
         </>
       )}
       {LinkItems.map(link => (
