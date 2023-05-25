@@ -38,6 +38,7 @@ import { IconType } from 'react-icons';
 import useAuthStore from 'store/authStore';
 import useCartStore from 'store/cartStore';
 import ProductFilters from './ProductFilters';
+import DashLinks from './DashLinks';
 
 interface LinkItemProps {
   name: string;
@@ -88,6 +89,7 @@ interface SidebarProps extends BoxProps {
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   const isProductsPage = useLocation().pathname === '/products';
+  const isDashboardPage = useLocation().pathname.includes('/dashboard');
   const authUser = useAuthStore(state => state.authUser);
 
   return (
@@ -107,9 +109,14 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       {authUser?.is_admin && (
-        <NavItem key={'Dashboard'} icon={AiFillDashboard} link={'dashboard'}>
-          {'Dashboard'}
-        </NavItem>
+        <>
+          <NavItem key={'Dashboard'} icon={AiFillDashboard} link={'dashboard'}>
+            {'Dashboard'}
+          </NavItem>
+         
+            {isDashboardPage && <DashLinks />}
+         
+        </>
       )}
       {LinkItems.map(link => (
         <NavItem key={link.name} icon={link.icon} link={link.link}>
@@ -170,10 +177,12 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   const clearAuth = useAuthStore(state => state.clearAuth);
   const authUser = useAuthStore(state => state.authUser);
   const cartCount = useCartStore(state => state.cartCount());
+  const clearCartStore = useCartStore(state => state.clearCartStore);
 
   const { colorMode, toggleColorMode } = useColorMode();
   const signOut = () => {
     clearAuth();
+    clearCartStore();
   };
   const signIn = () => {
     navigate('login');

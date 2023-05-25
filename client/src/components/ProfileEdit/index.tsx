@@ -178,7 +178,7 @@ export default function UserProfileEdit(): JSX.Element {
               type="email"
             />
           </FormControl> */}
-        <FormControl id="password" isRequired>
+        <FormControl id="phone" isRequired>
           <FormLabel>Phone</FormLabel>
           <Input
             onChange={e => setUser(user => ({ ...user, phone: +e.target.value } as IUser))}

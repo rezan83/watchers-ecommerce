@@ -21,7 +21,7 @@ import { MultiValue } from 'react-select';
 import { multiFormReq, deleteProduct } from 'api/crudProducts';
 import { IProduct } from '@types';
 import useCartStore from 'store/cartStore';
-import SelectCategories from 'components/SideBar/SelectCategories';
+import SelectCategories from 'components/SelectCategories.ts';
 import useCategoriesStore from 'store/categoriesStore';
 
 const initialProduct: IProduct = {
@@ -194,7 +194,6 @@ export default function UserProfileEdit(): JSX.Element {
               />
             </FormControl>
             <Box m="5px">
-              <label htmlFor="">Categories</label>
               <SelectCategories
                 categories={categories}
                 selectCategories={selectCategories}

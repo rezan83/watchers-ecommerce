@@ -3,6 +3,8 @@ import React, { FC } from 'react';
 import {
   Box,
   Flex,
+  FormControl,
+  FormLabel,
   Icon,
   RangeSlider,
   RangeSliderFilledTrack,
@@ -15,8 +17,7 @@ import useProductsStore from 'store/productsStrore';
 import { FaFilter } from 'react-icons/fa';
 
 import useCategoriesStore from 'store/categoriesStore';
-import './productFilter.css';
-import SelectCategories from './SelectCategories';
+import SelectCategories from '../SelectCategories.ts';
 
 const ProductFilters: FC = () => {
   const categories = useCategoriesStore(state =>
@@ -46,36 +47,41 @@ const ProductFilters: FC = () => {
   };
   return (
     <Flex m="15px" direction="column" w={'80%'}>
-      <Icon as={FaFilter} />
-      <h4>Price</h4>
       <Box m="5px">
-        <RangeSlider
-          aria-label={['min', 'max']}
-          max={1000}
-          defaultValue={[0, 1000]}
-          step={25}
-          onChangeEnd={priceFilterhandle}>
-          <RangeSliderTrack>
-            <RangeSliderFilledTrack />
-          </RangeSliderTrack>
-          <RangeSliderThumb index={0} />
-          <RangeSliderThumb index={1} />
-        </RangeSlider>
-        <p>{priceFilter ? `min:${priceFilter[0]} max:${priceFilter[1]}` : ''}</p>
+        <Icon as={FaFilter} />
+      </Box>
+      <Box m="5px">
+        <FormControl>
+          <FormLabel htmlFor="name">Price</FormLabel>
+          <RangeSlider
+            aria-label={['min', 'max']}
+            max={1000}
+            defaultValue={[0, 1000]}
+            step={25}
+            onChangeEnd={priceFilterhandle}>
+            <RangeSliderTrack>
+              <RangeSliderFilledTrack />
+            </RangeSliderTrack>
+            <RangeSliderThumb index={0} />
+            <RangeSliderThumb index={1} />
+          </RangeSlider>
+          <p>{priceFilter ? `min:${priceFilter[0]} max:${priceFilter[1]}` : ''}</p>
+        </FormControl>
       </Box>
       <hr />
       <Box m="5px">
-        <label htmlFor="name">Name</label>
-        <input
-          type="search"
-          name="name"
-          id="name"
-          placeholder="search name"
-          onChange={searchHandle}
-        />
+        <FormControl>
+          <FormLabel htmlFor="name">Name</FormLabel>
+          <input
+            type="search"
+            name="name"
+            id="name"
+            placeholder="search name"
+            onChange={searchHandle}
+          />
+        </FormControl>
       </Box>
       <Box m="5px">
-        <label htmlFor="">Categories</label>
         <SelectCategories categories={categories} selectCategories={selectCategories} />
       </Box>
     </Flex>

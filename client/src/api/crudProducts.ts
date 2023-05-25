@@ -13,8 +13,10 @@ export const fetchProducts = async (
   let filter = `?limit=${setLimit}`;
   filter += page ? `&&page=${page}` : '';
 
-  const categories = selectedCategories? selectedCategories.map(c=> `&&selectedCategories=${c}`).join(','): ''
-  filter += categories
+  const categories = selectedCategories
+    ? selectedCategories.map(c => (c ? `&&selectedCategories=${c}` : '')).join('')
+    : '';
+  filter += categories;
   filter += priceFilter ? `&&minPrice=${priceFilter[0]}&&maxPrice=${priceFilter[1]}` : '';
   filter += nameFilter ? `&&searchName=${nameFilter}` : '';
   try {
@@ -38,14 +40,16 @@ export const fetchOneProduct = async (id: string): Promise<IProduct | void> => {
 export async function multiFormReq(product: IProduct, edit = false) {
   const multiForm = new FormData();
   const { image, name, description, price, categories } = product;
-  const productInfo = { image, name, description, price};
+  const productInfo = { image, name, description, price };
   productInfo &&
     Object.entries(productInfo as IProduct).forEach(entry => {
       multiForm.append(entry[0], entry[1]);
     });
-    categories?.forEach(entry => {
-      multiForm.append("categories", entry);
-    });
+  categories?.forEach(entry => {
+    if (entry) {
+      multiForm.append('categories', entry);
+    }
+  });
 
   let response;
   try {
