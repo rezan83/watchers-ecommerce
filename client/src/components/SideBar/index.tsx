@@ -47,7 +47,7 @@ interface LinkItemProps {
 }
 
 const LinkItems: Array<LinkItemProps> = [
-  { name: 'Home', icon: FiHome, link: 'home' },
+  // { name: 'Home', icon: FiHome, link: 'home' },
   { name: 'Products', icon: HiShoppingBag, link: 'products' }
   // { name: 'Trending', icon: FiTrendingUp },
   // { name: 'Explore', icon: FiCompass },
@@ -108,6 +108,11 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         </Text>
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
+      <>
+        <NavItem key={'Home'} icon={FiHome} link={'home'}>
+          {'Home'}
+        </NavItem>
+      </>
       {authUser?.is_admin && (
         <>
           <NavItem key={'Dashboard'} icon={AiFillDashboard} link={'dashboard'}>
@@ -117,13 +122,13 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
           {isDashboardPage && <DashLinks />}
         </>
       )}
-      {LinkItems.map(link => (
-        <NavItem key={link.name} icon={link.icon} link={link.link}>
-          {link.name}
+      <>
+        <NavItem key={'Products'} icon={HiShoppingBag} link={'products'}>
+          {'Products'}
         </NavItem>
-      ))}
 
-      {isProductsPage && <ProductFilters />}
+        {isProductsPage && <ProductFilters />}
+      </>
     </Box>
   );
 };
