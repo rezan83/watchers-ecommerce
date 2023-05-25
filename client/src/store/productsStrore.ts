@@ -30,7 +30,7 @@ const useProductsStore = create<IProductsStore>((set, get) => ({
   setPage: num => {
     set({ page: get().page + num });
   },
-  limit: 4,
+  limit: 6,
   setLimit: limit => {
     set({ limit });
   },
