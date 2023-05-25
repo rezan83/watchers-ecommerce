@@ -47,6 +47,8 @@ export const isLogedIn = (req: authReq, res: Response, next: NextFunction) => {
       req.user = user
 
       next()
+    } else {
+      return res.status(401).json({ message: 'Unauthorized' })
     }
   } catch (error) {
     return res.status(500).json({ message: 'something went wrong' })
