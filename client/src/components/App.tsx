@@ -70,9 +70,9 @@ const App = () => {
             <Route
               path={'products'}
               element={
-                <ProtectRouteFor rule={'user'}>
+                // <ProtectRouteFor rule={'user'}>
                   <Products />
-                </ProtectRouteFor>
+                // </ProtectRouteFor>
               }
             />
             <Route
