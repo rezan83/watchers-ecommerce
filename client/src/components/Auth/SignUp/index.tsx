@@ -20,6 +20,7 @@ import {
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 
 import axiosInstance from 'api/axiosInterceptors';
+import env from 'config/env';
 
 export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
@@ -32,7 +33,7 @@ export default function SignUp() {
   const submitLogin = async () => {
     if (email && firstName && password) {
       try {
-        await axiosInstance.post(process.env.REACT_APP_REGISTER_URL!, {
+        await axiosInstance.post(env.REGISTER_URL!, {
           name: firstName,
           email,
           password

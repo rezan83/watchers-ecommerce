@@ -1,5 +1,6 @@
 import { IProduct, IProductPages } from '@types';
 import axiosInstance from './axiosInterceptors';
+import env from '../config/env';
 
 export const fetchProducts = async (
   priceFilter: number[] | null = null,
@@ -20,7 +21,7 @@ export const fetchProducts = async (
   filter += priceFilter ? `&&minPrice=${priceFilter[0]}&&maxPrice=${priceFilter[1]}` : '';
   filter += nameFilter ? `&&searchName=${nameFilter}` : '';
   try {
-    const productsRes = await axiosInstance.get(process.env.REACT_APP_PRODUCTS_URL! + filter);
+    const productsRes = await axiosInstance.get(env.PRODUCTS_URL + filter);
     products = await productsRes.data;
   } catch (error) {
     console.log(error);
@@ -30,7 +31,7 @@ export const fetchProducts = async (
 
 export const fetchOneProduct = async (id: string): Promise<IProduct | void> => {
   try {
-    const productRes = await axiosInstance.get(process.env.REACT_APP_PRODUCTS_URL! + id);
+    const productRes = await axiosInstance.get(env.PRODUCTS_URL! + id);
     return await productRes.data;
   } catch (error) {
     console.log(error);
@@ -54,15 +55,11 @@ export async function multiFormReq(product: IProduct, edit = false) {
   let response;
   try {
     if (edit) {
-      response = await axiosInstance.put(
-        process.env.REACT_APP_PRODUCTS_URL! + product._id,
-        multiForm,
-        {
-          headers: { 'Content-Type': 'multipart/form-data' }
-        }
-      );
+      response = await axiosInstance.put(env.PRODUCTS_URL! + product._id, multiForm, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
     } else {
-      response = await axiosInstance.post(process.env.REACT_APP_PRODUCTS_URL!, multiForm, {
+      response = await axiosInstance.post(env.PRODUCTS_URL!, multiForm, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
     }
@@ -75,7 +72,7 @@ export async function multiFormReq(product: IProduct, edit = false) {
 
 export async function deleteProduct(id: string) {
   try {
-    const response = await axiosInstance.delete(process.env.REACT_APP_PRODUCTS_URL! + id);
+    const response = await axiosInstance.delete(env.PRODUCTS_URL + id);
 
     return response?.data;
   } catch (error) {

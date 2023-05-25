@@ -21,6 +21,7 @@ import axiosInstance from 'api/axiosInterceptors';
 import useAuthStore from 'store/authStore';
 import { IUser } from '@types';
 import { multiFormReq } from 'api/fetchUsers';
+import env from 'config/env';
 
 export default function UserProfileEdit(): JSX.Element {
   const authUser = useAuthStore(state => state.authUser);
@@ -42,8 +43,8 @@ export default function UserProfileEdit(): JSX.Element {
     }
     const editUrl =
       authUser?.is_admin && userToEdit
-        ? process.env.REACT_APP_ADMIN_URL! + userToEdit._id
-        : process.env.REACT_APP_USER_URL!;
+        ? env.ADMIN_URL! + userToEdit._id
+        : env.USERS_URL!;
     setUrl(editUrl);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authUser, userToEdit, authUser]);
@@ -93,7 +94,7 @@ export default function UserProfileEdit(): JSX.Element {
   const banAccount = async () => {
     const banUrl = (user?.is_banned ? 'unban/' : 'ban/') + user?._id;
     try {
-      const updatedUser = await axiosInstance.put(process.env.REACT_APP_ADMIN_URL + banUrl);
+      const updatedUser = await axiosInstance.put(env.ADMIN_URL + banUrl);
 
       setUserToEdit(updatedUser.data.user);
       setUser(updatedUser.data.user);

@@ -59,7 +59,6 @@ export default function UserProfileEdit(): JSX.Element {
       ...product,
       categories: [...selectedCat]
     }));
-    console.log(product);
   };
 
   const submitProductAdd = async () => {

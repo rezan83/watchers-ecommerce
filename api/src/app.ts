@@ -66,6 +66,8 @@ app.get('/', (req,res)=>{
   res.status(200).json({message: "hello world"})
 })
 
+console.log(process.env.TEST1)
+
 // Custom API error handler
 // app.use(apiErrorHandler)
 

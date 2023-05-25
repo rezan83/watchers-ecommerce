@@ -6,9 +6,10 @@ import {
   setZustandAuthUser,
   getZustandAuthRefreshToken
 } from '../store/authStore';
+import env from 'config/env';
 
 const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_BASE_URL,
+  baseURL: env.BASE_URL,
   withCredentials: true
 });
 
@@ -33,7 +34,7 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
       try {
         const rToken = getZustandAuthRefreshToken();
-        const response = await axios.post(process.env.REACT_APP_BASE_REFRESH_URL!, {
+        const response = await axios.post(env.REFRESH_URL, {
           refreshToken: rToken
         });
         const { accessToken, refreshToken, user } = response.data;

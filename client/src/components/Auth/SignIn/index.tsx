@@ -18,6 +18,7 @@ import {
 
 import axiosInstance from 'api/axiosInterceptors';
 import useAuthStore from 'store/authStore';
+import env from 'config/env';
 
 export default function SIgnIn() {
   const setAuthUser = useAuthStore(state => state.setAuthUser);
@@ -31,8 +32,8 @@ export default function SIgnIn() {
     if (email && password) {
       try {
         const url = isForgetPass
-          ? process.env.REACT_APP_FORGET_URL
-          : process.env.REACT_APP_LOGIN_URL;
+          ? env.FORGET_URL
+          : env.LOGIN_URL;
         const submitAuth = await axiosInstance.post(url!, {
           email,
           password

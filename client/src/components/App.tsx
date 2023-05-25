@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
+
 import Sidebar from 'components/SideBar';
 import Home from 'pages/Home';
 import Products from 'pages/Products';
@@ -14,7 +16,6 @@ import ProfileEdit from './ProfileEdit';
 import Users from 'pages/Dashboard/Users';
 import AddProducts from 'pages/Dashboard/AddProducts';
 import ProductDetails from './ProductDetails';
-import { useEffect } from 'react';
 import useProductsStore from 'store/productsStrore';
 import useCategoriesStore from 'store/categoriesStore';
 
@@ -27,12 +28,11 @@ const App = () => {
   const limit = useProductsStore(state => state.limit);
   const page = useProductsStore(state => state.page);
 
-
   useEffect(() => {
-       fetchStoreProducts(priceFilter, nameFilter, limit, page, selectedCategories );
-       fetchStoreCategories();
-     // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [ priceFilter, nameFilter, limit, page, selectedCategories]);
+    fetchStoreProducts(priceFilter, nameFilter, limit, page, selectedCategories);
+    fetchStoreCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [priceFilter, nameFilter, limit, page, selectedCategories]);
 
   return (
     <BrowserRouter>
@@ -55,11 +55,11 @@ const App = () => {
               path={'cart'}
               element={
                 <ProtectRouteFor rule={'user'}>
-                  <Products cart/>
+                  <Products cart />
                 </ProtectRouteFor>
               }
             />
-             <Route
+            <Route
               path={'product-details'}
               element={
                 <ProtectRouteFor rule={'user'}>
@@ -71,7 +71,7 @@ const App = () => {
               path={'products'}
               element={
                 // <ProtectRouteFor rule={'user'}>
-                  <Products />
+                <Products />
                 // </ProtectRouteFor>
               }
             />

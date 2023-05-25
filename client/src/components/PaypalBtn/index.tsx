@@ -1,6 +1,7 @@
 import React from 'react';
 import { PayPalNamespace, PurchaseUnit, loadScript } from '@paypal/paypal-js';
 import useCartStore from 'store/cartStore';
+import env from 'config/env';
 
 const paypalInit = async (
   paypalRef: React.MutableRefObject<null>,
@@ -12,7 +13,7 @@ const paypalInit = async (
   let paypal: PayPalNamespace | null = null;
   try {
     paypal = await loadScript({
-      'client-id': process.env.REACT_APP_PAYPAL_CLIENT!,
+      'client-id': env.PAYPAL_CLIENT!,
       currency: 'EUR'
     });
   } catch (error) {

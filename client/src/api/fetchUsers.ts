@@ -1,10 +1,11 @@
 import { IUser } from '@types';
 import axiosInstance from './axiosInterceptors';
+import env from 'config/env';
 
 const fetchUsers = async (): Promise<IUser[]> => {
   let users: IUser[] = [];
   try {
-    const usersRes = await axiosInstance.get(process.env.REACT_APP_ALL_USERS_URL!);
+    const usersRes = await axiosInstance.get(env.ALL_USERS_URL!);
     users = await usersRes.data;
   } catch (error) {
     console.log(error);
@@ -29,7 +30,7 @@ export async function multiFormReq(url: string, user: IUser) {
     });
 
     // else {
-    //   response = await axiosInstance.post(process.env.REACT_APP_PRODUCTS_URL!, multiForm, {
+    //   response = await axiosInstance.post(env.PRODUCTS_URL!, multiForm, {
     //     headers: { 'Content-Type': 'multipart/form-data' }
     //   });
     // }
