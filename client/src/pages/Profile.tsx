@@ -39,9 +39,7 @@ export default function Profile() {
           <Avatar
             name="Avatar"
             size={'xl'}
-            src={
-              'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ'
-            }
+            src={String(authUser?.image)}
             css={{
               border: '2px solid white'
             }}
