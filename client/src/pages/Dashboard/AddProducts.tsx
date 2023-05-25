@@ -21,7 +21,7 @@ import { MultiValue } from 'react-select';
 import { multiFormReq, deleteProduct } from 'api/crudProducts';
 import { IProduct } from '@types';
 import useCartStore from 'store/cartStore';
-import SelectCategories from 'components/SelectCategories.ts';
+import SelectCategories from 'components/SelectCategories';
 import useCategoriesStore from 'store/categoriesStore';
 
 const initialProduct: IProduct = {

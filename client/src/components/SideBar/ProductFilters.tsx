@@ -17,7 +17,7 @@ import useProductsStore from 'store/productsStrore';
 import { FaFilter } from 'react-icons/fa';
 
 import useCategoriesStore from 'store/categoriesStore';
-import SelectCategories from '../SelectCategories.ts';
+import SelectCategories from '../SelectCategories/index.js';
 
 const ProductFilters: FC = () => {
   const categories = useCategoriesStore(state =>
