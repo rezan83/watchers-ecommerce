@@ -4,7 +4,11 @@ import { isAddmin, isLogedIn } from '../middlewares/auth'
 // import { upload, uploadToCloudinary } from '../middlewares/uploader'
 const productsRoute = Router()
 
-productsRoute.get('/', isLogedIn, productControllers.fetchAllProducts)
+productsRoute.get(
+  '/',
+  // isLogedIn,
+  productControllers.fetchAllProducts
+)
 
 productsRoute.get('/:id', isLogedIn, productControllers.fetchOneProduct)
 

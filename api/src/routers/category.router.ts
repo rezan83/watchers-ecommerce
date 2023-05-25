@@ -5,7 +5,7 @@ const categoriesRoute = Router()
 
 categoriesRoute.get(
   '/',
-  isLogedIn,
+  // isLogedIn,
   categoryControllers.fetchAllCategorys
 )
 // categoriesRoute.get('/:id', isLogedIn, categoryControllers.fetchOneCategory)
