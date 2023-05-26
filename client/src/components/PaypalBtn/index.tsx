@@ -55,9 +55,7 @@ const paypalInit = async (
               address: orderRes?.purchase_units[0]?.shipping?.address
             }
           };
-          const addedOrder = await addOrder(order)
-          console.log(addedOrder)
-        
+          await addOrder(order)
         },
         onError: (err: any) => {
           setError(err);
