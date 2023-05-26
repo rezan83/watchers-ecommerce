@@ -1,9 +1,11 @@
 import ProfileCard from 'components/ProfileCard';
 import { useEffect } from 'react';
+import useAuthStore from 'store/authStore';
 import useUsersStore from 'store/usersStore';
 
 const Users = () => {
   const fetchStoreUsers = useUsersStore(state => state.fetchStoreUsers);
+  const authUser = useAuthStore(state => state.authUser);
   const users = useUsersStore(state => state.users);
 
   useEffect(() => {
@@ -14,9 +16,11 @@ const Users = () => {
 
   return (
     <div>
-        {users.map(user => (
-          <ProfileCard key={user._id} user={user} />
-        ))}
+      {users.map(user => {
+        if (authUser?.email !== user.email) {
+          return <ProfileCard key={user._id} user={user} />;
+        }
+      })}
     </div>
   );
 };

@@ -193,6 +193,11 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
     navigate('login');
   };
 
+  const goProfile = () => {
+    setUserToEdit(null);
+    navigate('profile');
+  };
+
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -262,13 +267,9 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
             <MenuList
               bg={useColorModeValue('white', 'gray.900')}
               borderColor={useColorModeValue('gray.200', 'gray.700')}>
-              <MenuItem>
-                <Link onClick={() => setUserToEdit(null)} as={RouterLink} to={'/profile'}>
-                  Profile
-                </Link>
-              </MenuItem>
-              <MenuItem>Settings</MenuItem>
-              <MenuItem>Billing</MenuItem>
+              <MenuItem onClick={goProfile}>Profile</MenuItem>
+              {/* <MenuItem>Settings</MenuItem>
+              <MenuItem>Billing</MenuItem> */}
               <MenuDivider />
               {authUser ? (
                 <MenuItem onClick={signOut}>Sign out</MenuItem>

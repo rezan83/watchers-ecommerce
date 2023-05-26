@@ -35,13 +35,12 @@ const userControllers = {
     const image = await uploadToCloudinary(req, res)
     User.findOneAndUpdate(
       req.user._id,
-      { ...req.body, image },
+      { ...req.body, ...(image && { image }) },
       {
         new: true,
       }
     )
       .then((user) => {
-        console.log(user)
         res.status(200).json({ message: 'updated successfully', user })
       })
       .catch((err) =>

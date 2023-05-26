@@ -66,7 +66,7 @@ const adminControllers = {
     const image = await uploadToCloudinary(req, res)
     User.findByIdAndUpdate(
       req.params.id,
-      { ...req.body, image },
+      { ...req.body, ...(image && { image }) },
       {
         new: true,
       }
@@ -78,7 +78,7 @@ const adminControllers = {
         res.status(404).json({ message: 'user not found', error: err.message })
       )
   },
-  
+
   banUser: (req: Request, res: Response) => {
     User.findByIdAndUpdate(req.params.id, { is_banned: true }, { new: true })
       .then((user) =>

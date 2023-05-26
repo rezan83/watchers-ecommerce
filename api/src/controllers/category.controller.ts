@@ -5,7 +5,6 @@ import Category from '../models/category.model'
 
 const categoryControllers = {
   fetchAllCategorys: async (req: Request, res: Response) => {
-    console.log("fetchAllCategorys:",req.body.user)
     Category.find()
       .then((categorys) => {
         return res.status(200).json(categorys)
@@ -23,22 +22,22 @@ const categoryControllers = {
 
       newCategory.save()
       res.status(201).json({ message: 'updated successfully', newCategory })
-    } catch (err:any) {
+    } catch (err: any) {
       res
         .status(404)
         .json({ message: 'category not found', error: err.message })
     }
   },
 
-//   fetchOneCategory: (req: Request, res: Response) => {
-//     Category.findById(req.params.id)
-//       .then((category) => res.status(200).json(category))
-//       .catch((err) =>
-//         res
-//           .status(404)
-//           .json({ message: 'category not found', error: err.message })
-//       )
-//   },
+  //   fetchOneCategory: (req: Request, res: Response) => {
+  //     Category.findById(req.params.id)
+  //       .then((category) => res.status(200).json(category))
+  //       .catch((err) =>
+  //         res
+  //           .status(404)
+  //           .json({ message: 'category not found', error: err.message })
+  //       )
+  //   },
 
   deleteOneCategory: (req: Request, res: Response) => {
     Category.findByIdAndRemove(req.params.id)

@@ -309,6 +309,7 @@ const authController = {
                   name: refreshUser?.name,
                   email: refreshUser?.email,
                   phone: refreshUser?.phone,
+                  image: refreshUser?.image,
                   is_admin: refreshUser?.is_admin,
                 },
               })

@@ -110,7 +110,7 @@ const productControllers = {
     try {
       await Product.findByIdAndUpdate(
         req.params.id,
-        { ...(image && { image: image }), ...req.body },
+        { ...(image && { image }), ...req.body },
         { new: true }
       )
         .then((product) =>
