@@ -101,6 +101,15 @@ export default function UserProfileEdit(): JSX.Element {
       console.log(error);
     }
   };
+  
+  const cancelEdit = () => {
+    setUserToEdit(null);
+    if (!authUser?.is_admin && !userToEdit) {
+      navigate('/profile');
+    } else {
+      navigate('/dashboard/users');
+    }
+  };
 
   return (
     <Flex
@@ -162,7 +171,7 @@ export default function UserProfileEdit(): JSX.Element {
           <FormLabel>User name</FormLabel>
           <Input
             onChange={e => setUser(user => ({ ...user, name: e.target.value } as IUser))}
-            value={user?.name}
+            value={user?.name || ''}
             placeholder="User Name"
             _placeholder={{ color: 'gray.500' }}
             type="text"
@@ -183,7 +192,7 @@ export default function UserProfileEdit(): JSX.Element {
           <Input
             onChange={e => setUser(user => ({ ...user, phone: +e.target.value } as IUser))}
             // onChange={e => setPhone(e.target.value)}
-            value={user?.phone}
+            value={user?.phone || ''}
             placeholder="phone"
             _placeholder={{ color: 'gray.500' }}
             type="text"
@@ -191,6 +200,7 @@ export default function UserProfileEdit(): JSX.Element {
         </FormControl>
         <Stack spacing={3} direction={['column', 'row']}>
           <Button
+            onClick={cancelEdit}
             bg={'red.400'}
             color={'white'}
             w="full"
