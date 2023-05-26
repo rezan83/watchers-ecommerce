@@ -40,6 +40,7 @@ export default function UserProfileEdit(): JSX.Element {
       setImagPrev(String(userToEdit.image));
     } else {
       setUser(authUser);
+      setImagPrev(String(authUser?.image));
     }
     const editUrl =
       authUser?.is_admin && userToEdit ? env.ADMIN_URL! + userToEdit._id : env.USERS_URL!;
@@ -201,10 +202,7 @@ export default function UserProfileEdit(): JSX.Element {
 
           <Button
             onClick={deleteAccount}
-            isDisabled={
-              (!!authUser?.is_admin && !userToEdit) ||
-              (userToEdit?.is_admin && authUser?.email !== userToEdit?.email)
-            }
+            isDisabled={!!userToEdit && userToEdit.is_admin}
             w={'full'}
             mt={8}
             bg={useColorModeValue('#151f21', 'red.900')}
@@ -219,7 +217,7 @@ export default function UserProfileEdit(): JSX.Element {
 
           <Button
             onClick={banAccount}
-            isDisabled={userToEdit?.is_admin}
+            isDisabled={(!!userToEdit && userToEdit.is_admin) || !userToEdit}
             w={'full'}
             mt={8}
             bg={useColorModeValue('#151f21', 'red.900')}
