@@ -23,6 +23,7 @@ import { IProduct } from '@types';
 import useCartStore from 'store/cartStore';
 import SelectCategories from 'components/SelectCategories';
 import useCategoriesStore from 'store/categoriesStore';
+import useProductsStore from 'store/productsStrore';
 
 const initialProduct: IProduct = {
   name: '',
@@ -34,6 +35,7 @@ export default function UserProfileEdit(): JSX.Element {
   const categories = useCategoriesStore(state =>
     state.categories.map(c => ({ label: c.name, value: c._id }))
   );
+  const fetchStoreProducts = useProductsStore(state=>state.fetchStoreProducts)
 
   const { productToEdit, defaultValue } = useCartStore(state => {
     const productToEdit = state.productToEdit;
@@ -66,6 +68,7 @@ export default function UserProfileEdit(): JSX.Element {
       const res = await multiFormReq(product, !!productToEdit);
       if (res) {
         setProductToEdit(null);
+        fetchStoreProducts()
         navigate('/products');
       }
     } catch (error) {
@@ -79,6 +82,7 @@ export default function UserProfileEdit(): JSX.Element {
       try {
         await deleteProduct(productToEdit._id!);
         setProductToEdit(null);
+        fetchStoreProducts()
         navigate('/products');
       } catch (error) {
         console.log(error);
