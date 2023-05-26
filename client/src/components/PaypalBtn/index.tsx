@@ -40,22 +40,8 @@ const paypalInit = async (
           }
           // console.log(orderRes);
           
-          const purchasedProducts = orderRes?.purchase_units.map((p: any) => ({
-            id: p.reference_id,
-            name: p.description,
-            price: p.amount.value
-          }));
-          const order:IOrder = {
-            order_id: orderRes?.id,
-            products: purchasedProducts,
-            total: total,
-            buyer: {
-              full_name: orderRes?.purchase_units[0]?.shipping?.name?.full_name,
-              email: orderRes?.payer.email_address,
-              address: orderRes?.purchase_units[0]?.shipping?.address
-            }
-          };
-          await addOrder(order)
+         
+          await addOrder(orderRes, total)
         },
         onError: (err: any) => {
           setError(err);

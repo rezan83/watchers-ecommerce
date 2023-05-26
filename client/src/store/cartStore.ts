@@ -49,7 +49,6 @@ const useCartStore = create(
       productToEdit: null,
       setProductToEdit: (productToEdit: IProduct | null) => set(state => ({ productToEdit })),
       addToCartStore: (product: IProduct) => {
-        console.log(product);
         if (!get().isProductInCart(product._id!)) {
           set(state => ({ cartItems: [...state.cartItems, product] }));
         } else {
