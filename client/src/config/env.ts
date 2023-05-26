@@ -6,13 +6,14 @@ class EnvCalss {
   FORGET_URL = this.Url('auth/forget-password/');
   LOGIN_URL = this.Url('auth/login/');
   REGISTER_URL = this.Url('auth/register/');
-  PROFILE_URL = this.Url('users/profile/') ;
-  USERS_URL =  this.Url('users/') ;
+  PROFILE_URL = this.Url('users/profile/');
+  USERS_URL = this.Url('users/');
   ADMIN_URL = this.Url('admin/');
   ALL_USERS_URL = this.Url('admin/all-users/');
 
   PRODUCTS_URL = this.Url('products/');
   CATEGORIES_URL = this.Url('categories/');
+  ORDERS_URL = this.Url('orders/');
 
   //   paypal
   PAYPAL_CLIENT = process.env.REACT_APP_PAYPAL_CLIENT;

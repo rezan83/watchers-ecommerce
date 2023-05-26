@@ -1,3 +1,5 @@
+import { Address } from "@paypal/paypal-js";
+
 export interface IUser {
   _id: string;
   name: string;
@@ -32,3 +34,19 @@ export interface IProductPages {
   next?: boolean;
 }
 
+export interface IOrder {
+  user?: string
+  _id?: string
+  order_id: string | undefined
+  products?: {
+    id: string
+    name: string
+    price: string
+  }[]
+  total: number
+  buyer: {
+    full_name: string | undefined
+    email: string | undefined
+    address: Address | undefined
+  }
+}

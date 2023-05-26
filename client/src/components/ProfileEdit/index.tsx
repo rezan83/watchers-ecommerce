@@ -20,7 +20,7 @@ import axiosInstance from 'api/axiosInterceptors';
 
 import useAuthStore from 'store/authStore';
 import { IUser } from '@types';
-import { multiFormReq } from 'api/fetchUsers';
+import { multiFormReq } from 'api/usersApi';
 import env from 'config/env';
 
 export default function UserProfileEdit(): JSX.Element {
@@ -101,7 +101,7 @@ export default function UserProfileEdit(): JSX.Element {
       console.log(error);
     }
   };
-  
+
   const cancelEdit = () => {
     setUserToEdit(null);
     if (!authUser?.is_admin && !userToEdit) {

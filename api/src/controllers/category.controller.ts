@@ -5,22 +5,22 @@ import Category from '../models/category.model'
 const categoryControllers = {
   fetchAllCategorys: async (req: Request, res: Response) => {
     Category.find()
-      .then((categorys) => {
-        return res.status(200).json(categorys)
+      .then((categories) => {
+        return res.status(200).json(categories)
       })
       .catch((err: any) =>
         res
           .status(404)
-          .json({ message: 'categorys not found', error: err.message })
+          .json({ message: 'categories not found', error: err.message })
       )
   },
 
-  addOneCategory: (req: Request, res: Response) => {
+  addOneCategory: async (req: Request, res: Response) => {
     try {
-      const newCategory = new Category(req.body)
+      const category = new Category(req.body)
 
-      newCategory.save()
-      res.status(201).json({ message: 'updated successfully', newCategory })
+      await category.save()
+      res.status(201).json({ message: 'updated successfully', category })
     } catch (err: any) {
       res
         .status(404)
@@ -53,9 +53,9 @@ const categoryControllers = {
   },
 
   updateOneCategory: (req: Request, res: Response) => {
-    Category.findByIdAndUpdate(req.params.id, req.body)
-      .then((data) =>
-        res.status(200).json({ message: 'updated successfully', data })
+    Category.findByIdAndUpdate(req.params.id, req.body, {new:true})
+      .then((category) =>
+        res.status(200).json({ message: 'updated successfully', category })
       )
       .catch((err) =>
         res

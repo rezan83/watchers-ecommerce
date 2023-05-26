@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { IUser } from '../@types';
-import fetchUsers from 'api/fetchUsers';
+import fetchUsers from 'api/usersApi';
 
 interface IUsersStore {
   users: IUser[];

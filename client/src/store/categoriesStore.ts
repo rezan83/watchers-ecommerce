@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { ICategory } from '../@types';
-import fetchCategories from 'api/fetchCategories';
+import fetchCategories from 'api/categoriesApi';
 import { persist } from 'zustand/middleware';
 
 interface ICategoriesStore {

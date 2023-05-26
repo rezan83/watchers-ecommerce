@@ -18,7 +18,7 @@ import { SmallCloseIcon } from '@chakra-ui/icons';
 import { useNavigate } from 'react-router-dom';
 import { MultiValue } from 'react-select';
 
-import { multiFormReq, deleteProduct } from 'api/crudProducts';
+import { multiFormReq, deleteProduct } from 'api/productsApi';
 import { IProduct } from '@types';
 import useCartStore from 'store/cartStore';
 import SelectCategories from 'components/SelectCategories';
@@ -35,7 +35,7 @@ export default function UserProfileEdit(): JSX.Element {
   const categories = useCategoriesStore(state =>
     state.categories.map(c => ({ label: c.name, value: c._id }))
   );
-  const fetchStoreProducts = useProductsStore(state=>state.fetchStoreProducts)
+  const fetchStoreProducts = useProductsStore(state => state.fetchStoreProducts);
 
   const { productToEdit, defaultValue } = useCartStore(state => {
     const productToEdit = state.productToEdit;
@@ -68,7 +68,7 @@ export default function UserProfileEdit(): JSX.Element {
       const res = await multiFormReq(product, !!productToEdit);
       if (res) {
         setProductToEdit(null);
-        fetchStoreProducts()
+        fetchStoreProducts();
         navigate('/products');
       }
     } catch (error) {
@@ -82,7 +82,7 @@ export default function UserProfileEdit(): JSX.Element {
       try {
         await deleteProduct(productToEdit._id!);
         setProductToEdit(null);
-        fetchStoreProducts()
+        fetchStoreProducts();
         navigate('/products');
       } catch (error) {
         console.log(error);

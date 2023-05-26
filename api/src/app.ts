@@ -16,6 +16,7 @@ import authRouter from './routers/auth.router'
 import productsRoute from './routers/product.router'
 import adminRouter from './routers/admin.router'
 import categoriesRoute from './routers/category.router'
+import ordersRoute from './routers/order.router'
 
 dotenv.config({ path: '.env' })
 const app = express()
@@ -61,6 +62,7 @@ app.use('/api/v1/admin', adminRouter)
 app.use('/api/v1/users', usersRouter)
 app.use('/api/v1/products', productsRoute)
 app.use('/api/v1/categories', categoriesRoute)
+app.use('/api/v1/orders', ordersRoute)
 
 app.get('/', (req,res)=>{
   res.status(200).json({message: "hello world"})

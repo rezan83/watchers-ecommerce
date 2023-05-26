@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { IProductPages } from '../@types';
-import { fetchProducts } from 'api/crudProducts';
+import { fetchProducts } from 'api/productsApi';
 
 interface IProductsStore {
   products: IProductPages;
