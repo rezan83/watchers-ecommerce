@@ -3,7 +3,6 @@ import { PayPalNamespace, PurchaseUnit, loadScript } from '@paypal/paypal-js';
 import useCartStore from 'store/cartStore';
 import env from 'config/env';
 import { addOrder } from 'api/ordersApi';
-import { IOrder } from '@types';
 
 const paypalInit = async (
   paypalRef: React.MutableRefObject<null>,
@@ -38,10 +37,8 @@ const paypalInit = async (
           if (orderRes) {
             clearCartStore();
           }
-          // console.log(orderRes);
-          
-         
-          await addOrder(orderRes, total)
+
+          await addOrder(orderRes, total);
         },
         onError: (err: any) => {
           setError(err);

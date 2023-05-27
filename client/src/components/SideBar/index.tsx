@@ -40,20 +40,20 @@ import useCartStore from 'store/cartStore';
 import ProductFilters from './ProductFilters';
 import DashLinks from './DashLinks';
 
-interface LinkItemProps {
-  name: string;
-  icon: IconType;
-  link?: string;
-}
+// interface LinkItemProps {
+//   name: string;
+//   icon: IconType;
+//   link?: string;
+// }
 
-const LinkItems: Array<LinkItemProps> = [
-  // { name: 'Home', icon: FiHome, link: 'home' },
-  { name: 'Products', icon: HiShoppingBag, link: 'products' }
-  // { name: 'Trending', icon: FiTrendingUp },
-  // { name: 'Explore', icon: FiCompass },
-  // { name: 'Favourites', icon: FiStar },
-  // { name: 'Settings', icon: FiSettings }
-];
+// const LinkItems: Array<LinkItemProps> = [
+//   // { name: 'Home', icon: FiHome, link: 'home' },
+//   { name: 'Products', icon: HiShoppingBag, link: 'products' }
+//   // { name: 'Trending', icon: FiTrendingUp },
+//   // { name: 'Explore', icon: FiCompass },
+//   // { name: 'Favourites', icon: FiStar },
+//   // { name: 'Settings', icon: FiSettings }
+// ];
 
 const Logo = 'Watchers';
 

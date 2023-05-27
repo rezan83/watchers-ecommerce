@@ -23,7 +23,6 @@ const orderControllers = {
       country: req.body.address.country,
     })) as ICity
     const address = { ...req.body.address, lat: city.lat, lng: city.lng }
-    console.log(address)
     try {
       const order = new Order({
         user: req.user._id,

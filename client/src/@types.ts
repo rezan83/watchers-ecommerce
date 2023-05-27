@@ -1,5 +1,3 @@
-import { Address } from '@paypal/paypal-js';
-
 export interface IUser {
   _id: string;
   name: string;
@@ -52,6 +50,22 @@ export interface IOrder {
     city?: string;
     country?: string;
     lng?: string;
-    lan?: string;
+    lat?: string;
+    postal_code?: string;
+    address_line1?: string;
+    address_line2?: string;
   };
+}
+
+export interface ISalesStat {
+  city: string | undefined;
+  country: string | undefined;
+  lat: number | undefined;
+  lon: number | undefined;
+  z: number;
+}
+
+export interface IOrdersData {
+  orders: IOrder[];
+  salesStat: ISalesStat[];
 }

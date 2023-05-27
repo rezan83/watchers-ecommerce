@@ -1,4 +1,3 @@
-import { Address } from '@paypal/paypal-js'
 import { ObjectId, Schema, model } from 'mongoose'
 
 export interface IOrder {
@@ -44,8 +43,8 @@ const orderSchema = new Schema<IOrder>({
     address_line_1: { type: String, required: false },
     address_line_2: { type: String, required: false },
     admin_area_1: { type: String, required: false },
-    city: { type: String, required: false },
     postal_code: { type: String, required: false },
+    city: { type: String, required: false },
     country: String,
     lat: String,
     lng: String,

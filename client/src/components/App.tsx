@@ -18,10 +18,12 @@ import AddProducts from 'pages/Dashboard/AddProducts';
 import ProductDetails from './ProductDetails';
 import useProductsStore from 'store/productsStrore';
 import useCategoriesStore from 'store/categoriesStore';
+import useOrdersStore from 'store/ordersStore';
 
 const App = () => {
   const fetchStoreProducts = useProductsStore(state => state.fetchStoreProducts);
   const fetchStoreCategories = useCategoriesStore(state => state.fetchStoreCategories);
+  const fetchStoreOrders = useOrdersStore(state => state.fetchStoreOrders);
   const selectedCategories = useCategoriesStore(state => state.selectedCategories);
   const priceFilter = useProductsStore(state => state.priceFilter);
   const nameFilter = useProductsStore(state => state.nameFilter);
@@ -31,6 +33,7 @@ const App = () => {
   useEffect(() => {
     fetchStoreProducts(priceFilter, nameFilter, limit, page, selectedCategories);
     fetchStoreCategories();
+    fetchStoreOrders();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [priceFilter, nameFilter, limit, page, selectedCategories]);
 
