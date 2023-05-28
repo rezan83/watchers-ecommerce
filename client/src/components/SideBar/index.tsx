@@ -27,7 +27,8 @@ import {
   Button,
   chakra,
   Tag,
-  TagLabel
+  TagLabel,
+  Img
 } from '@chakra-ui/react';
 import { FiHome, FiMenu, FiBell, FiChevronDown, FiShoppingCart } from 'react-icons/fi';
 import { HiShoppingBag } from 'react-icons/hi';
@@ -103,9 +104,11 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       h="full"
       {...rest}>
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
+        <Img src="watch-logo.png" alt="logo" width={'60px'} />
+
+        {/* <Text fontSize="xl" fontFamily="monospace" fontWeight="bold">
           {Logo}
-        </Text>
+        </Text> */}
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       <>
@@ -216,14 +219,15 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         aria-label="open menu"
         icon={<FiMenu />}
       />
+      <Img display={{ base: 'flex', md: 'none' }} src="watch-logo.png" alt="logo" width={'60px'} />
 
-      <Text
+      {/* <Text
         display={{ base: 'flex', md: 'none' }}
         fontSize="2xl"
         fontFamily="monospace"
         fontWeight="bold">
         {Logo}
-      </Text>
+      </Text> */}
 
       <HStack spacing={{ base: '0', md: '6' }}>
         <IconButton size="lg" variant="ghost" aria-label="open menu" icon={<FiBell />} />
