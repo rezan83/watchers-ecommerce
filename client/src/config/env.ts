@@ -12,6 +12,7 @@ class EnvCalss {
   ALL_USERS_URL = this.Url('admin/all-users/');
 
   PRODUCTS_URL = this.Url('products/');
+  FEATURED_URL = this.Url('products/featured');
   CATEGORIES_URL = this.Url('categories/');
   ORDERS_URL = this.Url('orders/');
 

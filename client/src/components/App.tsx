@@ -22,6 +22,7 @@ import useOrdersStore from 'store/ordersStore';
 
 const App = () => {
   const fetchStoreProducts = useProductsStore(state => state.fetchStoreProducts);
+  const fetchStoreFeatured = useProductsStore(state => state.fetchStoreFeatured);
   const fetchStoreCategories = useCategoriesStore(state => state.fetchStoreCategories);
   const fetchStoreOrders = useOrdersStore(state => state.fetchStoreOrders);
   const searchCategories = useCategoriesStore(state => state.searchCategories);
@@ -32,6 +33,7 @@ const App = () => {
 
   useEffect(() => {
     fetchStoreProducts(priceFilter, nameFilter, limit, page, searchCategories);
+    fetchStoreFeatured()
     fetchStoreCategories();
     fetchStoreOrders();
     // eslint-disable-next-line react-hooks/exhaustive-deps

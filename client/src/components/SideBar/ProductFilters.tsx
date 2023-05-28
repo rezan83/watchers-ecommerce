@@ -20,9 +20,7 @@ import useCategoriesStore from 'store/categoriesStore';
 import SelectCategories from '../SelectCategories';
 
 const ProductFilters: FC = () => {
-  const optionCategories = useCategoriesStore(state =>
-    state.optionCategories)
-    console.log(typeof optionCategories)
+  const optionCategories = useCategoriesStore(state => state.optionCategories);
   const setSelectedCategories = useCategoriesStore(state => state.setSelectedCategories);
   const showCategories = useCategoriesStore(state => state.showCategories);
   const setNameFilter = useProductsStore(state => state.setNameFilter);

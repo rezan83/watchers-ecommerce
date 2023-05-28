@@ -26,6 +26,7 @@ export interface IProduct {
   categories?: string[];
   price: number;
   image?: Blob | string;
+  featured?: boolean
 }
 
 export interface IProductPages {

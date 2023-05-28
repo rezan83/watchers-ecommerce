@@ -1,10 +1,10 @@
 import { create } from 'zustand';
-import { IProductPages } from '../@types';
-import { fetchProducts } from 'api/productsApi';
+import { IProduct, IProductPages } from '../@types';
+import { fetchProducts, getFeatured } from 'api/productsApi';
 
 interface IProductsStore {
   products: IProductPages;
-
+  featuredProducts: IProduct[];
   setProducts: (products: IProductPages) => void;
   page: number;
   setPage: (num: number) => void;
@@ -14,18 +14,20 @@ interface IProductsStore {
   setPriceFilter: (priceFilter: number[] | null) => void;
   nameFilter: string | null;
   setNameFilter: (nameFilter: string | null) => void;
+  fetchStoreFeatured: () => Promise<void> ;
   fetchStoreProducts: (
     priceFilter?: null | number[],
     nameFilter?: string | null,
     limit?: null | number,
     page?: null | number,
     searchCategories?: null | string[]
-  ) => void;
+  ) => Promise<void>;
   clearProducts: () => void;
 }
 
 const useProductsStore = create<IProductsStore>((set, get) => ({
   products: { products: [] },
+  featuredProducts: [],
   page: 1,
   setPage: num => {
     set({ page: get().page + num });
@@ -41,7 +43,12 @@ const useProductsStore = create<IProductsStore>((set, get) => ({
   setProducts: products => {
     set({ products });
   },
-
+  fetchStoreFeatured: async () => {
+    const products = await getFeatured();
+    if (products) {
+      set({ featuredProducts: products.products });
+    }
+  },
   fetchStoreProducts: async (
     priceFilter = null,
     nameFilter = null,

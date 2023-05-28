@@ -63,6 +63,19 @@ const productControllers = {
       )
   },
 
+  getFeatured: async (req: Request, res: Response) => {
+    Product.find({ featured: true })
+
+      .then((products) => {
+        return res.status(200).json({ products })
+      })
+      .catch((err: any) =>
+        res
+          .status(404)
+          .json({ message: 'products not found', error: err.message })
+      )
+  },
+
   addOneProduct: async (req: authReq, res: Response) => {
     const image = await uploadToCloudinary(req, res)
     try {

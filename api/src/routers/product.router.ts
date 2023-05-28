@@ -10,6 +10,12 @@ productsRoute.get(
   productControllers.fetchAllProducts
 )
 
+productsRoute.get(
+  '/featured',
+  // isLogedIn,
+  productControllers.getFeatured
+)
+
 productsRoute.get('/:id', isLogedIn, productControllers.fetchOneProduct)
 
 // only admin

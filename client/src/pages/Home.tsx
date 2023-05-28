@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   IconButton,
@@ -28,7 +28,14 @@ const settings = {
 };
 
 export default function Home() {
-  const products = useProductsStore(state => state.products);
+  const featuredProducts = useProductsStore(state => state.featuredProducts);
+  const [cards, setCards] = useState<
+    {
+      title: string;
+      text: string | undefined;
+      image: string | Blob | undefined;
+    }[]
+  >([]);
   // As we have used custom buttons, we need a reference variable to
   // change the state
   const [slider, setSlider] = React.useState<Slider | null>(null);
@@ -40,23 +47,14 @@ export default function Home() {
 
   // This list contains all the data for carousels
   // This can be static or loaded from a server
-  const cards = [
-    {
-      title: products.products.length ? products.products[0].name : '',
-      text: products.products.length ? products.products[0].description : '',
-      image: products.products.length ? products.products[0].image : ''
-    },
-    {
-      title: products.products.length ? products.products[1].name : '',
-      text: products.products.length ? products.products[1].description : '',
-      image: products.products.length ? products.products[1].image : ''
-    },
-    {
-      title: products.products.length ? products.products[2].name : '',
-      text: products.products.length ? products.products[2].description : '',
-      image: products.products.length ? products.products[2].image : ''
+
+  useEffect(() => {
+    if (featuredProducts) {
+      setCards(
+        featuredProducts?.map(p => ({ title: p.name, text: p.description, image: p.image }))
+      );
     }
-  ];
+  }, [featuredProducts]);
 
   return (
     <Box position={'relative'} height={'600px'} width={'full'} overflow={'hidden'}>

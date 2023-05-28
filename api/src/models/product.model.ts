@@ -9,6 +9,7 @@ export interface IProduct {
   createdAt: Date
   createdBy: Schema.Types.ObjectId
   image?: string
+  featured?: boolean
 }
 
 const productSchema = new Schema<IProduct>({
@@ -27,6 +28,7 @@ const productSchema = new Schema<IProduct>({
   createdBy: { type: Schema.Types.ObjectId, ref: 'User' },
   createdAt: { type: Date, default: Date.now },
   image: { type: String, contentType: String},
+  featured: {type: Boolean, default: false}
 })
 
 const Product = model<IProduct>('Product', productSchema)
