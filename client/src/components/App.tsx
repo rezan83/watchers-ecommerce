@@ -24,18 +24,18 @@ const App = () => {
   const fetchStoreProducts = useProductsStore(state => state.fetchStoreProducts);
   const fetchStoreCategories = useCategoriesStore(state => state.fetchStoreCategories);
   const fetchStoreOrders = useOrdersStore(state => state.fetchStoreOrders);
-  const selectedCategories = useCategoriesStore(state => state.selectedCategories);
+  const searchCategories = useCategoriesStore(state => state.searchCategories);
   const priceFilter = useProductsStore(state => state.priceFilter);
   const nameFilter = useProductsStore(state => state.nameFilter);
   const limit = useProductsStore(state => state.limit);
   const page = useProductsStore(state => state.page);
 
   useEffect(() => {
-    fetchStoreProducts(priceFilter, nameFilter, limit, page, selectedCategories);
+    fetchStoreProducts(priceFilter, nameFilter, limit, page, searchCategories);
     fetchStoreCategories();
     fetchStoreOrders();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [priceFilter, nameFilter, limit, page, selectedCategories]);
+  }, [priceFilter, nameFilter, limit, page, searchCategories]);
 
   return (
     <BrowserRouter>

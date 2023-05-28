@@ -7,15 +7,15 @@ export const fetchProducts = async (
   nameFilter: string | null = null,
   limit: number | null = null,
   page: number | null = null,
-  selectedCategories: null | string[]
+  searchCategories: null | string[]
 ): Promise<IProductPages> => {
   let products: IProductPages = { products: [] };
   const setLimit = limit || 6;
   let filter = `?limit=${setLimit}`;
   filter += page ? `&&page=${page}` : '';
 
-  const categories = selectedCategories
-    ? selectedCategories.map(c => (c ? `&&selectedCategories=${c}` : '')).join('')
+  const categories = searchCategories
+    ? searchCategories.map(c => (c ? `&&searchCategories=${c}` : '')).join('')
     : '';
   filter += categories;
   filter += priceFilter ? `&&minPrice=${priceFilter[0]}&&maxPrice=${priceFilter[1]}` : '';

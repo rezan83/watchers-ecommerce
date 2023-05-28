@@ -1,25 +1,31 @@
 import { create } from 'zustand';
-import { ICategory } from '../@types';
+import { ICategory, IShowCategory } from '../@types';
 import fetchCategories from 'api/categoriesApi';
 import { persist } from 'zustand/middleware';
 
 interface ICategoriesStore {
   categories: ICategory[];
-  selectedCategories: string[];
+  optionCategories: IShowCategory[];
+  showCategories: IShowCategory[];
+  searchCategories: string[];
   setCategories: (categories: ICategory[]) => void;
   setSelectedCategories: (categories: ICategory[]) => void;
   fetchStoreCategories: () => void;
-  clearCategories: () => void;
+  clearSelectedCategories: () => void;
 }
 
 const useCategoriesStore = create(
   persist<ICategoriesStore>(
     (set, get) => ({
       categories: [],
-      selectedCategories: [],
-      setSelectedCategories: selectedCategories => {
-        const selected = selectedCategories.map(c => c._id) as string[];
-        set({ selectedCategories: selected });
+      optionCategories: [],
+      showCategories: [{label: 'All', value:''}],
+      searchCategories: [],
+      setSelectedCategories: searchCategories => {
+        const search = searchCategories.map(c => c._id) as string[];
+        const showCat = searchCategories.map(c => ({ value: c._id, label: c.name }));
+        set({ showCategories: showCat });
+        set({ searchCategories: search });
       },
       setCategories: categories => {
         set({ categories });
@@ -27,9 +33,15 @@ const useCategoriesStore = create(
 
       fetchStoreCategories: async () => {
         const categories = await fetchCategories();
+        const optionCategories = categories.map(c => ({
+          label: c.name,
+          value: c._id
+        })) as IShowCategory[];
+        set({ optionCategories });
+
         set({ categories });
       },
-      clearCategories: () => set(state => ({ categories: [] }))
+      clearSelectedCategories: () => set(state => ({ showCategories: [], searchCategories: [] }))
     }),
     {
       name: 'CategoriesStore'

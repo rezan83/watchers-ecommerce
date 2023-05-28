@@ -15,7 +15,10 @@ export interface ICategory {
   _id?: string;
   name: string;
 }
-
+export interface IShowCategory {
+  label: string;
+  value: string | undefined;
+}
 export interface IProduct {
   _id?: string;
   name: string;

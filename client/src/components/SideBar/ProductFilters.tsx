@@ -20,11 +20,11 @@ import useCategoriesStore from 'store/categoriesStore';
 import SelectCategories from '../SelectCategories';
 
 const ProductFilters: FC = () => {
-  const categories = useCategoriesStore(state =>
-    state.categories.map(c => ({ label: c.name, value: c._id }))
-  );
+  const optionCategories = useCategoriesStore(state =>
+    state.optionCategories)
+    console.log(typeof optionCategories)
   const setSelectedCategories = useCategoriesStore(state => state.setSelectedCategories);
-
+  const showCategories = useCategoriesStore(state => state.showCategories);
   const setNameFilter = useProductsStore(state => state.setNameFilter);
   const priceFilter = useProductsStore(state => state.priceFilter);
   const setPriceFilter = useProductsStore(state => state.setPriceFilter);
@@ -82,7 +82,11 @@ const ProductFilters: FC = () => {
         </FormControl>
       </Box>
       <Box m="5px">
-        <SelectCategories categories={categories} selectCategories={selectCategories} />
+        <SelectCategories
+          categories={optionCategories}
+          selectCategories={selectCategories}
+          showCategories={showCategories}
+        />
       </Box>
     </Flex>
   );

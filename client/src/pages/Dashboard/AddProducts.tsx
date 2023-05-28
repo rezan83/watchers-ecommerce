@@ -32,22 +32,15 @@ const initialProduct: IProduct = {
 
 export default function UserProfileEdit(): JSX.Element {
   const setProductToEdit = useCartStore(state => state.setProductToEdit);
-  const categories = useCategoriesStore(state =>
-    state.categories.map(c => ({ label: c.name, value: c._id }))
-  );
+  const optionCategories = useCategoriesStore(state => state.optionCategories);
   const fetchStoreProducts = useProductsStore(state => state.fetchStoreProducts);
 
-  const { productToEdit, defaultValue } = useCartStore(state => {
-    const productToEdit = state.productToEdit;
-    const defaultValue = productToEdit?.categories?.map(c => {
-      const label = categories.find(ct => ct.value === c)?.label!;
-      return { value: c, label };
-    });
-    return { productToEdit, defaultValue };
+  const productToEdit = useCartStore(state => {
+    return state.productToEdit;
   });
 
   const navigate = useNavigate();
-  const [product, setProduct] = useState<IProduct>(initialProduct);
+  const [product, setProduct] = useState<IProduct>(productToEdit || initialProduct);
   const [imagPrev, setImagPrev] = useState('');
 
   const selectCategories = (
@@ -198,9 +191,14 @@ export default function UserProfileEdit(): JSX.Element {
             </FormControl>
             <Box m="5px">
               <SelectCategories
-                categories={categories}
+                categories={optionCategories}
                 selectCategories={selectCategories}
-                defaultValue={defaultValue}
+                showCategories={
+                  product?.categories?.map(c => {
+                    const label = optionCategories.find(ct => ct.value === c)?.label!;
+                    return { value: c, label };
+                  }) || []
+                }
               />
             </Box>
           </Stack>

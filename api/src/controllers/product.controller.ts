@@ -15,13 +15,13 @@ const productControllers = {
       minPrice = 0,
       maxPrice,
       searchName = '',
-      selectedCategories,
+      searchCategories,
     } = req.query
 
     const searchNameRgx = new RegExp(searchName as string, 'i')
 
     const filters = {
-      ...(selectedCategories && {
+      ...(searchCategories && {
         categories: {},
       }),
       price: { $gte: minPrice, ...(maxPrice && { $lte: maxPrice }) },
@@ -30,11 +30,11 @@ const productControllers = {
         { description: { $regex: searchNameRgx } },
       ],
     }
-    if (selectedCategories) {
-      if (Array.isArray(selectedCategories)) {
-        filters.categories = { $in: [...(selectedCategories as string[])] }
+    if (searchCategories) {
+      if (Array.isArray(searchCategories)) {
+        filters.categories = { $in: [...(searchCategories as string[])] }
       } else {
-        filters.categories = { $in: [selectedCategories as string] }
+        filters.categories = { $in: [searchCategories as string] }
       }
     }
     const pages = !limit

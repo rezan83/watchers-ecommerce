@@ -3,36 +3,24 @@ import { Box, FormControl, FormLabel } from '@chakra-ui/react';
 import Select, { MultiValue } from 'react-select';
 
 import './select-categories.css';
+import { IShowCategory } from '@types';
+
 
 const SelectCategories = ({
   selectCategories,
   categories,
-  defaultValue
+  showCategories,
 }: {
-  selectCategories: (
-    e: MultiValue<{
-      label: string;
-      value: string | undefined;
-    }>
-  ) => void;
-  categories: {
-    label: string;
-    value: string | undefined;
-  }[];
-  defaultValue?:
-    | {
-        label: string;
-        value: string | undefined;
-      }[]
-    | undefined;
+  selectCategories: (e: MultiValue<IShowCategory>) => void;
+  categories: IShowCategory[];
+  showCategories: IShowCategory[];
 }) => {
   return (
     <Box m="5px">
       <FormControl>
         <FormLabel htmlFor="name">Categories</FormLabel>
         <Select
-          defaultValue={defaultValue || { label: 'All', value: '' }}
-          // value={{label:'All', value: ''}}
+          value={showCategories.length? showCategories: { label: 'All', value: '' }}
           onChange={selectCategories}
           isMulti
           name="categories"

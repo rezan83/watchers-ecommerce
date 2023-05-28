@@ -19,7 +19,7 @@ interface IProductsStore {
     nameFilter?: string | null,
     limit?: null | number,
     page?: null | number,
-    selectedCategories?: null | string[]
+    searchCategories?: null | string[]
   ) => void;
   clearProducts: () => void;
 }
@@ -47,9 +47,9 @@ const useProductsStore = create<IProductsStore>((set, get) => ({
     nameFilter = null,
     limit = null,
     page = null,
-    selectedCategories = null
+    searchCategories = null
   ) => {
-    const products = await fetchProducts(priceFilter, nameFilter, limit, page, selectedCategories);
+    const products = await fetchProducts(priceFilter, nameFilter, limit, page, searchCategories);
     set({ products });
   },
   clearProducts: () => set(state => ({ products: { products: [] } }))
