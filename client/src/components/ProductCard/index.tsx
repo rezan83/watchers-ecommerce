@@ -6,7 +6,8 @@ import {
   Icon,
   chakra,
   Tooltip,
-  Button
+  Button,
+  Link
 } from '@chakra-ui/react';
 import { FiShoppingCart } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
@@ -114,15 +115,16 @@ function ProductCard({ product }: { product: IProduct }) {
               )} */}
           </Box>
           <Flex mt="1" justifyContent="space-between" alignContent="center">
-            <Box
-              onClick={showProductDetails}
-              fontSize="xl"
-              fontWeight="semibold"
-              as="h4"
-              lineHeight="tight"
-              isTruncated>
-              {product.name}
-            </Box>
+            <Link onClick={showProductDetails}>
+              <Box
+                fontSize="xl"
+                fontWeight="semibold"
+                as="h4"
+                lineHeight="tight"
+                isTruncated>
+                {product.name}
+              </Box>
+            </Link>
           </Flex>
 
           <Flex justifyContent="space-between" alignContent="center">
