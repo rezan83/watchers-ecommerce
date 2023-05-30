@@ -23,6 +23,7 @@ interface IProductsStore {
     searchCategories?: null | string[]
   ) => Promise<void>;
   clearProducts: () => void;
+  clearSearchAndPrice: () => void;
 }
 
 const useProductsStore = create<IProductsStore>((set, get) => ({
@@ -59,7 +60,8 @@ const useProductsStore = create<IProductsStore>((set, get) => ({
     const products = await fetchProducts(priceFilter, nameFilter, limit, page, searchCategories);
     set({ products });
   },
-  clearProducts: () => set(state => ({ products: { products: [] } }))
+  clearProducts: () => set(state => ({ products: { products: [] } })),
+  clearSearchAndPrice: () => set(state => ({ nameFilter:null , priceFilter:null }))
 }));
 
 export default useProductsStore;

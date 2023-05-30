@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 
 import {
   Box,
+  Button,
   Flex,
   FormControl,
   FormLabel,
@@ -22,13 +23,16 @@ import SelectCategories from '../SelectCategories';
 import './product-filter.css';
 
 const ProductFilters: FC = () => {
-  const optionCategories = useCategoriesStore(state => state.optionCategories);
-  const setSelectedCategories = useCategoriesStore(state => state.setSelectedCategories);
-  const showCategories = useCategoriesStore(state => state.showCategories);
-  const setNameFilter = useProductsStore(state => state.setNameFilter);
-  const priceFilter = useProductsStore(state => state.priceFilter);
-  const setPriceFilter = useProductsStore(state => state.setPriceFilter);
+  const { optionCategories, setSelectedCategories, showCategories, clearSelectedCategories } =
+    useCategoriesStore();
 
+  const { nameFilter, setNameFilter, priceFilter, setPriceFilter, clearSearchAndPrice } =
+    useProductsStore();
+
+  const clearFilters = () => {
+    clearSearchAndPrice();
+    clearSelectedCategories();
+  };
   const priceFilterhandle = (minmax: number[]) => {
     setPriceFilter(minmax);
   };
@@ -47,9 +51,10 @@ const ProductFilters: FC = () => {
   };
   return (
     <Flex p={'10px'} direction="column" w={'100%'} border={'1px gray solid'}>
-      <Box m="5px">
+      <Flex m="5px" justifyContent={'space-between'}>
         <Icon as={FaFilter} />
-      </Box>
+        <Button onClick={clearFilters}>reset</Button>
+      </Flex>
       <Box m="5px">
         <FormControl>
           <FormLabel htmlFor="name">Price</FormLabel>
@@ -79,6 +84,7 @@ const ProductFilters: FC = () => {
               id="name"
               placeholder="search name"
               onChange={searchHandle}
+              value={nameFilter || ''}
             />
           </Flex>
         </FormControl>

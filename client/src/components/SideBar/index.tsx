@@ -40,6 +40,7 @@ import DashLinks from './DashLinks';
 
 import './side-bar.css';
 
+
 // interface LinkItemProps {
 //   name: string;
 //   icon: IconType;
@@ -180,13 +181,15 @@ interface MobileProps extends FlexProps {
 }
 const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   const navigate = useNavigate();
-  const clearAuth = useAuthStore(state => state.clearAuth);
-  const authUser = useAuthStore(state => state.authUser);
-  const cartCount = useCartStore(state => state.cartCount());
-  const clearCartStore = useCartStore(state => state.clearCartStore);
-  const setUserToEdit = useAuthStore(state => state.setUserToEdit);
+
+  const { clearAuth, authUser, setUserToEdit } = useAuthStore();
+
+  const { cartCount, clearCartStore } = useCartStore(state => {
+    return { cartCount: state.cartCount(), clearCartStore: state.clearCartStore };
+  });
 
   const { colorMode, toggleColorMode } = useColorMode();
+ 
   const signOut = () => {
     clearAuth();
     clearCartStore();
