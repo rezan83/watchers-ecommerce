@@ -104,7 +104,9 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       h="full"
       {...rest}>
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Img src="watch-logo.png" alt="logo" width={'60px'} />
+        <Link as={RouterLink} to="./">
+          <Img src="watch-logo.png" alt={`${Logo} logo`} width={'60px'} />
+        </Link>
 
         {/* <Text fontSize="xl" fontFamily="monospace" fontWeight="bold">
           {Logo}
@@ -148,16 +150,7 @@ const NavItem = ({ icon, link, children, ...rest }: NavItemProps) => {
       to={link}
       style={{ textDecoration: 'none' }}
       _focus={{ boxShadow: 'none' }}>
-      <Flex
-        align="center"
-        p="4"
-        mx="4"
-        borderRadius="lg"
-        role="group"
-        cursor="pointer"
-      
-      
-        >
+      <Flex align="center" p="4" mx="4" borderRadius="lg" role="group" cursor="pointer">
         {icon && (
           <Icon
             mr="4"
@@ -205,9 +198,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       px={{ base: 4, md: 4 }}
       height="20"
       alignItems="center"
-      borderBottomWidth="1px"
-  
-      >
+      borderBottomWidth="1px">
       <IconButton
         display={{ base: 'flex', md: 'none' }}
         onClick={onOpen}
@@ -215,7 +206,14 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         aria-label="open menu"
         icon={<FiMenu />}
       />
-      <Img display={{ base: 'flex', md: 'none' }} src="watch-logo.png" alt="logo" width={'60px'} />
+      <Link as={RouterLink} to="./">
+        <Img
+          display={{ base: 'flex', md: 'none' }}
+          src="watch-logo.png"
+          alt={`${Logo} logo`}
+          width={'60px'}
+        />
+      </Link>
 
       {/* <Text
         display={{ base: 'flex', md: 'none' }}
