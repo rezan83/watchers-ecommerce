@@ -19,6 +19,8 @@ import { FaFilter } from 'react-icons/fa';
 import useCategoriesStore from 'store/categoriesStore';
 import SelectCategories from '../SelectCategories';
 
+import './product-filter.css';
+
 const ProductFilters: FC = () => {
   const optionCategories = useCategoriesStore(state => state.optionCategories);
   const setSelectedCategories = useCategoriesStore(state => state.setSelectedCategories);
@@ -44,7 +46,7 @@ const ProductFilters: FC = () => {
     setSelectedCategories(selectedCategories);
   };
   return (
-    <Flex m="15px" direction="column" w={'80%'}>
+    <Flex p={'10px'} direction="column" w={'100%'} border={'1px gray solid'}>
       <Box m="5px">
         <Icon as={FaFilter} />
       </Box>
@@ -68,15 +70,17 @@ const ProductFilters: FC = () => {
       </Box>
       <hr />
       <Box m="5px">
-        <FormControl>
+        <FormControl w={'100%'}>
           <FormLabel htmlFor="name">Name</FormLabel>
-          <input
-            type="search"
-            name="name"
-            id="name"
-            placeholder="search name"
-            onChange={searchHandle}
-          />
+          <Flex>
+            <input
+              type="search"
+              name="name"
+              id="name"
+              placeholder="search name"
+              onChange={searchHandle}
+            />
+          </Flex>
         </FormControl>
       </Box>
       <Box m="5px">

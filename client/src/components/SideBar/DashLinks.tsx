@@ -15,12 +15,13 @@ const NavLink: FC<ILink> = ({ link, name, onClick }) => (
     onClick={onClick}
     as={RouterLink}
     to={link}
+    w={'full'}
     px={2}
     py={1}
     rounded={'md'}
     _hover={{
       textDecoration: 'none',
-      bg: useColorModeValue('gray.200', 'gray.700')
+      bg: useColorModeValue('gray.200', 'blue.700')
     }}>
     {name}
   </Link>
@@ -29,7 +30,7 @@ const NavLink: FC<ILink> = ({ link, name, onClick }) => (
 const DashLinks = () => {
   const setProductToEdit = useCartStore(state => state.setProductToEdit);
   return (
-    <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
+    <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4} border={'solid 1px gray'}>
       <VStack as={'nav'} spacing={4} display={'flex'} alignItems={'start'}>
         <NavLink link={'/dashboard/users'} name={'Users'} />
         <NavLink

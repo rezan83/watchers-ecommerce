@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { Link as RouterLink, useNavigate, useLocation } from 'react-router-dom';
 
 import {
@@ -25,9 +25,6 @@ import {
   MenuList,
   useColorMode,
   Button,
-  chakra,
-  Tag,
-  TagLabel,
   Img
 } from '@chakra-ui/react';
 import { FiHome, FiMenu, FiBell, FiChevronDown, FiShoppingCart } from 'react-icons/fi';
@@ -40,6 +37,8 @@ import useAuthStore from 'store/authStore';
 import useCartStore from 'store/cartStore';
 import ProductFilters from './ProductFilters';
 import DashLinks from './DashLinks';
+
+import './side-bar.css';
 
 // interface LinkItemProps {
 //   name: string;
@@ -105,7 +104,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       {...rest}>
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
         <Link as={RouterLink} to="./">
-          <Img src="watch-logo.png" alt={`${Logo} logo`} width={'60px'} />
+          <Img src="watchers-logo.png" alt={`${Logo} logo`} width={'60px'} />
         </Link>
 
         {/* <Text fontSize="xl" fontFamily="monospace" fontWeight="bold">
@@ -150,10 +149,16 @@ const NavItem = ({ icon, link, children }: NavItemProps) => {
       to={link}
       style={{ textDecoration: 'none' }}
       _focus={{ boxShadow: 'none' }}>
-      <Flex align="center" p="4" mx="4" borderRadius="lg" role="group" cursor="pointer"
-      
-      
-      >
+      <Flex
+        align="center"
+        p="4"
+        mx="4"
+        borderRadius="lg"
+        role="group"
+        cursor="pointer"
+        _hover={{
+          bg: useColorModeValue('gray.200', 'blue.700')
+        }}>
         {icon && (
           <Icon
             mr="4"
@@ -205,8 +210,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       bg={useColorModeValue('white', 'gray.900')}
       // borderBottomWidth="1px"
       borderBottomColor={useColorModeValue('gray.200', 'gray.700')}
-      justifyContent={{ base: 'space-between', md: 'flex-end' }}
-      >
+      justifyContent={{ base: 'space-between', md: 'flex-end' }}>
       <IconButton
         display={{ base: 'flex', md: 'none' }}
         onClick={onOpen}
@@ -217,7 +221,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       <Link as={RouterLink} to="./">
         <Img
           display={{ base: 'flex', md: 'none' }}
-          src="watch-logo.png"
+          src="watchers-logo.png"
           alt={`${Logo} logo`}
           width={'60px'}
         />
@@ -231,25 +235,25 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         {Logo}
       </Text> */}
 
-      <HStack spacing={{ base: '0', md: '6' }}>
+      <HStack spacing={{ base: '1', md: '6' }}>
         <IconButton size="lg" variant="ghost" aria-label="open menu" icon={<FiBell />} />
 
         <Button onClick={toggleColorMode}>
           {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
         </Button>
-        <Tag>
-          <chakra.a href={'#'} display={'flex'}>
+        <Button>
+          <span>
             <Icon
               onClick={() => navigate('/cart')}
               as={FiShoppingCart}
-              h={7}
+              h={12}
               w={7}
               alignSelf={'center'}
               color={cartCount ? 'dodgerblue' : 'white'}
             />
-          </chakra.a>
-          <TagLabel>{cartCount || ''}</TagLabel>
-        </Tag>
+          </span>
+          <span>{cartCount || ''}</span>
+        </Button>
         <Flex alignItems={'center'}>
           <Menu>
             <MenuButton py={2} transition="all 0.3s" _focus={{ boxShadow: 'none' }}>
