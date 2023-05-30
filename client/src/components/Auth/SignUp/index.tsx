@@ -23,13 +23,14 @@ import axiosInstance from 'api/axiosInterceptors';
 import env from 'config/env';
 
 export default function SignUp() {
-  const [showPassword, setShowPassword] = useState(false);
-
   const navigate = useNavigate();
-  const [firstName, setFirstName] = useState('Rezan3');
-  const [lastName, setLastName] = useState('moh');
-  const [email, setEmail] = useState('rezan@vivaldi.net');
-  const [password, setPass] = useState('1234qwer');
+  
+  const [showPassword, setShowPassword] = useState(false);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPass] = useState('');
+
   const submitLogin = async () => {
     if (email && firstName && password) {
       try {

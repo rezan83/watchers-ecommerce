@@ -70,8 +70,6 @@ export default function UserProfileEdit(): JSX.Element {
   };
   const submitDeleteProduct = async () => {
     if (productToEdit) {
-      // call api
-      // axiosInstance.delete(proccess.env.)
       try {
         await deleteProduct(productToEdit._id!);
         setProductToEdit(null);

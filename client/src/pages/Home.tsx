@@ -1,18 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Box,
-  IconButton,
-  useBreakpointValue,
-  Stack,
-  Heading,
-  Text,
-  Container,
-  Link
-} from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 
 import useProductsStore from 'store/productsStrore';
-import useCartStore from 'store/cartStore';
-import { useNavigate } from 'react-router-dom';
+
 import { ThreeGallery } from 'components/ThreeGallery';
 
 export default function Home() {

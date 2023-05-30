@@ -19,9 +19,11 @@ import { MdLocalShipping } from 'react-icons/md';
 import useCartStore from 'store/cartStore';
 
 export default function ProductDetails() {
+  
   const productDetails = useCartStore(state => state.productDetails);
   const addToCartStore = useCartStore(state => state.addToCartStore);
   const isProductInCart = useCartStore(state => state.isProductInCart(productDetails?._id!));
+
   const addToCart = () => {
     productDetails && addToCartStore(productDetails);
   };

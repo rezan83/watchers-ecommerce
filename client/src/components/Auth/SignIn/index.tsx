@@ -21,19 +21,20 @@ import useAuthStore from 'store/authStore';
 import env from 'config/env';
 
 export default function SIgnIn() {
+  const navigate = useNavigate();
+
   const setAuthUser = useAuthStore(state => state.setAuthUser);
   const setToken = useAuthStore(state => state.setToken);
   const setRefreshToken = useAuthStore(state => state.setRefreshToken);
-  const navigate = useNavigate();
+
   const [isForgetPass, setIsForgetPass] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPass] = useState('');
+
   const submitLogin = async () => {
     if (email && password) {
       try {
-        const url = isForgetPass
-          ? env.FORGET_URL
-          : env.LOGIN_URL;
+        const url = isForgetPass ? env.FORGET_URL : env.LOGIN_URL;
         const submitAuth = await axiosInstance.post(url!, {
           email,
           password

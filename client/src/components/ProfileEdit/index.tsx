@@ -24,11 +24,8 @@ import { multiFormReq } from 'api/usersApi';
 import env from 'config/env';
 
 export default function UserProfileEdit(): JSX.Element {
-  const authUser = useAuthStore(state => state.authUser);
-  const setAuthUser = useAuthStore(state => state.setAuthUser);
-  const userToEdit = useAuthStore(state => state.userToEdit);
-  const setUserToEdit = useAuthStore(state => state.setUserToEdit);
-  const clearAuth = useAuthStore(state => state.clearAuth);
+  const { authUser, setAuthUser, userToEdit, setUserToEdit, clearAuth } = useAuthStore();
+
   const [imagPrev, setImagPrev] = useState('');
   const [url, setUrl] = useState('');
   const [user, setUser] = useState<IUser | null>(null);

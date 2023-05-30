@@ -62,6 +62,7 @@ import useCartStore from 'store/cartStore';
 function ProductCard({ product }: { product: IProduct }) {
   const navigate = useNavigate();
   const isAdmin = useAuthStore(state => state.authUser?.is_admin);
+  
   const addToCartStore = useCartStore(state => state.addToCartStore);
   const setProductToEdit = useCartStore(state => state.setProductToEdit);
   const setProductDetails = useCartStore(state => state.setProductDetails);
