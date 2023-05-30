@@ -1,15 +1,17 @@
 .clickable {
-        color: #171923;
-    cursor: pointer;
-    font-size: .8rem;
-    display: flex;
-    width: 200px;
+  color: #171923;
+  cursor: pointer;
+  font-size: 0.8rem;
+  display: flex;
+  width: 200px;
+  font-family:cursive;
+
 }
 
 .clickable:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .hideLink {
-    display: none;
+  display: none;
 }

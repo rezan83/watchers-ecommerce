@@ -1,14 +1,7 @@
 import * as THREE from 'three';
 import { useEffect, useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import {
-  Html,
-  useCursor,
-  MeshReflectorMaterial,
-  Image,
-  Text,
-  Environment
-} from '@react-three/drei';
+import { Html, useCursor, MeshReflectorMaterial, Image, Environment } from '@react-three/drei';
 import { easing } from 'maath';
 import { Link } from '@chakra-ui/react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -27,7 +20,7 @@ export const ThreeGallery = ({ images }: { images: any }) => (
       <mesh rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[50, 50]} />
         <MeshReflectorMaterial
-          blur={[300, 100]}
+          blur={[400, 100]}
           mirror={1}
           resolution={2048}
           mixBlur={1}
@@ -90,7 +83,7 @@ function Frame({
   title,
   price,
   id,
-  c = new THREE.Color(),
+  colr = new THREE.Color(),
   ...props
 }: {
   [x: string]: any;
@@ -98,7 +91,7 @@ function Frame({
   title: string;
   price: number;
   id: string;
-  c?: THREE.Color | undefined;
+  // c?: THREE.Color | undefined;
 }) {
   const setProductDetails = useCartStore(state => state.setProductDetails);
   const navigate = useNavigate();
@@ -108,10 +101,8 @@ function Frame({
   };
 
   const image = useRef<any>();
-  const frame = useRef<any>();
   const params = useParams();
   const [hovered, hover] = useState(false);
-  const [rnd] = useState(() => Math.random());
   const name = title;
   const isActive = params?.id === name;
 
@@ -119,14 +110,12 @@ function Frame({
   useCursor(hovered);
   useFrame((state, dt) => {
     image.current.material.zoom = 0.7;
-    //  1.5 + Math.sin(rnd * 10000 + state.clock.elapsedTime / 4);
     easing.damp3(
       image.current.scale,
-      [0.825 * (!isActive && hovered ? 1.05 : 1), 0.7 * (!isActive && hovered ? 1.05 : 1), 1],
+      [0.93 * (!isActive && hovered ? 1.05 : 1), 0.8 * (!isActive && hovered ? 1.05 : 1), 1],
       0.1,
       dt
     );
-    // easing.dampC(frame.current.material.color, hovered ? 'dodgerblue' : 'white', 0.2, dt);
   });
   return (
     <group {...props}>
@@ -134,14 +123,10 @@ function Frame({
         name={name}
         onPointerOver={e => (e.stopPropagation(), hover(true))}
         onPointerOut={() => hover(false)}
-        scale={[1.3, GOLDENRATIO, 0.05]}
+        scale={[1.3, GOLDENRATIO, 0.01]}
         position={[0, GOLDENRATIO / 2, 0]}>
         <boxGeometry />
-        <meshStandardMaterial color="black" metalness={0.5} roughness={0.5} envMapIntensity={2} />
-        <mesh ref={frame} raycast={() => null} scale={[0.9, 0.93, 0.9]} position={[0, 0, 0.2]}>
-          <boxGeometry />
-          <meshBasicMaterial toneMapped={false} fog={false} />
-        </mesh>
+        <meshStandardMaterial color="white" envMapIntensity={20} />
         <Image raycast={() => null} ref={image} position={[0, +0.05, 0.7]} url={url} />
 
         <Html
