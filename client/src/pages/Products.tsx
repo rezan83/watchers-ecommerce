@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { SimpleGrid } from '@chakra-ui/react';
+import { Box, SimpleGrid } from '@chakra-ui/react';
 import ProductCard from 'components/ProductCard';
 import useProductsStore from 'store/productsStrore';
 import useCartStore from 'store/cartStore';
@@ -21,26 +21,26 @@ const Products = ({ cart }: { cart?: boolean }) => {
       <h1>
         {(cart ? cartProducts : products.products).length
           ? cart
-            ? 'Cart'
+            ? `Cart: ${currency}${cartTotal}`
             : 'Products'
           : 'No Items'}
       </h1>
-      <SimpleGrid columns={cart ? [2] : [1]} spacing={5} justifyItems={'center'}>
+      <SimpleGrid columns={[1]} spacing={5} justifyItems={'center'}>
         {!cart && <Paginate />}
 
-        <SimpleGrid p="1rem" columns={cart ? [1] : [1, 2, 2, 3]} spacing={5}>
+        <SimpleGrid p="1rem" columns={[1, 2, 2, 3]} spacing={5}>
           {(cart ? cartProducts : products.products).map(product => {
             return <ProductCard key={product._id} product={product} />;
           })}
         </SimpleGrid>
         {cart && (
-          <div>
+          <Box w={'80%'}>
             <h2>
               Total: {currency}
               {cartTotal}
             </h2>
             <PaypalBtn />
-          </div>
+          </Box>
         )}
       </SimpleGrid>
     </>

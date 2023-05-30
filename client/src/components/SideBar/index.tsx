@@ -143,14 +143,17 @@ interface NavItemProps extends FlexProps {
   link?: string;
   children: ReactNode;
 }
-const NavItem = ({ icon, link, children, ...rest }: NavItemProps) => {
+const NavItem = ({ icon, link, children }: NavItemProps) => {
   return (
     <Link
       as={RouterLink}
       to={link}
       style={{ textDecoration: 'none' }}
       _focus={{ boxShadow: 'none' }}>
-      <Flex align="center" p="4" mx="4" borderRadius="lg" role="group" cursor="pointer">
+      <Flex align="center" p="4" mx="4" borderRadius="lg" role="group" cursor="pointer"
+      
+      
+      >
         {icon && (
           <Icon
             mr="4"
@@ -198,7 +201,12 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       px={{ base: 4, md: 4 }}
       height="20"
       alignItems="center"
-      borderBottomWidth="1px">
+      borderBottomWidth="1px"
+      bg={useColorModeValue('white', 'gray.900')}
+      // borderBottomWidth="1px"
+      borderBottomColor={useColorModeValue('gray.200', 'gray.700')}
+      justifyContent={{ base: 'space-between', md: 'flex-end' }}
+      >
       <IconButton
         display={{ base: 'flex', md: 'none' }}
         onClick={onOpen}
