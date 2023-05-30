@@ -11,7 +11,7 @@ import {
 } from '@react-three/drei';
 import { easing } from 'maath';
 import { Link } from '@chakra-ui/react';
-import { useNavigate, useParams  } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useCartStore from 'store/cartStore';
 
 import './three-gallery.css';
@@ -60,7 +60,6 @@ function Frames({
   const setLocation = useNavigate();
   useEffect(() => {
     clicked.current = ref.current.getObjectByName(params['*']);
-    console.log(params)
     if (clicked.current) {
       clicked.current.parent.updateWorldMatrix(true, true);
       clicked.current.parent.localToWorld(p.set(0, GOLDENRATIO / 2, 1.25));
@@ -72,14 +71,13 @@ function Frames({
   });
   useFrame((state, dt) => {
     easing.damp3(state.camera.position, p, 0.4, dt);
-    easing.dampQ(state.camera.quaternion, q, 0.4, dt);
+    easing.dampQ(state.camera.quaternion, q, 0.5, dt);
   });
   return (
     <group
       ref={ref}
       onClick={e => (
-        e.stopPropagation(),
-        setLocation(clicked.current === e.object ? '/' :   e.object.name)
+        e.stopPropagation(), setLocation(clicked.current === e.object ? '/' : e.object.name)
       )}
       onPointerMissed={() => setLocation('/')}>
       {images.map((props:any) => <Frame key={props.url} {...props} /> /* prettier-ignore */)}
@@ -111,21 +109,24 @@ function Frame({
 
   const image = useRef<any>();
   const frame = useRef<any>();
-  const params = useParams ();
+  const params = useParams();
   const [hovered, hover] = useState(false);
   const [rnd] = useState(() => Math.random());
   const name = title;
   const isActive = params?.id === name;
+ 
+  
+  const [hidden, setVisible] = useState(false);
   useCursor(hovered);
   useFrame((state, dt) => {
     image.current.material.zoom = 1.5 + Math.sin(rnd * 10000 + state.clock.elapsedTime / 4);
     easing.damp3(
       image.current.scale,
-      [0.85 * (!isActive && hovered ? 0.95 : 1), 0.9 * (!isActive && hovered ? 0.95 : 1), 1],
+      [0.9 * (!isActive && hovered ? 0.98 : 1), 0.9 * (!isActive && hovered ? 0.98 : 1), 1],
       0.1,
       dt
     );
-    easing.dampC(frame.current.material.color, hovered ? 'dodgerblue' : 'white', 0.2, dt);
+    // easing.dampC(frame.current.material.color, hovered ? 'dodgerblue' : 'white', 0.2, dt);
   });
   return (
     <group {...props}>
@@ -141,20 +142,25 @@ function Frame({
           <boxGeometry />
           <meshBasicMaterial toneMapped={false} fog={false} />
         </mesh>
-        <Image raycast={() => null} ref={image} position={[0, 0, 0.7]} url={url} />
-      </mesh>
-      <Text
-        maxWidth={0.1}
-        anchorX="left"
-        anchorY="top"
-        position={[-0.5, GOLDENRATIO-1, 0]}
-        fontSize={0.025}>
-        <Html>
-          <Link
-            className="clickable"
-            onClick={() => showProductDetails(id)}>{`${title}: $${price}`}</Link>
+        <Image raycast={() => null} ref={image} position={[0, +0.05, 0.7]} url={url} />
+    
+
+        <Html
+          style={{
+            transition: 'all 0.2s',
+            opacity: hidden  ? 0 : 1,
+            transform: `scale(${hidden ? 0.5 : 1})`
+          }}
+          distanceFactor={1.5}
+          position={[0, -0.43, 0.51]}
+          transform
+          occlude
+          onOcclude={setVisible as any}>
+          <Link className={`clickable`} onClick={() => showProductDetails(id)}>
+            {`${title}: $${price}`}
+          </Link>
         </Html>
-      </Text>
+      </mesh>
     </group>
   );
 }
