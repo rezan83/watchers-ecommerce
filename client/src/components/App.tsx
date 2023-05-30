@@ -19,25 +19,26 @@ import ProductDetails from './ProductDetails';
 import useProductsStore from 'store/productsStrore';
 import useCategoriesStore from 'store/categoriesStore';
 import useOrdersStore from 'store/ordersStore';
+import useAuthStore from 'store/authStore';
 
 const App = () => {
-  const fetchStoreProducts = useProductsStore(state => state.fetchStoreProducts);
-  const fetchStoreFeatured = useProductsStore(state => state.fetchStoreFeatured);
+  const is_admin = useAuthStore(state => state.authUser?.is_admin);
+  const { fetchStoreProducts, fetchStoreFeatured, priceFilter, nameFilter, limit, page } =
+    useProductsStore();
+
   const fetchStoreCategories = useCategoriesStore(state => state.fetchStoreCategories);
-  const fetchStoreOrders = useOrdersStore(state => state.fetchStoreOrders);
   const searchCategories = useCategoriesStore(state => state.searchCategories);
-  const priceFilter = useProductsStore(state => state.priceFilter);
-  const nameFilter = useProductsStore(state => state.nameFilter);
-  const limit = useProductsStore(state => state.limit);
-  const page = useProductsStore(state => state.page);
+  const fetchStoreOrders = useOrdersStore(state => state.fetchStoreOrders);
 
   useEffect(() => {
     fetchStoreProducts(priceFilter, nameFilter, limit, page, searchCategories);
-    fetchStoreFeatured()
+    fetchStoreFeatured();
     fetchStoreCategories();
-    fetchStoreOrders();
+    if (is_admin) {
+      fetchStoreOrders();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [priceFilter, nameFilter, limit, page, searchCategories]);
+  }, [priceFilter, nameFilter, limit, page, searchCategories, is_admin]);
 
   return (
     <BrowserRouter>
