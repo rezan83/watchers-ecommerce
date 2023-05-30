@@ -18,7 +18,6 @@ export default fetchUsers;
 export async function multiFormReq(url: string, user: IUser) {
   const multiForm = new FormData();
   const { image, name, phone } = user;
-console.log("multiFormReq",image)
   Object.entries({ image, name, phone } as IUser).forEach(entry => {
     multiForm.append(entry[0], entry[1]);
   });

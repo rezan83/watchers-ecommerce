@@ -58,9 +58,9 @@ export default function UserProfileEdit(): JSX.Element {
 
         const updatedUser = await multiFormReq(url, user);
         setUserToEdit(null);
-        if (!authUser?.is_admin && !userToEdit) {
+        if (!userToEdit) {
           navigate('/profile');
-          setAuthUser(updatedUser.data.user);
+          setAuthUser(updatedUser?.user);
         } else {
           navigate('/dashboard/users');
         }

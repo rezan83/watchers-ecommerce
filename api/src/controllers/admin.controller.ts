@@ -70,7 +70,7 @@ const adminControllers = {
       {
         new: true,
       }
-    )
+    ).select('-password')
       .then((user) => {
         res.status(200).json({ message: 'updated successfully', user })
       })
