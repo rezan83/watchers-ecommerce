@@ -114,15 +114,15 @@ function Frame({
   const [rnd] = useState(() => Math.random());
   const name = title;
   const isActive = params?.id === name;
- 
-  
+
   const [hidden, setVisible] = useState(false);
   useCursor(hovered);
   useFrame((state, dt) => {
-    image.current.material.zoom = 1.5 + Math.sin(rnd * 10000 + state.clock.elapsedTime / 4);
+    image.current.material.zoom = 0.7;
+    //  1.5 + Math.sin(rnd * 10000 + state.clock.elapsedTime / 4);
     easing.damp3(
       image.current.scale,
-      [0.9 * (!isActive && hovered ? 0.98 : 1), 0.9 * (!isActive && hovered ? 0.98 : 1), 1],
+      [0.825 * (!isActive && hovered ? 1.05 : 1), 0.7 * (!isActive && hovered ? 1.05 : 1), 1],
       0.1,
       dt
     );
@@ -137,18 +137,17 @@ function Frame({
         scale={[1.3, GOLDENRATIO, 0.05]}
         position={[0, GOLDENRATIO / 2, 0]}>
         <boxGeometry />
-        <meshStandardMaterial color="#151515" metalness={0.5} roughness={0.5} envMapIntensity={2} />
+        <meshStandardMaterial color="black" metalness={0.5} roughness={0.5} envMapIntensity={2} />
         <mesh ref={frame} raycast={() => null} scale={[0.9, 0.93, 0.9]} position={[0, 0, 0.2]}>
           <boxGeometry />
           <meshBasicMaterial toneMapped={false} fog={false} />
         </mesh>
         <Image raycast={() => null} ref={image} position={[0, +0.05, 0.7]} url={url} />
-    
 
         <Html
           style={{
             transition: 'all 0.2s',
-            opacity: hidden  ? 0 : 1,
+            opacity: hidden ? 0 : 1,
             transform: `scale(${hidden ? 0.5 : 1})`
           }}
           distanceFactor={1.5}
@@ -157,7 +156,7 @@ function Frame({
           occlude
           onOcclude={setVisible as any}>
           <Link className={`clickable`} onClick={() => showProductDetails(id)}>
-            {`${title}: $${price}`}
+            {`${title}: $${price}  ->`}
           </Link>
         </Html>
       </mesh>
