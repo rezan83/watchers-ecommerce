@@ -40,7 +40,6 @@ import DashLinks from './DashLinks';
 
 import './side-bar.css';
 
-
 // interface LinkItemProps {
 //   name: string;
 //   icon: IconType;
@@ -107,10 +106,6 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         <Link as={RouterLink} to="./">
           <Img src="watchers-logo.png" alt={`${Logo} logo`} width={'60px'} />
         </Link>
-
-        {/* <Text fontSize="xl" fontFamily="monospace" fontWeight="bold">
-          {Logo}
-        </Text> */}
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       <>
@@ -128,9 +123,6 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         </>
       )}
       <>
-        <NavItem key={'Products'} icon={HiShoppingBag} link={'products'}>
-          {'Products'}
-        </NavItem>
 
         {isProductsPage && <ProductFilters />}
       </>
@@ -189,7 +181,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   });
 
   const { colorMode, toggleColorMode } = useColorMode();
- 
+
   const signOut = () => {
     clearAuth();
     clearCartStore();
@@ -238,9 +230,12 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         {Logo}
       </Text> */}
 
-      <HStack spacing={{ base: '1', md: '6' }}>
-        <IconButton size="lg" variant="ghost" aria-label="open menu" icon={<FiBell />} />
-
+      <HStack spacing={{ base: '2', md: '6' }}>
+        
+        <NavItem key={'Products'} icon={HiShoppingBag} link={'products'}>
+          {'Shop'}
+        </NavItem>
+        
         <Button onClick={toggleColorMode}>
           {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
         </Button>
@@ -281,6 +276,9 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               bg={useColorModeValue('white', 'gray.900')}
               borderColor={useColorModeValue('gray.200', 'gray.700')}>
               <MenuItem onClick={goProfile}>Profile</MenuItem>
+              <MenuDivider />
+              <MenuItem > <Icon as={FiBell} /></MenuItem>
+
               {/* <MenuItem>Settings</MenuItem>
               <MenuItem>Billing</MenuItem> */}
               <MenuDivider />
