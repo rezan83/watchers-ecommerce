@@ -47,7 +47,7 @@ import './side-bar.css';
 // }
 
 // const LinkItems: Array<LinkItemProps> = [
-//   // { name: 'Home', icon: FiHome, link: 'home' },
+//   // { name: 'Home', icon: FiHome, link: '/' },
 //   { name: 'Products', icon: HiShoppingBag, link: 'products' }
 //   // { name: 'Trending', icon: FiTrendingUp },
 //   // { name: 'Explore', icon: FiCompass },
@@ -109,7 +109,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       <>
-        <NavItem key={'Home'} icon={FiHome} link={'home'}>
+        <NavItem key={'Home'} icon={FiHome} link={'/'}>
           {'Home'}
         </NavItem>
       </>
