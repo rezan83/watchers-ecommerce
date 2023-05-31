@@ -25,7 +25,7 @@ export default function Home() {
         // { position: [0.8, 0, -0.6], rotation: [0, 0, 0], url: pexel(310452) },
         // Left
         {
-          position: [-1.2, 0, 2.25],
+          position: [-0.2, 0, 2.25],
           rotation: [0, Math.PI / 2.5, 0],
           url: featured[1].image,
           title: featured[1].name,
@@ -36,7 +36,7 @@ export default function Home() {
         // { position: [-2, 0, 2.75], rotation: [0, Math.PI / 2.5, 0], url: pexel(358574) },
         // Right
         {
-          position: [1.2, 0, 2.25],
+          position: [0.2, 0, 2.25],
           rotation: [0, -Math.PI / 2.5, 0],
           url: featured[2].image,
           title: featured[2].name,

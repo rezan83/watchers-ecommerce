@@ -1,9 +1,8 @@
 import * as THREE from 'three';
 import { useEffect, useRef, useState } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Html, useCursor, MeshReflectorMaterial, Image, Environment } from '@react-three/drei';
+import { Canvas, ThreeEvent, useFrame } from '@react-three/fiber';
+import { useCursor, MeshReflectorMaterial, Image, Environment, Text } from '@react-three/drei';
 import { easing } from 'maath';
-import { Link } from '@chakra-ui/react';
 import { useNavigate, useParams } from 'react-router-dom';
 import useCartStore from 'store/cartStore';
 
@@ -55,7 +54,7 @@ function Frames({
     clicked.current = ref.current.getObjectByName(params['*']);
     if (clicked.current) {
       clicked.current.parent.updateWorldMatrix(true, true);
-      clicked.current.parent.localToWorld(p.set(0, GOLDENRATIO / 2, 1.25));
+      clicked.current.parent.localToWorld(p.set(0, GOLDENRATIO / 2, 0.25));
       clicked.current.parent.getWorldQuaternion(q);
     } else {
       p.set(0, 0, 5.5);
@@ -92,10 +91,11 @@ function Frame({
   price: number;
   id: string;
   // c?: THREE.Color | undefined;
-}) {
+}): any {
   const setProductDetails = useCartStore(state => state.setProductDetails);
   const navigate = useNavigate();
-  const showProductDetails = (id: string) => {
+  const showProductDetails = (e: ThreeEvent<MouseEvent>) => {
+    e.stopPropagation();
     setProductDetails(id);
     navigate('/product-details');
   };
@@ -106,7 +106,6 @@ function Frame({
   const name = title;
   const isActive = params?.id === name;
 
-  const [hidden, setVisible] = useState(false);
   useCursor(hovered);
   useFrame((state, dt) => {
     image.current.material.zoom = 0.7;
@@ -117,33 +116,25 @@ function Frame({
       dt
     );
   });
+
   return (
     <group {...props}>
       <mesh
         name={name}
         onPointerOver={e => (e.stopPropagation(), hover(true))}
         onPointerOut={() => hover(false)}
-        scale={[1.3, GOLDENRATIO, 0.01]}
-        position={[0, GOLDENRATIO / 2, 0]}>
+        scale={[1.4, GOLDENRATIO, 0.01]}
+        position={[0, GOLDENRATIO / 2, -1]}>
         <boxGeometry />
         <meshStandardMaterial color="white" envMapIntensity={20} />
         <Image raycast={() => null} ref={image} position={[0, +0.05, 0.7]} url={url} />
-
-        <Html
-          style={{
-            transition: 'all 0.2s',
-            opacity: hidden ? 0 : 1,
-            transform: `scale(${hidden ? 0.5 : 1})`
-          }}
-          distanceFactor={1.5}
-          position={[0, -0.43, 0.51]}
-          transform
-          occlude
-          onOcclude={setVisible as any}>
-          <Link className={`clickable`} onClick={() => showProductDetails(id)}>
-            {`${title}: $${price}  ->`}
-          </Link>
-        </Html>
+        <Text
+          onClick={showProductDetails}
+          fontSize={0.04}
+          color={'dodgerblue'}
+          position={[0, -0.43, 0.51]}>
+          {`${title}: $${price}  ->`}
+        </Text>
       </mesh>
     </group>
   );

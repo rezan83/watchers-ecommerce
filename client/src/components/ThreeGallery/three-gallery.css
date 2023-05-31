@@ -1,10 +1,12 @@
 .clickable {
+  position: absolute;
   color: #171923;
   cursor: pointer;
   font-size: 0.8rem;
   display: flex;
   width: 200px;
   font-family:cursive;
+  z-index: -100;
 
 }
 
