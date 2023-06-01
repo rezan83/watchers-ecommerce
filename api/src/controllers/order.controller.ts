@@ -18,12 +18,14 @@ const orderControllers = {
   },
 
   addOneOrder: async (req: authReq, res: Response) => {
-    const city = (await City.findOne({
-      name: req.body.address.city,
-      country: req.body.address.country,
-    })) as ICity
-    const address = { ...req.body.address, lat: city.lat, lng: city.lng }
     try {
+      const city = (await City.findOne({
+        name: req.body.address.city,
+        country: req.body.address.country,
+      })) as ICity
+      console.log(city)
+      const address = { ...req.body.address, lat: city.lat, lng: city.lng }
+
       const order = new Order({
         user: req.user._id,
         ...req.body,
