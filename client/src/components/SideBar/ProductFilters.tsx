@@ -50,7 +50,7 @@ const ProductFilters: FC = () => {
     setSelectedCategories(selectedCategories);
   };
   return (
-    <Flex p={'10px'} direction="column" w={'100%'} border={'1px gray solid'}>
+    <Flex mx={2} direction="column" border={'1px gray solid'}>
       <Flex m="5px" justifyContent={'space-between'}>
         <Icon as={FaFilter} />
         <Button onClick={clearFilters}>reset</Button>

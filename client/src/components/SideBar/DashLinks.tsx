@@ -30,7 +30,7 @@ const NavLink: FC<ILink> = ({ link, name, onClick }) => (
 const DashLinks = () => {
   const setProductToEdit = useCartStore(state => state.setProductToEdit);
   return (
-    <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4} border={'solid 1px gray'}>
+    <Box bg={useColorModeValue('gray.100', 'gray.900')} mx={2} border={'solid 1px gray'}>
       <VStack as={'nav'} spacing={4} display={'flex'} alignItems={'start'}>
         <NavLink link={'/dashboard/users'} name={'Users'} />
         <NavLink

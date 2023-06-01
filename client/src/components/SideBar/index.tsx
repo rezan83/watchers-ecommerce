@@ -40,7 +40,7 @@ import DashLinks from './DashLinks';
 
 import './side-bar.css';
 
-// interface LinkItemProps {
+// interface LinkItemProps {shop
 //   name: string;
 //   icon: IconType;
 //   link?: string;

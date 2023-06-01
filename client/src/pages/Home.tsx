@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Box } from '@chakra-ui/react';
+import { Box, Button, Icon } from '@chakra-ui/react';
 
 import useProductsStore from 'store/productsStrore';
 
 import { ThreeGallery } from 'components/ThreeGallery';
+import { useNavigate } from 'react-router-dom';
+import { HiShoppingBag } from 'react-icons/hi';
 
 export default function Home() {
+  const navigate = useNavigate();
   const featured = useProductsStore(state => state.featuredProducts);
   const [images, setimages] = useState<any>([]);
   useEffect(() => {
@@ -51,7 +54,30 @@ export default function Home() {
 
   return (
     <Box position={'relative'} height={'600px'} width={'full'} overflow={'hidden'}>
+      <Button
+        position={'absolute'}
+        zIndex={'100'}
+        top={0}
+        left={`1rem`}
+        colorScheme={'blue'}
+        color='white'
+        size={'sm'}>
+        {'Our Featured'}
+      </Button>
       {!!featured.length && <ThreeGallery images={images} />}
+      <Button
+        position={'absolute'}
+        zIndex={'100'}
+        bottom={'1rem'}
+        left={`1rem`}
+        colorScheme={'blue'}
+        color='white'
+        size={'sm'}
+        onClick={() => navigate('/products')}>
+        <span>{'See More in ->'} <Icon as={HiShoppingBag} /> {'Shop'}</span>
+        
+        
+      </Button>
     </Box>
   );
 }
