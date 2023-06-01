@@ -62,7 +62,7 @@ import useCartStore from 'store/cartStore';
 function ProductCard({ product }: { product: IProduct }) {
   const navigate = useNavigate();
   const isAdmin = useAuthStore(state => state.authUser?.is_admin);
-  
+
   const addToCartStore = useCartStore(state => state.addToCartStore);
   const setProductToEdit = useCartStore(state => state.setProductToEdit);
   const setProductDetails = useCartStore(state => state.setProductDetails);
@@ -101,6 +101,8 @@ function ProductCard({ product }: { product: IProduct }) {
           )} */}
 
         <Image
+          onClick={showProductDetails}
+          cursor={'pointer'}
           w="100%"
           src={String(product.image)}
           alt={`Picture of ${product.name}`}
@@ -117,12 +119,7 @@ function ProductCard({ product }: { product: IProduct }) {
           </Box>
           <Flex mt="1" justifyContent="space-between" alignContent="center">
             <Link onClick={showProductDetails}>
-              <Box
-                fontSize="xl"
-                fontWeight="semibold"
-                as="h4"
-                lineHeight="tight"
-                isTruncated>
+              <Box fontSize="xl" fontWeight="semibold" as="h4" lineHeight="tight" isTruncated>
                 {product.name}
               </Box>
             </Link>
