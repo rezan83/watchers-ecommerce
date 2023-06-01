@@ -16,13 +16,13 @@ import useAuthStore from 'store/authStore';
 export default function Profile() {
   const authUser = useAuthStore(state => state.authUser);
   const navigate = useNavigate();
-
+  const bgColor = authUser?.is_admin ? ['purple.300', 'purple.300'] : ['white', 'gray.800'];
   return (
     <Center py={6}>
       <Box
         maxW={'90%'}
         w={'full'}
-        bg={useColorModeValue('white', 'gray.800')}
+        bg={useColorModeValue(bgColor[0], bgColor[1])}
         boxShadow={'2xl'}
         rounded={'md'}
         overflow={'hidden'}>
@@ -35,7 +35,7 @@ export default function Profile() {
           }
           objectFit={'cover'}
         />
-        <Flex justify={'center'} mt={-12}>
+        <Flex mt={-12} justify={'center'}>
           <Avatar
             name="Avatar"
             size={'xl'}
@@ -47,13 +47,13 @@ export default function Profile() {
         </Flex>
 
         <Box p={6}>
-          <Stack spacing={0} align={'center'} mb={5}>
+          <Stack spacing={0} mb={5}>
             <Heading fontSize={'2xl'} fontWeight={500} fontFamily={'body'}>
-              {authUser?.name}
+            Name: {authUser?.name}
             </Heading>
-            <Text color={'gray.500'}> {authUser?.email}</Text>
-            <Text color={'gray.500'}> {authUser?.phone}</Text>
-            {authUser?.is_admin && <Text color={'gray.500'}> Admin</Text>}
+            <Text> Email: {authUser?.email}</Text>
+            <Text> Phone: {authUser?.phone}</Text>
+            {authUser?.is_admin && <Text> Status: Admin</Text>}
           </Stack>
 
           <Button

@@ -41,7 +41,9 @@ export default function ProfileCard({ user }: { user: IUser }) {
           }
           objectFit={'cover'}
         />
-        <Flex justify={'center'} mt={-12}>
+        <Flex
+        justify={'space-between'}
+          mt={-12}>
           <Avatar
             name="Avatar"
             size={'xl'}
@@ -50,16 +52,21 @@ export default function ProfileCard({ user }: { user: IUser }) {
               border: '2px solid white'
             }}
           />
+          {user?.is_admin && <Button bg={'purple.300'}>Admin</Button>}
+          {user?.is_banned && <Button bg={'red.800'}>Banned!</Button>}
         </Flex>
 
         <Box p={6}>
-          <Stack spacing={0} align={'center'} mb={5}>
+          <Stack
+            spacing={0}
+            p={2}
+            mb={5}>
             <Heading fontSize={'2xl'} fontWeight={500} fontFamily={'body'}>
-              {user?.name}
+              Name: {user?.name}
             </Heading>
-            <Text color={'gray.500'}> {user?.email}</Text>
-            <Text color={'gray.500'}> {user?.phone}</Text>
-            {user?.is_admin && <Text color={'gray.500'}> Admin</Text>}
+            <Text > Email: {user?.email}</Text>
+            <Text > Phone: {user?.phone}</Text>
+           
           </Stack>
 
           <Button
