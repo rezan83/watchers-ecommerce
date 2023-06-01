@@ -1,3 +1,4 @@
+import { SimpleGrid } from '@chakra-ui/react';
 import ProfileCard from 'components/ProfileCard';
 import { useEffect } from 'react';
 import useAuthStore from 'store/authStore';
@@ -15,13 +16,13 @@ const Users = () => {
   }, []);
 
   return (
-    <div>
+    <SimpleGrid p="1rem" columns={[1, 2, 2, 3]} spacing={5}>
       {users.map(user => {
         if (authUser?.email !== user.email) {
           return <ProfileCard key={user._id} user={user} />;
         }
       })}
-    </div>
+    </SimpleGrid>
   );
 };
 
