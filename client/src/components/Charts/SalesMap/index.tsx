@@ -6,21 +6,24 @@ import useOrdersStore from 'store/ordersStore';
 import { ISalesStat } from '@types';
 
 const initOptions = (data: ISalesStat[]) => {
-
-
   return {
     chart: {
       map: world,
       backgroundColor: '#2e2e2e',
       style: {
         // fontFamily: 'serif',
-        stroke: '#949292'
+        stroke: '#90CDF4'
       }
-      
     },
     title: {
       text: 'Sales Map',
       align: 'left',
+      style: {
+        // fontFamily: 'serif',
+        fontSize: '1em',
+        fontWeight: '300',
+        color: '#90CDF4'
+      }
     },
     // subtitle: {
     //   text:
