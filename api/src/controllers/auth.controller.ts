@@ -116,7 +116,7 @@ const authController = {
       // res.status(200).json({
       //   message: 'user was created, ready to sign in',
       // })
-      res.redirect(env.CLIENT_URL + '/login')
+      res.redirect(env.CLIENT_URL + '/login/success')
     })
   },
 

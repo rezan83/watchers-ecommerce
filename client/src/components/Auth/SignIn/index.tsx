@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link as ReactRouter, useNavigate } from 'react-router-dom';
+import { Link as ReactRouter, useNavigate, useParams } from 'react-router-dom';
 import {
   Flex,
   Box,
@@ -19,8 +19,11 @@ import {
 import axiosInstance from 'api/axiosInterceptors';
 import useAuthStore from 'store/authStore';
 import env from 'config/env';
+import Notifyer from 'components/Notifyer';
 
-export default function SIgnIn() {
+export default function SignIn() {
+  const { success } = useParams();
+  console.log({ success });
   const navigate = useNavigate();
 
   const setAuthUser = useAuthStore(state => state.setAuthUser);
@@ -66,6 +69,7 @@ export default function SIgnIn() {
       justify={'center'}
       bg={useColorModeValue('gray.50', 'gray.800')}>
       <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+        {success && <Notifyer title={'success, now login please'} status={'success'} />}
         <Stack align={'center'}>
           <Heading fontSize={'4xl'}>
             {isForgetPass ? 'Set a new password' : 'Sign in to your account'}

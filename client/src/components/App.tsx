@@ -105,6 +105,15 @@ const App = () => {
               }
             />
             <Route
+              path={'login/:success'}
+              element={
+                <ProtectRouteFor rule={'guest'}>
+                  <SignIn />
+                </ProtectRouteFor>
+              }
+            />
+             <Route
+             
               path={'login'}
               element={
                 <ProtectRouteFor rule={'guest'}>
