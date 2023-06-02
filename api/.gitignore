@@ -39,3 +39,7 @@ dist/**/*
 
 *.swo
 *.swp
+
+# ignore docker because Railway
+Dockerfile
+.dockerignore
