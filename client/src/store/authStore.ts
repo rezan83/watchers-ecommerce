@@ -27,12 +27,14 @@ const useAuthStore = create(
       setRefreshToken: refreshToken => set(state => ({ refreshToken })),
 
       setAuthUser: authUser => {
+        console.log(authUser)
         authUser.status = authUser.is_admin ? 'Admin' : 'User';
         set({ authUser });
       },
       setUserToEdit: userToEdit => {
         set({ userToEdit });
       },
+     
       clearAuth: () =>
         set(state => ({ token: null, refreshToken: null, user: null, authUser: null }))
     }),

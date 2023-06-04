@@ -5,13 +5,18 @@ import { authReq } from '../models/@types'
 import { uploadToCloudinary } from '../middlewares/uploader'
 
 const userControllers = {
-  userProfile: (req: Request, res: Response) => {
-    const user = req.user
+  userProfile: async (req: authReq, res: Response) => {
     try {
-      return res.status(200).json({
-        message: 'Profile returned',
-        user,
+      const user = await User.findById(req.user).select('-password').populate({
+        path: 'orders',
+        populate: {
+          path: 'products',
+        },
       })
+
+      return res.status(200).json(
+        user,
+      )
     } catch (error: any) {
       return res.status(500).json({
         message: error.message,
@@ -39,11 +44,10 @@ const userControllers = {
       {
         new: true,
       }
-    ).select('-password')
+    )
+      .select('-password')
       .then((user) => {
-        res
-          .status(200)
-          .json({ message: 'updated successfully', user })
+        res.status(200).json({ message: 'updated successfully', user })
       })
       .catch((err) =>
         res.status(404).json({ message: 'user not found', error: err.message })

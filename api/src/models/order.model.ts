@@ -1,4 +1,5 @@
 import { ObjectId, Schema, model } from 'mongoose'
+import User from './user.model'
 
 export interface IOrder {
   _id?: ObjectId
@@ -49,6 +50,18 @@ const orderSchema = new Schema<IOrder>({
     lat: String,
     lng: String,
   },
+})
+
+
+orderSchema.post('save', async function (doc, next) {
+  const relatedUser: any = await User.findById(this.user)
+
+  relatedUser.orders = relatedUser.orders.length
+    ? [...relatedUser.orders, this._id]
+    : [this._id]
+
+  relatedUser.save()
+  next()
 })
 
 const Order = model<IOrder>('Order', orderSchema)

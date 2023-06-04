@@ -226,7 +226,8 @@ const authController = {
           message: 'minimum length for password is 6 characters',
         })
       }
-      const user = await User.findOne({ email: email })
+      const user = await User.findOne({ email: email }).populate('orders')
+      console.log(user)
       if (!user) {
         return res.status(400).json({
           message: 'user with this email does not exist, please register first',

@@ -23,7 +23,6 @@ import Notifyer from 'components/Notifyer';
 
 export default function SignIn() {
   const { success } = useParams();
-  console.log({ success });
   const navigate = useNavigate();
 
   const setAuthUser = useAuthStore(state => state.setAuthUser);

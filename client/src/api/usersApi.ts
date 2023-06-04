@@ -15,6 +15,18 @@ const fetchUsers = async (): Promise<IUser[]> => {
 
 export default fetchUsers;
 
+export const fetchUserProfile = async (): Promise<IUser | null> => {
+  // PROFILE_URL
+  let user: IUser | null = null;
+  try {
+    const userRes = await axiosInstance.post(env.PROFILE_URL!);
+    user = await userRes.data;
+  } catch (error) {
+    console.log(error);
+  }
+  return user;
+};
+
 export async function multiFormReq(url: string, user: IUser) {
   const multiForm = new FormData();
   const { image, name, phone } = user;

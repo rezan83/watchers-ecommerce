@@ -9,6 +9,7 @@ export interface IUser {
   is_banned: boolean;
   status?: string;
   image?: Blob | string;
+  orders?: IOrder[]
 }
 
 export interface ICategory {

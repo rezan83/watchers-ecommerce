@@ -20,6 +20,8 @@ import useProductsStore from 'store/productsStrore';
 import useCategoriesStore from 'store/categoriesStore';
 import useOrdersStore from 'store/ordersStore';
 import useAuthStore from 'store/authStore';
+import Footer from './Footer';
+
 
 const App = () => {
   const is_admin = useAuthStore(state => state.authUser?.is_admin);
@@ -131,7 +133,9 @@ const App = () => {
             />
             <Route path="*" element={<Home />} />
           </Routes>
+          <Footer />
         </Sidebar>
+        
       </ChakraProvider>
     </BrowserRouter>
   );

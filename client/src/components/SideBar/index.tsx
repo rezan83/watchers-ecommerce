@@ -102,7 +102,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       pos="fixed"
       h="full"
       {...rest}>
-      <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
+      <Flex h="20" alignItems="center" mx="8" p={'3rem'} justifyContent="space-between">
         <Link as={RouterLink} to="./">
           <Img src="watchers-logo.png" alt={`${Logo} logo`} width={'60px'} />
         </Link>
@@ -213,7 +213,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         aria-label="open menu"
         icon={<FiMenu />}
       />
-      <Link as={RouterLink} to="./">
+      <Link as={RouterLink} to="./" >
         <Img
           display={{ base: 'flex', md: 'none' }}
           src="watchers-logo.png"

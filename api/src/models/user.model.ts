@@ -11,6 +11,8 @@ export interface IUser {
   is_banned: boolean
   createdAt: Date
   image?: string
+  orders?: ObjectId[]
+  cart?: ObjectId[]
 }
 
 const userSchema = new Schema<IUser>({
@@ -34,6 +36,7 @@ const userSchema = new Schema<IUser>({
     trim: true,
     lowercase: true,
     required: true,
+    set: (v:string) => v.toLowerCase(),
     validate: {
       validator: (v: any) => /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/.test(v),
       message: 'not a valid email',
@@ -50,6 +53,8 @@ const userSchema = new Schema<IUser>({
   createdAt: { type: Date, default: Date.now },
   // image: { type: String, contentType: String },
   image: { type: String, contentType: String },
+  orders: [{type: Schema.Types.ObjectId, ref: 'Order'}],
+  cart: [{type: Schema.Types.ObjectId, ref: 'Product'}]
 })
 
 const User = model<IUser>('User', userSchema)
