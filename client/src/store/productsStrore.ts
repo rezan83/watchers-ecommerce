@@ -1,11 +1,15 @@
 import { create } from 'zustand';
 import { IProduct, IProductPages } from '../@types';
-import { fetchProducts, getFeatured } from 'api/productsApi';
+import { fetchOneProduct, fetchProducts, getFeatured } from 'api/productsApi';
 
 interface IProductsStore {
   products: IProductPages;
   featuredProducts: IProduct[];
   setProducts: (products: IProductPages) => void;
+  productToReview: IProduct | null;
+  setProductToReview: (id: string | null) => void;
+  productToEdit: IProduct | null;
+  setProductToEdit: (productToEdit: IProduct | null) => void;
   page: number;
   setPage: (num: number) => void;
   limit: number;
@@ -14,7 +18,7 @@ interface IProductsStore {
   setPriceFilter: (priceFilter: number[] | null) => void;
   nameFilter: string | null;
   setNameFilter: (nameFilter: string | null) => void;
-  fetchStoreFeatured: () => Promise<void> ;
+  fetchStoreFeatured: () => Promise<void>;
   fetchStoreProducts: (
     priceFilter?: null | number[],
     nameFilter?: string | null,
@@ -29,6 +33,19 @@ interface IProductsStore {
 const useProductsStore = create<IProductsStore>((set, get) => ({
   products: { products: [] },
   featuredProducts: [],
+  productToReview: null,
+  setProductToReview: async (id: string | null) => {
+    if (id) {
+      const product = await fetchOneProduct(id);
+      if (product) {
+        set(state => ({ productToReview: product }));
+      }
+    } else {
+      set(state => ({ productToReview: null }));
+    }
+  },
+  productToEdit: null,
+  setProductToEdit: (productToEdit: IProduct | null) => set(state => ({ productToEdit })),
   page: 1,
   setPage: num => {
     set({ page: get().page + num });
@@ -61,7 +78,7 @@ const useProductsStore = create<IProductsStore>((set, get) => ({
     set({ products });
   },
   clearProducts: () => set(state => ({ products: { products: [] } })),
-  clearSearchAndPrice: () => set(state => ({ nameFilter:null , priceFilter:null }))
+  clearSearchAndPrice: () => set(state => ({ nameFilter: null, priceFilter: null }))
 }));
 
 export default useProductsStore;

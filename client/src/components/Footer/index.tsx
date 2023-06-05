@@ -26,7 +26,7 @@ const Footer = () => {
           base: 'column',
           lg: 'row'
         }}
-        w="full"
+        w="100%"
         justify="space-between"
         p={10}>
         <Flex justify="center">

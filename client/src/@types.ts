@@ -9,7 +9,7 @@ export interface IUser {
   is_banned: boolean;
   status?: string;
   image?: Blob | string;
-  orders?: IOrder[]
+  orders?: IOrder[];
 }
 
 export interface ICategory {
@@ -27,7 +27,8 @@ export interface IProduct {
   categories?: string[];
   price: number;
   image?: Blob | string;
-  featured?: boolean
+  featured?: boolean;
+  rating?: number;
 }
 
 export interface IProductPages {
@@ -73,4 +74,11 @@ export interface ISalesStat {
 export interface IOrdersData {
   orders: IOrder[];
   salesStat: ISalesStat[];
+}
+
+export interface IReview {
+  product: string;
+  user?: string;
+  comment: string;
+  rating: number;
 }

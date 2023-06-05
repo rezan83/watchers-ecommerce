@@ -10,7 +10,8 @@ class EnvCalss {
   USERS_URL = this.Url('users/');
   ADMIN_URL = this.Url('admin/');
   ALL_USERS_URL = this.Url('admin/all-users/');
-
+  ALL_REVIEWS_URL = this.Url('reviews/');
+ 
   PRODUCTS_URL = this.Url('products/');
   FEATURED_URL = this.Url('products/featured');
   CATEGORIES_URL = this.Url('categories/');

@@ -20,7 +20,6 @@ import { MultiValue } from 'react-select';
 
 import { multiFormReq, deleteProduct } from 'api/productsApi';
 import { IProduct } from '@types';
-import useCartStore from 'store/cartStore';
 import SelectCategories from 'components/SelectCategories';
 import useCategoriesStore from 'store/categoriesStore';
 import useProductsStore from 'store/productsStrore';
@@ -31,13 +30,11 @@ const initialProduct: IProduct = {
 };
 
 export default function UserProfileEdit(): JSX.Element {
-  const setProductToEdit = useCartStore(state => state.setProductToEdit);
+  const { setProductToEdit, productToEdit } = useProductsStore(state => {
+    return { productToEdit: state.productToEdit, setProductToEdit: state.setProductToEdit };
+  });
   const optionCategories = useCategoriesStore(state => state.optionCategories);
   const fetchStoreProducts = useProductsStore(state => state.fetchStoreProducts);
-
-  const productToEdit = useCartStore(state => {
-    return state.productToEdit;
-  });
 
   const navigate = useNavigate();
   const [product, setProduct] = useState<IProduct>(productToEdit || initialProduct);

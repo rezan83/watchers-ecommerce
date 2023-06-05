@@ -16,30 +16,38 @@ const reviewControllers = {
       )
   },
 
-  addOneReview: async (req: authReq, res: Response) => {
+  addOrUpdateReview: async (req: authReq, res: Response) => {
+    // { upsert: true, new:true }
     try {
-      const review = new Review({
-        user: req.user._id,
-        ...req.body,
+      const { product } = req.body
+      const review = await Review.findOneAndUpdate(
+        { user: req.user._id, product },
+        { user: req.user._id, ...req.body },
+        { upsert: true, new: true }
+      )
+      return res.status(201).json({
+        message: `${
+          // review.modifiedCount ? 'updated' : 'add'
+          'updated'
+        } review successfully`,
+        review,
       })
-
-      await review.save()
-
-      res.status(201).json({ message: 'updated successfully', review })
     } catch (err: any) {
-      res.status(404).json({ message: 'review not found', error: err.message })
+      return res
+        .status(404)
+        .json({ message: 'review not found', error: err.message })
     }
   },
 
-  //   fetchOneReview: (req: Request, res: Response) => {
-  //     Review.findById(req.params.id)
-  //       .then((review) => res.status(200).json(review))
-  //       .catch((err) =>
-  //         res
-  //           .status(404)
-  //           .json({ message: 'review not found', error: err.message })
-  //       )
-  //   },
+  fetchOneReview: (req: authReq, res: Response) => {
+    Review.findOne({ user: req.user._id, product: req.params.id })
+      .then((review) => res.status(200).json(review))
+      .catch((err) =>
+        res
+          .status(404)
+          .json({ message: 'review not found', error: err.message })
+      )
+  },
 
   deleteOneReview: (req: Request, res: Response) => {
     Review.findByIdAndRemove(req.params.id)

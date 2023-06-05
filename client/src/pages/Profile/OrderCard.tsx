@@ -1,22 +1,17 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 // Chakra imports
-import {
-  Avatar,
-  AvatarGroup,
-  Box,
-  Button,
-  Flex,
-  Image,
-  Text,
-  useColorModeValue
-} from '@chakra-ui/react';
+import { Box, Button, Flex, Image, Text, useColorModeValue } from '@chakra-ui/react';
+import useProductsStore from 'store/productsStrore';
 
 const ProjectCard = ({
+  id,
   image,
   name,
   price,
   description
 }: {
+  id: string;
   image: string;
   name: string;
   price: number;
@@ -24,7 +19,12 @@ const ProjectCard = ({
 }) => {
   // Chakra color mode
   const textColor = useColorModeValue('gray.700', 'white');
-
+  const setProductToReview = useProductsStore(state => state.setProductToReview);
+  const navigate = useNavigate();
+  const goReviewPage = () => {
+    setProductToReview(id);
+    navigate('/product-add-review');
+  };
   return (
     <Flex direction="column">
       <Box mb="20px" position="relative" borderRadius="15px">
@@ -49,13 +49,14 @@ const ProjectCard = ({
         </Text>
         <Flex justifyContent="space-between">
           <Button
+            onClick={goReviewPage}
             variant="outline"
             colorScheme="teal"
             minW="110px"
             h="36px"
             fontSize="xs"
             px="1.5rem">
-            VIEW PURCHASE
+            REVIEW PURCHASE
           </Button>
           {/* <AvatarGroup size='xs'>
               {avatars.map((el, idx) => {

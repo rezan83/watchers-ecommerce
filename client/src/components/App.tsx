@@ -21,6 +21,7 @@ import useCategoriesStore from 'store/categoriesStore';
 import useOrdersStore from 'store/ordersStore';
 import useAuthStore from 'store/authStore';
 import Footer from './Footer';
+import ProductAddReview from './ProductAddReview';
 
 
 const App = () => {
@@ -95,6 +96,14 @@ const App = () => {
               element={
                 <ProtectRouteFor rule={'user'}>
                   <ProfileEdit />
+                </ProtectRouteFor>
+              }
+            />
+            <Route
+              path={'product-add-review'}
+              element={
+                <ProtectRouteFor rule={'user'}>
+                  <ProductAddReview />
                 </ProtectRouteFor>
               }
             />

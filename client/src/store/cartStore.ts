@@ -9,8 +9,7 @@ interface ICartStore {
   cartItems: IProduct[];
   productDetails: IProduct | null;
   setProductDetails: (id: string) => void;
-  productToEdit: IProduct | null;
-  setProductToEdit: (productToEdit: IProduct | null) => void;
+  
   currency: string;
   setCurrency: (currency: string) => void;
   addToCartStore: (product: IProduct) => void;
@@ -46,8 +45,7 @@ const useCartStore = create(
           set(state => ({ productDetails: product }));
         }
       },
-      productToEdit: null,
-      setProductToEdit: (productToEdit: IProduct | null) => set(state => ({ productToEdit })),
+   
       addToCartStore: (product: IProduct) => {
         if (!get().isProductInCart(product._id!)) {
           set(state => ({ cartItems: [...state.cartItems, product] }));

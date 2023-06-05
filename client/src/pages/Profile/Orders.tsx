@@ -1,12 +1,6 @@
 import React from 'react';
 // Chakra imports
-import { Button, Flex, Grid, Icon, Text, useColorModeValue } from '@chakra-ui/react';
-import { FaPlus } from 'react-icons/fa';
-// Assets
-// import avatar2 from 'assets/img/avatars/avatar2.png';
-// import avatar4 from 'assets/img/avatars/avatar4.png';
-// import avatar6 from 'assets/img/avatars/avatar6.png';
-import notavailable from '../../assets/img/notavailable.png';
+import { Flex, Grid, Text, useColorModeValue } from '@chakra-ui/react';
 
 // Custom components
 import GenericCard from 'components/GenericCard/GenericCard';
@@ -50,7 +44,8 @@ const Orders = ({
             return (
               <OrderCard
                 key={product.id}
-                image={isAvailableProduct ? String(isAvailableProduct.image) : notavailable}
+                id={product.id}
+                image={isAvailableProduct ? String(isAvailableProduct.image) : 'notavailable.png'}
                 name={product.name}
                 price={product.price}
                 description={'As Uber works through a huge amount of internal management turmoil.'}

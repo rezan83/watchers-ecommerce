@@ -1,9 +1,10 @@
 import { Router } from 'express'
 import reviewControllers from '../controllers/review.controller'
-import { isAddmin, isLogedIn } from '../middlewares/auth'
+import { isLogedIn } from '../middlewares/auth'
 const veviewsRoute = Router()
 
-veviewsRoute.post('/', isLogedIn, reviewControllers.addOneReview)
+veviewsRoute.post('/', isLogedIn, reviewControllers.addOrUpdateReview)
+veviewsRoute.get('/{product:id}', isLogedIn, reviewControllers.fetchOneReview)
 
 veviewsRoute.get('/', isLogedIn, reviewControllers.fetchAllReviews)
 // veviewsRoute.get('/:id', isLogedIn, reviewControllers.fetchOneReview)

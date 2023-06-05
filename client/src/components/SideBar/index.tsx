@@ -30,8 +30,9 @@ import {
 import { FiHome, FiMenu, FiBell, FiChevronDown, FiShoppingCart } from 'react-icons/fi';
 import { HiShoppingBag } from 'react-icons/hi';
 import { AiFillDashboard } from 'react-icons/ai';
-import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { IconType } from 'react-icons';
+import { BsMoonStarsFill } from 'react-icons/bs';
+import { FaSun } from 'react-icons/fa';
 
 import useAuthStore from 'store/authStore';
 import useCartStore from 'store/cartStore';
@@ -122,10 +123,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
           {isDashboardPage && <DashLinks />}
         </>
       )}
-      <>
-
-        {isProductsPage && <ProductFilters />}
-      </>
+      <>{isProductsPage && <ProductFilters />}</>
     </Box>
   );
 };
@@ -213,7 +211,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         aria-label="open menu"
         icon={<FiMenu />}
       />
-      <Link as={RouterLink} to="./" >
+      <Link as={RouterLink} to="./">
         <Img
           display={{ base: 'flex', md: 'none' }}
           src="watchers-logo.png"
@@ -231,13 +229,12 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       </Text> */}
 
       <HStack spacing={{ base: '2', md: '6' }}>
-        
         <NavItem key={'Products'} icon={HiShoppingBag} link={'products'}>
           {'Shop'}
         </NavItem>
-        
-        <Button onClick={toggleColorMode}>
-          {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+
+        <Button onClick={toggleColorMode} bg={useColorModeValue('darkblue', 'black')} >
+          {colorMode === 'light' ? <Icon color='white' as={BsMoonStarsFill} /> : <Icon color='yellow.300' as={FaSun} />}
         </Button>
         <Button>
           <span>
@@ -277,7 +274,10 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               borderColor={useColorModeValue('gray.200', 'gray.700')}>
               <MenuItem onClick={goProfile}>Profile</MenuItem>
               <MenuDivider />
-              <MenuItem > <Icon as={FiBell} /></MenuItem>
+              <MenuItem>
+                {' '}
+                <Icon as={FiBell} />
+              </MenuItem>
 
               {/* <MenuItem>Settings</MenuItem>
               <MenuItem>Billing</MenuItem> */}
