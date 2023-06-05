@@ -51,7 +51,7 @@ const Orders = ({
                 image={isAvailableProduct ? String(isAvailableProduct.image) : 'notavailable.png'}
                 name={product.name}
                 price={product.price}
-                description={'As Uber works through a huge amount of internal management turmoil.'}
+                description={isAvailableProduct?.description || 'No description'}
               />
             );
           })}

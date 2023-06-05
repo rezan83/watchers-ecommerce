@@ -96,8 +96,8 @@ export default function Profile() {
               return (
                 <Orders
                   key={order._id}
-                  title={'order'}
-                  description={'description'}
+                  title={'Order: ' + order.order_id}
+                  description={order.createdAt ? new Date(order.createdAt).toDateString() : ''}
                   products={order.products}
                 />
               );

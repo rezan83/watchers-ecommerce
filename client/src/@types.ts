@@ -41,6 +41,7 @@ export interface IProductPages {
 export interface IOrder {
   user?: string;
   _id?: string;
+  createdAt?: string
   order_id: string | undefined;
   products?: {
     id: string;
