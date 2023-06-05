@@ -19,10 +19,10 @@ const ProjectCard = ({
 }) => {
   // Chakra color mode
   const textColor = useColorModeValue('gray.700', 'white');
-  const setProductToReview = useProductsStore(state => state.setProductToReview);
+  const fetchStroeProductToReview = useProductsStore(state => state.fetchStroeProductToReview);
   const navigate = useNavigate();
   const goReviewPage = () => {
-    setProductToReview(id);
+    fetchStroeProductToReview(id);
     navigate('/product-add-review');
   };
   return (

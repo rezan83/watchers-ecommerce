@@ -104,6 +104,19 @@ const productControllers = {
       )
   },
 
+  fetchAvailableProducts: (req: authReq, res: Response) => {
+    const { ids } = req.body
+    Product.find({ _id: { $in: ids } })
+      .then((products) => {
+        return res.status(200).json(products)
+      })
+      .catch((err) =>
+        res
+          .status(404)
+          .json({ message: 'products not found', error: err.message })
+      )
+  },
+
   deleteOneProduct: (req: Request, res: Response) => {
     Product.findByIdAndRemove(req.params.id)
       .then((data) =>

@@ -28,14 +28,14 @@ import useProductsStore from 'store/productsStrore';
 import Rating from 'components/ProductCard/ProductRating';
 import { addOrUpdateReview } from 'api/reviewsApi';
 
-const initialProduct: IProduct = {
-  name: '',
-  price: 0
-};
+// const initialProduct: IProduct = {
+//   name: '',
+//   price: 0
+// };
 
 export default function ProductAddReview(): JSX.Element {
   const productToReview = useProductsStore(state => state.productToReview);
-  const setProductToReview = useProductsStore(state => state.setProductToReview);
+  const fetchStroeProductToReview = useProductsStore(state => state.fetchStroeProductToReview);
 
   const [rating, setSelectRating] = useState(0);
   const [comment, setCOmment] = useState('');
@@ -49,22 +49,16 @@ export default function ProductAddReview(): JSX.Element {
   //   const [imagPrev, setImagPrev] = useState('');
 
   const submitProductReview = async () => {
-    addOrUpdateReview({ product: productToReview?._id || '', comment, rating });
-    // console.log(productToReview?._id, comment, rate)
-    //   try {
-    //     const res = await multiFormReq(product, !!productToReview);
-    //     if (res) {
-    //       setProductToEdit(null);
-    //       fetchStoreProducts();
-    //       navigate('/products');
-    //     }
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
+    try {
+      await addOrUpdateReview({ product: productToReview?._id || '', comment, rating });
+      navigate('/profile');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const cancelEdit = () => {
-    setProductToReview(null);
+    fetchStroeProductToReview(null);
     setSelectRating(0);
     setCOmment('');
 

@@ -17,13 +17,14 @@ import useUsersStore from 'store/usersStore';
 import Orders from './Orders';
 
 export default function Profile() {
-  const authUser = useAuthStore(state => state.authUser);
   const navigate = useNavigate();
-  const bgColor = authUser?.is_admin ? ['purple.300', 'purple.300'] : ['white', 'gray.800'];
+  const authUser = useAuthStore(state => state.authUser);
   const { fetchStroeUserProfile, userProfile } = useUsersStore(state => {
     return { fetchStroeUserProfile: state.fetchStroeUserProfile, userProfile: state.userProfile };
   });
   const textColor = useColorModeValue('gray.700', 'white');
+  const bgColor = authUser?.is_admin ? ['purple.300', 'purple.300'] : ['white', 'gray.800'];
+
   useEffect(() => {
     fetchStroeUserProfile();
     // eslint-disable-next-line react-hooks/exhaustive-deps

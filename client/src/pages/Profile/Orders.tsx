@@ -7,7 +7,8 @@ import GenericCard from 'components/GenericCard/GenericCard';
 import GenericCardBody from 'components/GenericCard/GenericCardBody';
 import GenericCardHeader from 'components/GenericCard/GenericCardHeader';
 import OrderCard from './OrderCard';
-import useProductsStore from 'store/productsStrore';
+import useUsersStore from 'store/usersStore';
+import { IProduct } from '@types';
 
 const Orders = ({
   title,
@@ -18,7 +19,7 @@ const Orders = ({
   description: string;
   products: any;
 }) => {
-  const fetchedProducts = useProductsStore(state => state.products);
+  const purchasedAndAvailableProducts = useUsersStore(state => state.purchasedAndAvailableProducts);
   // Chakra color mode
   const textColor = useColorModeValue('gray.700', 'white');
 
@@ -40,7 +41,9 @@ const Orders = ({
           templateRows={{ sm: '1fr 1fr 1fr auto', md: '1fr', xl: '1fr' }}
           gap="24px">
           {products.map((product: any) => {
-            const isAvailableProduct = fetchedProducts.products.find(fp => fp._id === product.id);
+            const isAvailableProduct = purchasedAndAvailableProducts?.find(
+              (p: IProduct) => p._id === product.id
+            );
             return (
               <OrderCard
                 key={product.id}

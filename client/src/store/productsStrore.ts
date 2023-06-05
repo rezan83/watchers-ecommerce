@@ -7,7 +7,7 @@ interface IProductsStore {
   featuredProducts: IProduct[];
   setProducts: (products: IProductPages) => void;
   productToReview: IProduct | null;
-  setProductToReview: (id: string | null) => void;
+  fetchStroeProductToReview: (id: string | null) => void;
   productToEdit: IProduct | null;
   setProductToEdit: (productToEdit: IProduct | null) => void;
   page: number;
@@ -34,7 +34,7 @@ const useProductsStore = create<IProductsStore>((set, get) => ({
   products: { products: [] },
   featuredProducts: [],
   productToReview: null,
-  setProductToReview: async (id: string | null) => {
+  fetchStroeProductToReview: async (id: string | null) => {
     if (id) {
       const product = await fetchOneProduct(id);
       if (product) {

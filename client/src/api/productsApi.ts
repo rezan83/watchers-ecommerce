@@ -29,7 +29,7 @@ export const fetchProducts = async (
   return products;
 };
 
-export const getFeatured = async (): Promise<{products:IProduct[]} | void> => {
+export const getFeatured = async (): Promise<{ products: IProduct[] } | void> => {
   try {
     const productRes = await axiosInstance.get(env.FEATURED_URL!);
     return await productRes.data;
@@ -37,7 +37,16 @@ export const getFeatured = async (): Promise<{products:IProduct[]} | void> => {
     console.log(error);
   }
 };
-
+export const fetchAvailableProducts = async (ids: string[]): Promise<IProduct[] | null> => {
+  let products: IProduct[] | null = null;
+  try {
+    const productsRes = await axiosInstance.post(env.AVAILABLE_PRODUCTS_URL, {ids});
+    products = await productsRes.data;
+  } catch (error) {
+    console.log(error);
+  }
+  return products;
+};
 export const fetchOneProduct = async (id: string): Promise<IProduct | void> => {
   try {
     const productRes = await axiosInstance.get(env.PRODUCTS_URL! + id);

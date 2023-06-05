@@ -9,11 +9,16 @@ productsRoute.get(
   // isLogedIn,
   productControllers.fetchAllProducts
 )
-
 productsRoute.get(
   '/featured',
   // isLogedIn,
   productControllers.getFeatured
+)
+// array og products ids in body
+productsRoute.post(
+  '/available',
+  isLogedIn,
+  productControllers.fetchAvailableProducts
 )
 
 productsRoute.get('/:id', isLogedIn, productControllers.fetchOneProduct)

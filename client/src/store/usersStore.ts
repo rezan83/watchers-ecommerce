@@ -1,10 +1,12 @@
 import { create } from 'zustand';
-import { IUser } from '../@types';
+import { IProduct, IUser } from '../@types';
 import fetchUsers, { fetchUserProfile } from 'api/usersApi';
+import { fetchAvailableProducts } from 'api/productsApi';
 
 interface IUsersStore {
   users: IUser[];
   userProfile: IUser | null;
+  purchasedAndAvailableProducts: IProduct[] | null;
   setUsers: (users: IUser[]) => void;
   fetchStoreUsers: () => void;
   fetchStroeUserProfile: () => void;
@@ -14,6 +16,7 @@ interface IUsersStore {
 const useUsersStore = create<IUsersStore>((set, get) => ({
   users: [],
   userProfile: null,
+  purchasedAndAvailableProducts: null,
   setUsers: users => {
     set({ users });
   },
@@ -22,27 +25,19 @@ const useUsersStore = create<IUsersStore>((set, get) => ({
     const users = await fetchUsers();
     set({ users });
   },
+
   fetchStroeUserProfile: async () => {
     const userProfile = await fetchUserProfile();
-    set({ userProfile });
+    const ids = userProfile?.orders?.flatMap(order => {
+      return order.products?.map(p => p.id);
+    });
+
+    const purchasedAndAvailableProducts = await fetchAvailableProducts(ids as string[]);
+
+    set({ userProfile, purchasedAndAvailableProducts });
   },
+
   clearUsers: () => set(state => ({ users: [] }))
 }));
 
 export default useUsersStore;
-
-// export const setZustandAuthUser = (user: IUser) =>
-//   useAuthStore.setState(state => ({
-//     ...state,
-//     user
-//   }));
-
-// export const getZustandAuthToken = () => useAuthStore.getState().token;
-
-// const useFishStore = create((set) => ({
-//   fishies: {},
-//   fetch: async (pond) => {
-//     const response = await fetch(pond)
-//     set({ fishies: await response.json() })
-//   },
-// }))

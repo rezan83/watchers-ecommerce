@@ -13,6 +13,8 @@ class EnvCalss {
   ALL_REVIEWS_URL = this.Url('reviews/');
  
   PRODUCTS_URL = this.Url('products/');
+  AVAILABLE_PRODUCTS_URL = this.Url('products/available');
+  
   FEATURED_URL = this.Url('products/featured');
   CATEGORIES_URL = this.Url('categories/');
   ORDERS_URL = this.Url('orders/');
