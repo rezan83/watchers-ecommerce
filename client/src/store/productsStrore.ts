@@ -1,12 +1,14 @@
 import { create } from 'zustand';
-import { IProduct, IProductPages } from '../@types';
+import { IProduct, IProductPages, IReview } from '../@types';
 import { fetchOneProduct, fetchProducts, getFeatured } from 'api/productsApi';
+import { fetchProductReview } from 'api/reviewsApi';
 
 interface IProductsStore {
   products: IProductPages;
   featuredProducts: IProduct[];
   setProducts: (products: IProductPages) => void;
   productToReview: IProduct | null;
+  oldReview: IReview | null;
   fetchStroeProductToReview: (id: string | null) => void;
   productToEdit: IProduct | null;
   setProductToEdit: (productToEdit: IProduct | null) => void;
@@ -34,12 +36,12 @@ const useProductsStore = create<IProductsStore>((set, get) => ({
   products: { products: [] },
   featuredProducts: [],
   productToReview: null,
+  oldReview: null,
   fetchStroeProductToReview: async (id: string | null) => {
     if (id) {
       const product = await fetchOneProduct(id);
-      if (product) {
-        set(state => ({ productToReview: product }));
-      }
+      const oldReview = await fetchProductReview(id);
+      set(state => ({ productToReview: product || null, oldReview: oldReview || null }));
     } else {
       set(state => ({ productToReview: null }));
     }

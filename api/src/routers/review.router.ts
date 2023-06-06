@@ -4,7 +4,7 @@ import { isLogedIn } from '../middlewares/auth'
 const veviewsRoute = Router()
 
 veviewsRoute.post('/', isLogedIn, reviewControllers.addOrUpdateReview)
-veviewsRoute.get('/{product:id}', isLogedIn, reviewControllers.fetchOneReview)
+veviewsRoute.get('/:id', isLogedIn, reviewControllers.fetchOneReview)
 
 veviewsRoute.get('/', isLogedIn, reviewControllers.fetchAllReviews)
 // veviewsRoute.get('/:id', isLogedIn, reviewControllers.fetchOneReview)

@@ -5,7 +5,6 @@ import {
   FormControl,
   FormLabel,
   Heading,
-  Input,
   Stack,
   useColorModeValue,
   Avatar,
@@ -13,40 +12,29 @@ import {
   IconButton,
   Center,
   Box,
-  Select,
   Textarea
 } from '@chakra-ui/react';
 import { SmallCloseIcon } from '@chakra-ui/icons';
 import { useNavigate } from 'react-router-dom';
-import { MultiValue } from 'react-select';
-
-import { multiFormReq } from 'api/productsApi';
-import { IProduct } from '@types';
-import useCartStore from 'store/cartStore';
 
 import useProductsStore from 'store/productsStrore';
 import Rating from 'components/ProductCard/ProductRating';
 import { addOrUpdateReview } from 'api/reviewsApi';
 
-// const initialProduct: IProduct = {
-//   name: '',
-//   price: 0
+// const initialReview: IReview = {
+//   product: '',
+//   rating: 0,
+//   comment: '',
 // };
 
 export default function ProductAddReview(): JSX.Element {
-  const productToReview = useProductsStore(state => state.productToReview);
-  const fetchStroeProductToReview = useProductsStore(state => state.fetchStroeProductToReview);
-
-  const [rating, setSelectRating] = useState(0);
-  const [comment, setCOmment] = useState('');
-
-  //   const productToReview = useCartStore(state => {
-  //     return state.productToReview;
-  //   });
-
   const navigate = useNavigate();
-  //   const [product, setProduct] = useState<IProduct>(productToReview || initialProduct);
-  //   const [imagPrev, setImagPrev] = useState('');
+  
+  const { productToReview, oldReview, fetchStroeProductToReview } = useProductsStore();
+
+  const [rating, setSelectRating] = useState(oldReview?.rating || 0);
+  const [comment, setComment] = useState(oldReview?.comment || '');
+
 
   const submitProductReview = async () => {
     try {
@@ -60,19 +48,17 @@ export default function ProductAddReview(): JSX.Element {
   const cancelEdit = () => {
     fetchStroeProductToReview(null);
     setSelectRating(0);
-    setCOmment('');
-
+    setComment('');
     navigate('/profile');
   };
 
-  //   useEffect(() => {
-  //     if (productToReview) {
-  //       setProduct(productToReview);
-  //       setImagPrev(String(productToReview.image));
-  //     } else {
-  //       setProduct(initialProduct);
-  //     }
-  //   }, [productToReview]);
+  useEffect(() => {
+    if (oldReview) {
+      setComment(oldReview.comment)
+      setSelectRating(oldReview.rating)
+    }
+  }, [oldReview])
+  
 
   return (
     <Flex
@@ -92,7 +78,8 @@ export default function ProductAddReview(): JSX.Element {
         direction={['column']}>
         <Heading lineHeight={1.1} fontSize={{ base: '2xl', sm: '3xl' }}>
           {/* {productToReview ? 'Review' : 'Edit Review'}  */}
-          Review Purchase: {productToReview ? productToReview?.name : 'not available'}
+          {oldReview ? 'Update' : ''} Review Purchase:{' '}
+          {productToReview ? productToReview?.name : 'not available'}
         </Heading>
         <form id="form" encType="multipart/form-data">
           <Stack my={6} spacing={3} direction={['column']}>
@@ -120,7 +107,7 @@ export default function ProductAddReview(): JSX.Element {
             <FormControl id="ProductReview">
               <FormLabel>Product Review</FormLabel>
               <Textarea
-                onChange={e => setCOmment(e.target.value)}
+                onChange={e => setComment(e.target.value)}
                 value={comment}
                 placeholder="Product veview"
                 _placeholder={{ color: 'gray.500' }}
