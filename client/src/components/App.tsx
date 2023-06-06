@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
 
-import Sidebar from 'components/SideBar';
+import Sidebar from 'components/NavBar';
 import Home from 'pages/Home';
 import Products from 'pages/Products';
 import Dashboard from 'pages/Dashboard';

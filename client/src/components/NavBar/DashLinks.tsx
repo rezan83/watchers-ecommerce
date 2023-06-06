@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
-import { Box, Link, useColorModeValue, VStack } from '@chakra-ui/react';
-import useCartStore from 'store/cartStore';
+import { Box, Flex, Link, useColorModeValue, VStack } from '@chakra-ui/react';
 import useProductsStore from 'store/productsStrore';
+import { SettingsIcon } from '@chakra-ui/icons';
 
 interface ILink {
   name: string;
@@ -31,7 +31,10 @@ const NavLink: FC<ILink> = ({ link, name, onClick }) => (
 const DashLinks = () => {
   const setProductToEdit = useProductsStore(state => state.setProductToEdit);
   return (
-    <Box bg={useColorModeValue('gray.100', 'gray.900')} mx={2} border={'solid 1px gray'}>
+    <Box bg={useColorModeValue('gray.100', 'gray.900')} m={2} border={'solid 1px gray'}>
+      <Flex m={2} justifyContent={'space-between'}>
+        <SettingsIcon />
+      </Flex>
       <VStack as={'nav'} spacing={4} display={'flex'} alignItems={'start'}>
         <NavLink link={'/dashboard/users'} name={'Users'} />
         <NavLink

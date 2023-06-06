@@ -117,7 +117,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       {authUser?.is_admin && (
         <>
           <NavItem key={'Dashboard'} icon={AiFillDashboard} link={'dashboard'}>
-            {'Dashboard'}
+            {'Admin Dashboard'}
           </NavItem>
 
           {isDashboardPage && <DashLinks />}
