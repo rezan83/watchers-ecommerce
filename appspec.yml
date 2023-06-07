@@ -6,14 +6,14 @@ files:
 
 hooks:
   BeforeInstall:
-    - location: /api/scripts/before_install.sh
+    - location: /scripts/before_install.sh
       timeout: 300
       runas: ubuntu
   ApplicationStart:
-    - location: /api/scripts/application_start.sh
+    - location: /scripts/application_start.sh
       timeout: 300
       runas: ubuntu
   ApplicationStop:
-    - location: /api/scripts/application_stop.sh
+    - location: /scripts/application_stop.sh
       timeout: 300
       runas: ubuntu
