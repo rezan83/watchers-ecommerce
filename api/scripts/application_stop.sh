@@ -1,4 +1,4 @@
 #!/bin/bash
-echo "stopping node"
+echo "stopping node" > log
 pkill ts-node &&
     pkill node
