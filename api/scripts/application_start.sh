@@ -1,6 +1,6 @@
 #!/bin/bash
-sudo chmod -R 777 /home/ubuntu/watchers-api
-cd /home/ubuntu/watchers-api
+sudo chmod -R 777 /home/ubuntu/watchers-app
+cd /home/ubuntu/watchers-app
 
 export NVM_DIR='$HOME/.nvm'
 [ -s '$NVM_DIR/nvm.sh' ] && \. '$NVM_DIR/nvm.sh'
