@@ -41,5 +41,5 @@ dist/**/*
 *.swp
 
 # ignore docker because Railway
-Dockerfile
-.dockerignore
+# Dockerfile
+# .dockerignore
