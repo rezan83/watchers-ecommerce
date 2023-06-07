@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
   - source: /api
-    destination: /home/ubuntu/watchers-app
+    destination: /watchers-app
 
 hooks:
   BeforeInstall:
