@@ -5,15 +5,15 @@ files:
     destination: /var/www/html/watchers-app
 
 hooks:
-  ApplicationStop:
-    - location: /api/scripts/application_stop.sh
-      timeout: 300
-      runas: ubuntu
   BeforeInstall:
     - location: /api/scripts/before_install.sh
       timeout: 300
       runas: ubuntu
   ApplicationStart:
     - location: /api/scripts/application_start.sh
+      timeout: 300
+      runas: ubuntu
+  ApplicationStop:
+    - location: /api/scripts/application_stop.sh
       timeout: 300
       runas: ubuntu
