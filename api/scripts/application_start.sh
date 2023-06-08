@@ -15,4 +15,4 @@
 pm2 stop all
 
 ## Start app.ts in watch & restart:
-pm2 start /home/ubuntu/watchers-app/src/server.ts --watch
+pm2 start --interpreter ts-node /home/ubuntu/watchers-app/src/server.ts --watch
