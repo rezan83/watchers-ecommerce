@@ -11,6 +11,7 @@ sudo apt-get install npm -y
 sudo npm install pm2 -g
 ## Add the new typescript dependency in PM2:
 pm2 install typescript
+pm2 install ts-node
 
 
 
