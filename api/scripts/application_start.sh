@@ -15,7 +15,8 @@
 pm2 stop all
 sudo chmod -R 777 /home/ubuntu/watchers-app
 cd /home/ubuntu/watchers-app
+npm run build
 ## Start app.ts in watch & restart:
 # pm2 start  /home/ubuntu/watchers-app/src/server.ts --watch
 # npm run start
-pm2 start /src/server.ts --watch
+pm2 start dist/server.js --watch
