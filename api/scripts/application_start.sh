@@ -1,5 +1,4 @@
 #!/bin/bash
-echo "start" > log
 sudo chmod -R 777 /watchers-app
 cd /watchers-app
 
