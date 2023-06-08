@@ -2,7 +2,11 @@
 // import mongoose from 'mongoose'
 
 import connectDB from './db'
-connectDB()
+try {
+  connectDB()
+} catch (error) {
+  console.log(error)
+}
 
 import app from './app'
 // import { MONGODB_URI } from './util/secrets'
@@ -29,7 +33,6 @@ import app from './app'
 // if (process.env.NODE_ENV === 'development') {
 //   app.use(errorHandler())
 // }
-
 
 // Start Express server
 app.listen(app.get('port'), () => {
