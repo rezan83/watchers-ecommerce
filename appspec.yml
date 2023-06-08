@@ -80,10 +80,12 @@ hooks:
   # During the ApplicationStop deployment lifecycle event, run the commands
   #   in the script specified in "location" starting from the root of the
   #   revision's file bundle.
-  ApplicationStop:
-    - location: api/scripts/application_stop.sh
-      timeout: 300
-      runas: ubuntu
+
+  # ApplicationStop:
+  #   - location: api/scripts/application_stop.sh
+  #     timeout: 300
+  #     runas: ubuntu
+
   # During the BeforeInstall deployment lifecycle event, run the commands
   #   in the script specified in "location".
   BeforeInstall:
@@ -92,10 +94,10 @@ hooks:
       runas: ubuntu
   # During the AfterInstall deployment lifecycle event, run the commands
   #   in the script specified in "location".
-  # AfterInstall:
-  #   - location:
-  #     timeout:
-  #     runas:
+  AfterInstall:
+    - location: api/scripts/after_install.sh
+      timeout: 300
+      runas: ubuntu
   #   - location:
   #     timeout:
   #     runas:
@@ -115,4 +117,4 @@ hooks:
 #     timeout:
 #     runas:
 
-file_exists_behavior: OVERWRITE
+# file_exists_behavior: OVERWRITE
