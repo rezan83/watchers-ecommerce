@@ -7,6 +7,8 @@ cd /watchers-app
 # [ -s '$NVM_DIR/nvm.sh' ] && \. '$NVM_DIR/nvm.sh'
 # [ -s '$NVM_DIR/bash_completion' ] && \. '$NVM_DIR/bash_completion'
 
-npm install
-npm run build &&
-    npm run start
+npm install  &&
+# npm run build &&
+#     npm run start
+
+npm run dev
