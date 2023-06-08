@@ -12,8 +12,6 @@ sudo npm install pm2 -g
 sudo npm install typescript -g
 ## Add the new typescript dependency in PM2:
 sudo pm2 install typescript
-sudo pm2 install ts-node
-
 
 
 # DIR="/watchers-app"
