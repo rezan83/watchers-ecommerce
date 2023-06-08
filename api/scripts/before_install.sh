@@ -9,6 +9,10 @@ sudo apt-get update
 sudo apt-get install nodejs-legacy -y
 sudo apt-get install npm -y
 sudo npm install pm2 -g
+## Add the new typescript dependency in PM2:
+pm2 install typescript
+
+
 
 # DIR="/watchers-app"
 # if [ -d "$DIR" ]; then
