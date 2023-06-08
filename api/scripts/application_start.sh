@@ -17,5 +17,5 @@ sudo chmod -R 777 /home/ubuntu/watchers-app
 cd /home/ubuntu/watchers-app
 ## Start app.ts in watch & restart:
 # pm2 start  /home/ubuntu/watchers-app/src/server.ts --watch
-echo "done"> log
-npm run start
+# npm run start
+pm2 start /src/server.ts --watch
