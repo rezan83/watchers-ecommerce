@@ -13,7 +13,8 @@
 
 # Stop all servers and start the server
 pm2 stop all
-
+sudo chmod -R 777 /home/ubuntu/watchers-app
+cd /home/ubuntu/watchers-app
 ## Start app.ts in watch & restart:
 # pm2 start  /home/ubuntu/watchers-app/src/server.ts --watch
 echo "done"> log
