@@ -90,7 +90,7 @@ hooks:
   #   in the script specified in "location".
   BeforeInstall:
     - location: api/scripts/before_install.sh
-      timeout: 300
+      timeout: 600
       runas: ubuntu
   # During the AfterInstall deployment lifecycle event, run the commands
   #   in the script specified in "location".
@@ -105,7 +105,7 @@ hooks:
   #   in the script specified in "location".
   ApplicationStart:
     - location: api/scripts/application_start.sh
-      timeout: 300
+      timeout: 600
       runas: ubuntu
 # During the ValidateService deployment lifecycle event, run the commands
 #   in the script specified in "location".
