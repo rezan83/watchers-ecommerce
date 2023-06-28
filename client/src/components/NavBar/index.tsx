@@ -99,18 +99,18 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       bg={useColorModeValue('white', 'gray.900')}
       borderRight="1px"
       borderRightColor={useColorModeValue('gray.200', 'gray.700')}
-      w={{ base: 'full', md: 60 }}
+      w={{ base: '80%', md: 60 }}
       pos="fixed"
       h="full"
       {...rest}>
-      <Flex h="20" alignItems="center" mx="8" p={'3rem'} justifyContent="space-between">
+      <Flex h="20" alignItems="center" px={'2rem'} justifyContent="space-between">
         <Link as={RouterLink} to="./">
           <Img src="watchers-logo.png" alt={`${Logo} logo`} width={'60px'} />
         </Link>
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       <>
-        <NavItem key={'Home'} icon={FiHome} link={'/'}>
+        <NavItem key={'Home'} icon={FiHome} link={'/'} onClose={onClose}>
           {'Home'}
         </NavItem>
       </>
@@ -120,7 +120,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
             {'Admin Dashboard'}
           </NavItem>
 
-          {isDashboardPage && <DashLinks />}
+          {isDashboardPage && <DashLinks onClose={onClose} />}
         </>
       )}
       <>{isProductsPage && <ProductFilters />}</>
@@ -132,10 +132,12 @@ interface NavItemProps extends FlexProps {
   icon: IconType;
   link?: string;
   children: ReactNode;
+  onClose?: () => void;
 }
-const NavItem = ({ icon, link, children }: NavItemProps) => {
+const NavItem = ({ icon, link, onClose, children }: NavItemProps) => {
   return (
     <Link
+      onClick={onClose}
       as={RouterLink}
       to={link}
       style={{ textDecoration: 'none' }}
@@ -233,8 +235,12 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
           {'Shop'}
         </NavItem>
 
-        <Button onClick={toggleColorMode} bg={useColorModeValue('darkblue', 'black')} >
-          {colorMode === 'light' ? <Icon color='white' as={BsMoonStarsFill} /> : <Icon color='yellow.300' as={FaSun} />}
+        <Button onClick={toggleColorMode} bg={useColorModeValue('darkblue', 'black')}>
+          {colorMode === 'light' ? (
+            <Icon color="white" as={BsMoonStarsFill} />
+          ) : (
+            <Icon color="yellow.300" as={FaSun} />
+          )}
         </Button>
         <Button>
           <span>

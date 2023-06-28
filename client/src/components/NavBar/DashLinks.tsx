@@ -28,7 +28,7 @@ const NavLink: FC<ILink> = ({ link, name, onClick }) => (
   </Link>
 );
 
-const DashLinks = () => {
+const DashLinks = ({ onClose }: { onClose: () => void }) => {
   const setProductToEdit = useProductsStore(state => state.setProductToEdit);
   return (
     <Box bg={useColorModeValue('gray.100', 'gray.900')} m={2} border={'solid 1px gray'}>
@@ -36,9 +36,12 @@ const DashLinks = () => {
         <SettingsIcon />
       </Flex>
       <VStack as={'nav'} spacing={4} display={'flex'} alignItems={'start'}>
-        <NavLink link={'/dashboard/users'} name={'Users'} />
+        <NavLink link={'/dashboard/users'} name={'Users'} onClick={onClose} />
         <NavLink
-          onClick={() => setProductToEdit(null)}
+          onClick={() => {
+            setProductToEdit(null);
+            onClose();
+          }}
           link={'/dashboard/add-products'}
           name={'Add/ Edit Products'}
         />
